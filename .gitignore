@@ -1,0 +1,7 @@
+node_modules
+/src/MoviesJavaScript.html
+/src/table/posts-table.js
+/src/dynamo.js
+moviedata.json
+vn1301_accessKeys.csv
+.prettierrc

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title> </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+    <script  type="text/javascript" src="main.js"></script>
+  </head>
+  <form action="" method="post">
+    <div>
+      <div style="margin-bottom: 5px;">
+        <label for="year">Năm</label>
+        <input type="number" id="year" placeholder="Điền năm">
+      </div>
+      <div>
+        <label for="title">Tiêu đề</label>
+        <input type="text" id="title" placeholder="Điền tiêu đề">
+      </div>
+      <div>
+        <label for="title">Ảnh</label>
+        <input type="text" id="image" value="https://source.unsplash.com/1600x900/?beach" placeholder="chọn ảnh">
+      </div>
+      <button type="button" onclick="createItem()">Đăng bài</button>
+    </div>
+  </form>
+  <br>
+  <br>
+  <div>
+    <div><button onclick="scanData()">Scan Data</button></div>
+    <textarea id="scanData" cols="30" rows="10"></textarea>
+    <img  id="imageItem" alt="">
+  </div>
+</html>
