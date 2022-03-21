@@ -32,14 +32,14 @@ var dynamodb = new AWS.DynamoDB();
 var docClient = new AWS.DynamoDB.DocumentClient();
 function createMovies() {
     var params = {
-        TableName : "Users",
+        TableName : "Movies",
         KeySchema: [
-            { AttributeName: "UserID", KeyType: "HASH"},
-            { AttributeName: "Username", KeyType: "RANGE" }
+            { AttributeName: "year", KeyType: "HASH"},
+            { AttributeName: "title", KeyType: "RANGE" }
         ],
         AttributeDefinitions: [       
-            { AttributeName: "UserID", AttributeType: "S" },
-            { AttributeName: "Username", AttributeType: "S" }
+            { AttributeName: "year", AttributeType: "N" },
+            { AttributeName: "title", AttributeType: "S" }
         ],
         ProvisionedThroughput: {       
             ReadCapacityUnits: 5,
@@ -58,7 +58,7 @@ function createMovies() {
 
 function deleteMovies() {
     var params = {
-        TableName : "Movies"
+        TableName : "Blog"
     };
 
     dynamodb.deleteTable(params, function(err, data) {
@@ -112,7 +112,7 @@ function readItem() {
         TableName: table,
         Key:{
             "PK": PK,
-            "SK": SK
+            "SK": PK
         }
     };
     docClient.get(params, function(err, data) {

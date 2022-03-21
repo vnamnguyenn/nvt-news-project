@@ -1,0 +1,731 @@
+{
+  "ModelName": "Blog",
+  "ModelMetadata": {
+    "Author": "",
+    "DateCreated": "Mar 16, 2022, 01:41 AM",
+    "DateLastModified": "Mar 19, 2022, 03:11 PM",
+    "Description": "",
+    "AWSService": "Amazon DynamoDB",
+    "Version": "3.0"
+  },
+  "DataModel": [
+    {
+      "TableName": "Blog",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "PK",
+          "AttributeType": "S"
+        },
+        "SortKey": {
+          "AttributeName": "SK",
+          "AttributeType": "S"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "UserEmail",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "FirstName",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "LastName",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "PhoneNumber",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Gender",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Addresses",
+          "AttributeType": "M"
+        },
+        {
+          "AttributeName": "DateOfBirth",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Role",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "PasswordHash",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "IsActive",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Avatar",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Description",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "PostID",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "PostTitle",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Slug",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Thumbnail",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "PostImage",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "LikeCount",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CommentCount",
+          "AttributeType": "N"
+        },
+        {
+          "AttributeName": "SaveCount",
+          "AttributeType": "N"
+        },
+        {
+          "AttributeName": "ViewCount",
+          "AttributeType": "N"
+        },
+        {
+          "AttributeName": "MetaTitle",
+          "AttributeType": "N"
+        },
+        {
+          "AttributeName": "MetaDescription",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "MetaKeyword",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "TagId",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "TagName",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CategoryId",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CategoryName",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CommentId",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "ParentCommentId",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CommentContent",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Published",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "PublishedDate",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "ActiveCode",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "ExpirationDate",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CreatedBy",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "UpdatedBy",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "CreatedDate",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "UpdatedDate",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "VideoID",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "VideoTitle",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "VideoUrl",
+          "AttributeType": "S"
+        }
+      ],
+      "TableFacets": [
+        {
+          "FacetName": "Accounts",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [
+            {
+              "PK": {
+                "S": "ACCT#vn13012000@gmail.com"
+              },
+              "SK": {
+                "S": "ACCT#vn13012000@gmail.com"
+              },
+              "UserEmail": {
+                "S": "vn13012000@gmail.com"
+              },
+              "FirstName": {
+                "S": "Văn"
+              },
+              "LastName": {
+                "S": "Nam"
+              },
+              "PhoneNumber": {
+                "S": "0866658801"
+              },
+              "Gender": {
+                "S": "Nam"
+              },
+              "Addresses": {
+                "M": {
+                  "Nhà": {
+                    "S": "Phước hiệp"
+                  },
+                  "Office": {
+                    "S": "Linh Trung"
+                  }
+                }
+              },
+              "DateOfBirth": {
+                "S": "13/01/2000"
+              },
+              "Role": {
+                "S": "ADMIN"
+              },
+              "PasswordHash": {
+                "S": "123456ab"
+              },
+              "IsActive": {
+                "BOOL": true
+              },
+              "Avatar": {
+                "S": "1.jpg"
+              },
+              "CreatedBy": {
+                "S": "vn13012000@gmail.com"
+              },
+              "UpdatedBy": {
+                "S": "vn13012000@gmail.com"
+              }
+            },
+            {
+              "PK": {
+                "S": "ACCT#user@gmail.com"
+              },
+              "SK": {
+                "S": "ACCT#user@gmail.com"
+              },
+              "UserEmail": {
+                "S": "user@gmail.com"
+              },
+              "FirstName": {
+                "S": "User"
+              },
+              "LastName": {
+                "S": "1"
+              },
+              "PhoneNumber": {
+                "S": "0123456789"
+              },
+              "Gender": {
+                "S": "Nữ"
+              },
+              "Addresses": {
+                "M": {
+                  "Nhà": {
+                    "S": "Phước hiệp"
+                  },
+                  "Office": {
+                    "S": "Linh Trung"
+                  }
+                }
+              },
+              "DateOfBirth": {
+                "S": "25/06/2000"
+              },
+              "Role": {
+                "S": "USER"
+              },
+              "PasswordHash": {
+                "S": "123456ab"
+              },
+              "IsActive": {
+                "BOOL": true
+              }
+            }
+          ],
+          "NonKeyAttributes": [
+            "UserEmail",
+            "FirstName",
+            "LastName",
+            "PhoneNumber",
+            "Gender",
+            "Addresses",
+            "DateOfBirth",
+            "Role",
+            "PasswordHash",
+            "IsActive",
+            "Avatar",
+            "Description",
+            "ActiveCode",
+            "ExpirationDate",
+            "CreatedBy",
+            "UpdatedBy",
+            "CreatedDate",
+            "UpdatedDate"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "Posts",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [
+            {
+              "PK": {
+                "S": "ACCT#vn13012000@gmail.com"
+              },
+              "SK": {
+                "S": "POST#1"
+              },
+              "UserEmail": {
+                "S": "vn13012000@gmail.com"
+              },
+              "PostID": {
+                "S": "1"
+              },
+              "PostTitle": {
+                "S": "acer"
+              },
+              "Slug": {
+                "S": "acer"
+              },
+              "Thumbnail": {
+                "S": "1.jpg"
+              },
+              "PostImage": {
+                "S": "1.jpg"
+              },
+              "LikeCount": {
+                "S": "2"
+              },
+              "CommentCount": {
+                "N": "0"
+              },
+              "SaveCount": {
+                "N": "0"
+              },
+              "ViewCount": {
+                "N": "1"
+              },
+              "Published": {
+                "BOOL": true
+              }
+            },
+            {
+              "PK": {
+                "S": "ACCT#vn13012000@gmail.com"
+              },
+              "SK": {
+                "S": "POST#2"
+              },
+              "UserEmail": {
+                "S": "vn13012000@gmail.com"
+              },
+              "PostID": {
+                "S": "2"
+              },
+              "PostTitle": {
+                "S": "Asus ROG"
+              },
+              "Slug": {
+                "S": "asus-rog"
+              },
+              "Thumbnail": {
+                "S": "2.jpg"
+              },
+              "PostImage": {
+                "S": "2.jpg"
+              },
+              "LikeCount": {
+                "S": "3"
+              },
+              "CommentCount": {
+                "N": "0"
+              },
+              "SaveCount": {
+                "N": "1"
+              },
+              "ViewCount": {
+                "N": "2"
+              },
+              "Published": {
+                "BOOL": false
+              }
+            }
+          ],
+          "NonKeyAttributes": [
+            "UserEmail",
+            "PostID",
+            "PostTitle",
+            "Slug",
+            "Thumbnail",
+            "PostImage",
+            "LikeCount",
+            "CommentCount",
+            "SaveCount",
+            "ViewCount",
+            "MetaTitle",
+            "MetaDescription",
+            "MetaKeyword",
+            "CommentContent",
+            "Published",
+            "PublishedDate",
+            "CreatedBy",
+            "UpdatedBy",
+            "CreatedDate",
+            "UpdatedDate"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "PostComments",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "UserEmail",
+            "PostID",
+            "PostTitle",
+            "CommentId",
+            "ParentCommentId",
+            "CommentContent",
+            "Published",
+            "PublishedDate",
+            "CreatedDate"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "Categories",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "CategoryId",
+            "CategoryName",
+            "CreatedBy",
+            "UpdatedBy",
+            "CreatedDate",
+            "UpdatedDate"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "PostsCategories",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "PostID",
+            "PostTitle",
+            "CategoryId",
+            "CategoryName"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "Tags",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "TagId",
+            "TagName",
+            "CreatedBy",
+            "UpdatedBy",
+            "CreatedDate",
+            "UpdatedDate"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "Videos",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [
+            {
+              "PK": {
+                "S": "ACCT#vn13012000@gmail.com"
+              },
+              "SK": {
+                "S": "VIDEO#1"
+              },
+              "UserEmail": {
+                "S": "vn13012000@gmail.com"
+              },
+              "Slug": {
+                "S": "yeu-di-dung-so-dau"
+              },
+              "Thumbnail": {
+                "S": "1.jpg"
+              },
+              "LikeCount": {
+                "S": "0"
+              },
+              "CommentCount": {
+                "N": "0"
+              },
+              "SaveCount": {
+                "N": "0"
+              },
+              "ViewCount": {
+                "N": "0"
+              },
+              "Published": {
+                "BOOL": true
+              },
+              "VideoID": {
+                "S": "1"
+              },
+              "VideoTitle": {
+                "S": "Yêu đi đừng sợ đau"
+              },
+              "VideoUrl": {
+                "S": "https://www.youtube.com/embed/TUrjWi341zg"
+              }
+            }
+          ],
+          "NonKeyAttributes": [
+            "UserEmail",
+            "VideoID",
+            "VideoTitle",
+            "Thumbnail",
+            "Slug",
+            "VideoUrl",
+            "LikeCount",
+            "CommentCount",
+            "SaveCount",
+            "ViewCount",
+            "MetaTitle",
+            "MetaDescription",
+            "MetaKeyword",
+            "Published",
+            "PublishedDate",
+            "CreatedBy",
+            "UpdatedBy",
+            "CreatedDate",
+            "UpdatedDate"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        },
+        {
+          "FacetName": "PostsTags",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "PK",
+            "SortKeyAlias": "SK"
+          },
+          "TableData": [],
+          "NonKeyAttributes": [
+            "PostID",
+            "PostTitle",
+            "TagId",
+            "TagName"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "AccountIndex",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "UserEmail",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "INCLUDE",
+            "NonKeyAttributes": [
+              "FirstName",
+              "LastName",
+              "PhoneNumber",
+              "Gender",
+              "DateOfBirth",
+              "Role",
+              "PasswordHash",
+              "Addresses",
+              "Avatar",
+              "Description"
+            ]
+          }
+        },
+        {
+          "IndexName": "PostIndex",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "PostID",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "INCLUDE",
+            "NonKeyAttributes": [
+              "PostTitle",
+              "Slug",
+              "Thumbnail",
+              "PostImage",
+              "LikeCount",
+              "CommentCount",
+              "SaveCount",
+              "ViewCount",
+              "MetaTitle",
+              "MetaDescription",
+              "MetaKeyword",
+              "Published",
+              "PublishedDate",
+              "CreatedBy",
+              "UpdatedBy",
+              "CreatedDate",
+              "UpdatedDate"
+            ]
+          }
+        },
+        {
+          "IndexName": "VideoIndex",
+          "KeyAttributes": {
+            "PartitionKey": {
+              "AttributeName": "VideoID",
+              "AttributeType": "S"
+            }
+          },
+          "Projection": {
+            "ProjectionType": "INCLUDE",
+            "NonKeyAttributes": [
+              "VideoTitle",
+              "VideoUrl",
+              "Slug",
+              "Thumbnail",
+              "LikeCount",
+              "CommentCount",
+              "SaveCount",
+              "ViewCount",
+              "MetaTitle",
+              "MetaDescription",
+              "MetaKeyword",
+              "CreatedBy",
+              "UpdatedBy",
+              "CreatedDate",
+              "UpdatedDate",
+              "Published",
+              "PublishedDate"
+            ]
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      },
+      "BillingMode": "PROVISIONED",
+      "ProvisionedCapacitySettings": {
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "AutoScalingRead": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        },
+        "AutoScalingWrite": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        }
+      }
+    }
+  ]
+}
