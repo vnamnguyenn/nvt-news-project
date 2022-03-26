@@ -1,4 +1,4 @@
-const db = require(`../../helpers/database`);
+const db = require(`../../config/dynamoDB`);
 const {v4: uuidv4} = require('uuid');
 
 class UserRepository {
@@ -10,7 +10,7 @@ class UserRepository {
         const params = {
             TableName: this.tableName,
             Key: {
-                "PK": "PK",
+                "PK": PK,
                 "SK": "ACCT#vn13012000@gmail.com"
             },
         };
@@ -18,12 +18,22 @@ class UserRepository {
         return await db.get(params).promise();
     }
 
+    async getAll() {
+        const params = {
+            TableName: this.tableName,
+            IndexName: "AccountIndex",
+            Limit: "2"
+        };
+        return await db.scan(params).promise();
+    }
+
     async create(data) {
         const params = {
             TableName: this.tableName,
             Item: {
-                PK: "ACCT#vn13012000@gmail.com",
-                SK: data.SK,
+                "PK": data.PK,
+                "SK": uuidv4(),
+                "Role":"Admin"
             },
         };
 
@@ -32,18 +42,19 @@ class UserRepository {
         return params.Item;
     }
 
-    async update(UserID, data) {
+    async update(PK, data) {
         const params = {
             TableName: this.tableName,
             Key: {
-                UserID: UserID
+                "PK": PK,
+                "SK":"5f0d1623-5c16-43aa-9eaa-5e78c932c8e2"
             },
-            UpdateExpression: `set #Username = :Username`,
+            UpdateExpression: `set #Role = :Roles`,
             ExpressionAttributeNames: {
-                '#Username': `Username`,
+                "#Role": "Role"
             },
             ExpressionAttributeValues: {
-                ":Username": data.Username,
+                ":Roles": data.Role,
             },
             ReturnValues: `UPDATED_NEW`,
         };
@@ -53,11 +64,12 @@ class UserRepository {
         return update.Attributes;
     }
 
-    async deleteByID(UserID) {
+    async deleteByID(PK) {
         const params = {
             TableName: this.tableName,
             Key: {
-                UserID,
+                "PK":PK,
+                "SK":"ACCT#vn13012000@gmail.com"
             },
         };
 
