@@ -5,7 +5,7 @@ const port = process.env.EXPRESS_PORT || 9000;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 // routes
-require(`./routes/auth`)(app);
+require('./routes/post')(app);
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
