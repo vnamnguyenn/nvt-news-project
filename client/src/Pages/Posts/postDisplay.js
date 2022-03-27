@@ -1,11 +1,11 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
-const Post = () =>{
-    let { postSlug } = useParams();
+const PostDetail = () =>{
+    let { id } = useParams();
     return(
         <div>
-            This is {postSlug}
+            This is {id}
         </div>
     )   
 }
-export default Post;
+export default PostDetail;

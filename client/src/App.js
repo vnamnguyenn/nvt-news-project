@@ -1,20 +1,14 @@
 import React, {Fragment} from "react";
-import {Routes, Route} from "react-router-dom";
 import Navigation from "./Pages/Navigation";
-import Home from "./Pages/DashBoard/index";
-import Post from "./Pages/Post/index";
-import ErrorPage from "./Pages/Error";
+import ROUTES from "./Routes/Routes";
 
 const App = () => {
 	return (
 		<Fragment>
 			<Navigation />
-			<Routes>
-				<Route path="/" element={<Home/>} />
-				<Route path="/post/:postSlug" element={<Post/>} />
-				<Route path="*" element={<ErrorPage/>} />
-			</Routes>
+			<ROUTES />
 		</Fragment>
 	);
 };
+
 export default App;
