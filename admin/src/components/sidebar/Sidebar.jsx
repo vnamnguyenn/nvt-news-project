@@ -6,8 +6,8 @@ import FeedIcon from '@mui/icons-material/Feed';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import CategoryIcon from '@mui/icons-material/Category';
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const Sidebar = () => {
 	return (
@@ -49,13 +49,17 @@ const Sidebar = () => {
 						<AccountCircleOutlinedIcon className="icon" />
 						<span>Profile</span>
 					</li>
-          <li>
-            <ExitToAppIcon className="icon" />
+					<li>
+						<ExitToAppIcon className="icon" />
 						<span>Logout</span>
 					</li>
 				</ul>
 			</div>
-			<div className="sidebar__bottom">color option</div>
+			<div className="sidebar__bottom">
+				<div className="sidebar__bottom-colorOption"></div>
+				<div className="sidebar__bottom-colorOption"></div>
+				<div className="sidebar__bottom-colorOption"></div>
+			</div>
 		</div>
 	);
 };

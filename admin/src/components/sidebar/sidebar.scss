@@ -1,3 +1,4 @@
+@import "../../assets/sass/variables.scss";
 .sidebar {
 	flex: 1;
 	border-right: 0.5px solid rgb(230, 227, 227);
@@ -13,7 +14,7 @@
 
 	&__logo {
 		font-size: 20px;
-		font-weight: bold;
+		font-weight: $fontWeightMedium;
 		color: #6439ff;
 	}
 
@@ -31,8 +32,8 @@
 			padding: 0;
 
 			.title {
-				font-size: 10px;
-				font-weight: bold;
+				font-size: 12px;
+				font-weight: $fontWeightRegular;
 				color: #999;
 				margin-top: 15px;
 				margin-bottom: 5px;
@@ -54,14 +55,15 @@
 				}
 
 				span {
-					font-size: 13px;
-					font-weight: 500;
+					font-size: $primaryFontFamily;
+					font-weight: $fontWeightRegular;
 					color: #888;
 					margin-left: 10px;
 				}
 			}
 		}
 	}
+
     &__bottom{
         display: flex;
         align-items: center;
@@ -74,13 +76,15 @@
             border: 1px solid #7451f8;
             cursor: pointer;
             margin: 5px;
-  
+   
             &:nth-child(1){
                 background-color: whitesmoke;
             }
+
             &:nth-child(2){
                 background-color: #333;
             }
+
             &:nth-child(3){
                 background-color: darkblue;
             }
