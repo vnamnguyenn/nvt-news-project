@@ -1,0 +1,46 @@
+/* Older posts */
+.older-posts-grid-wrapper {
+	gap: var(--gap);
+}
+
+.older-posts-article-image-wrapper,
+.older-posts .article {
+	min-height: var(--item-min-height-sm);
+}
+
+.older-posts .article {
+	background-color: var(--secondary-background-color);
+}
+
+.older-posts-article-image-wrapper {
+	position: relative;
+}
+
+.older-posts-grid-wrapper .article-data-container {
+	position: static;
+	background-color: transparent;
+}
+
+.older-posts-grid-wrapper .article-title {
+	margin-bottom: var(--margin-sm);
+}
+
+.see-more-container {
+	padding-top: var(--margin-md);
+}
+
+.see-more-btn {
+	text-transform: uppercase;
+}
+
+.see-more-btn:hover {
+	color: var(--light-color);
+}
+
+.see-more-btn i {
+	transition: transform 0.25s;
+}
+
+.see-more-btn:hover i {
+	transform: translateX(0.5rem);
+}

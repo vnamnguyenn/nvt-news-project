@@ -1,12 +1,16 @@
 // import { Fragment } from 'react';
-import Home from './pages/Home';
+import Routes from './routes/Routes';
+import {BrowserRouter as Router} from 'react-router-dom';
 import './assets/sass/app.scss'
-function App() {
-  return (
-    <div>
-      <Home />
-    </div>
-  );
-}
+
+const App = () => {
+	return (
+		<div>
+			<Router>
+				<Routes />
+			</Router>
+		</div>
+	);
+};
 
 export default App;

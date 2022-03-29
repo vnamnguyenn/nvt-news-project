@@ -1,0 +1,43 @@
+/* Quick read */
+.section-title {
+	position: relative;
+	font-size: var(--font-size-md);
+	margin-bottom: 6rem;
+}
+
+.section-title::after {
+	content: attr(data-name);
+	font-size: var(--font-size-lg);
+	text-transform: uppercase;
+	position: absolute;
+	opacity: 0.1;
+	top: 1.5rem;
+	left: 2rem;
+}
+
+.article.swiper-slide {
+	height: 40rem;
+}
+
+/* Quick read - Swiper */
+.swiper-wrapper {
+	height: auto;
+}
+.swiper-controls {
+	width: 3.5rem;
+	height: 3.5rem;
+	background-color: var(--secondary-background-color);
+}
+
+.swiper-controls::after {
+	font-size: 1.6rem;
+	color: var(--light-color);
+}
+
+.swiper-pagination {
+	bottom: 0.5rem !important;
+}
+
+.swiper-pagination-bullet {
+	background-color: var(--light-color);
+}

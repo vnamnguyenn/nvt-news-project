@@ -10,7 +10,7 @@ const Featured = () => {
 
 			<a href="./post.html" className="article featured-article featured-article-1">
 				<img
-					src="https://res.cloudinary.com/van-nam/image/upload/v1648531561/images/featured/featured-2_qhosxy.jpg"
+					src="https://res.cloudinary.com/van-nam/image/upload/v1648531528/images/featured/featured-1_khyxmd.jpg"
 					alt=""
 					className="article-image"
 				/>
