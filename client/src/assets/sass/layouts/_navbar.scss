@@ -1,0 +1,90 @@
+.header{
+    background-color: var(--secondary-background-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.5rem;
+}
+
+.logo{
+    font-size: var(--font-size-md);
+    color: var(--light-color);
+}
+
+.menu{
+    position: absolute;
+    top: 8.5rem;
+    right: 1.5rem;
+    width: 23rem;
+    padding: 1.5rem;
+    background-color:var(--secondary-background-color);
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity .25s ease-in;
+}
+
+.list{
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+}
+
+.menu > .list{
+    flex-direction: column;
+}
+
+.list-link.current{
+    color: var(--light-color);
+}
+
+.close-menu-icon{
+    display: none;
+}
+
+.btn{
+    cursor: pointer;
+}
+
+.list-link:hover,
+.btn:hover,
+.btn:hover span{
+    color: var(--light-color);
+}
+
+.moon-icon{
+    display: none;
+}
+
+.light-theme .sun-icon{
+    display: none;
+}
+
+.light-theme .moon-icon{
+    display: block;
+}
+/* Header JavaScript Styles */
+.header.activated{
+    box-shadow: 0 1px .5rem var(--transparent-light-color);
+}
+
+.menu.activated{
+    box-shadow: 1px 1px 1rem var(--transparent-light-color);
+    opacity: 1;
+    transform: scale(1);
+}
+
+.menu-toggle-icon.activated .open-menu-icon{
+    display: none;
+}
+
+.menu-toggle-icon.activated .close-menu-icon{
+    display: block;
+}
