@@ -46,14 +46,14 @@ const Header = () => {
 								</Link>
 							</li>
 							<li className="list-item">
-								<a href="/#" className="list-link">
+								<Link to="/category" className="list-link">
 									Categories
-								</a>
+								</Link>
 							</li>
 							<li className="list-item">
-								<a href="/#" className="list-link">
+								<Link to="/news" className="list-link">
 									News
-								</a>
+								</Link>
 							</li>
 							<li className="list-item">
 								<a href="/#" className="list-link">
@@ -106,6 +106,7 @@ const Header = () => {
 					</div>
 				</nav>
 			</header>
+			{/* search popup */}
 			<div className="search-form-container container" id="search-form-container">
 				<div className="form-container-inner">
 					<form action="" className="form">

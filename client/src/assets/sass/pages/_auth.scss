@@ -1,0 +1,70 @@
+@import '../abstracts/variables';
+.signin-container {
+	display: flex;
+	justify-content: center;
+
+	form {
+		background-color: var(--secondary-background-color);
+		padding: 2.5rem 3.5rem;
+
+		.title {
+			text-align: center;
+			margin-bottom: 15px;
+		}
+
+		.auth-input {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 10px;
+			width: 340px;
+
+			input {
+				padding: 15px;
+			}
+
+			label {
+				color: gray;
+			}
+
+			span {
+				padding: 3px;
+				color: red;
+				display: none;
+			}
+
+			input:invalid[focused='true'] {
+				border: 1px solid red;
+			}
+
+			input:invalid[focused='true'] ~ span {
+				display: block;
+			}
+		}
+	}
+
+	.btn-primary{
+		margin-top: 20px;
+		margin-bottom: 25px;
+	}
+
+	.signin-bottom {
+		text-align: center;
+		line-height: 20px;
+		font-weight: 400;
+		color: #999;
+
+		.forgot {
+			display: inline-block;
+			margin: 0 0 10px;
+
+		}
+		.new {
+			display: block;
+		}
+
+		a {
+			color: #0071b9;
+			text-decoration: underline;
+		}
+	}
+}

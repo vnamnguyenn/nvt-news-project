@@ -1,21 +1,32 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
 import Home from '../pages/Home';
-import Login from '../pages/SignIn';
+import Signin from '../pages/SignIn';
 import NotFound from '../pages/NotFound';
-import Post from '../pages/Post';
-import Register from '../pages/SignUp';
+import News from '../pages/News';
+import NewsList from '../pages/NewsList';
+import Signup from '../pages/SignUp';
+import CategoryList from '../pages/CategoryList';
 
 const ROUTES = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
-			<Route path="/post">
-				<Route index element={<Post />} />
-				{/* <Route path=":id" element={<Post />} /> */}
+
+			<Route path="/signin" element={<Signin />} />
+			<Route path="/signup" element={<Signup />} />
+
+			<Route path="/category">
+				<Route index element={<CategoryList />} />
+				<Route path=":id" element={<CategoryList />} />
 			</Route>
-            <Route path="/signin" element={<Login />}/>
-            <Route path="/signup" element={<Register />}/>
+
+			<Route path="/news">
+				<Route index element={<NewsList />} />
+				<Route path=":as" element={<News />} />
+			</Route> 
+
+
 			<Route path="*" element={<NotFound />} />
 		</Routes>
 	);

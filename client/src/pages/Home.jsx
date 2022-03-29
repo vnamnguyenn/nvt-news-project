@@ -1,7 +1,6 @@
 import {Fragment} from 'react';
 import FeaturedSidebar from '../components/FeaturedSidebar';
 import Header from '../layouts/Header';
-import Seach from '../components/Seach';
 import Quickread from '../components/QuickRead';
 import OlderPost from '../components/OlderPost';
 import PopularTags from '../components/PopularTags';

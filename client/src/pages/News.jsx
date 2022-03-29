@@ -2,7 +2,7 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import { Fragment } from 'react';
 
-const Post = () => {
+const News = () => {
 	return (
 		<Fragment>
             <Header/>
@@ -98,4 +98,4 @@ const Post = () => {
 	);
 };
 
-export default Post;
+export default News;

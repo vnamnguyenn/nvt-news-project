@@ -58,7 +58,7 @@ function createMovies() {
 
 function deleteMovies() {
     var params = {
-        TableName : "Movies"
+        TableName : "population"
     };
 
     dynamodb.deleteTable(params, function(err, data) {

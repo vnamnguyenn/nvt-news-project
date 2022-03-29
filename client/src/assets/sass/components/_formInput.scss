@@ -1,0 +1,49 @@
+.form-container-inner {
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	text-align: center;
+}
+
+.form {
+	display: flex;
+	justify-content: center;
+}
+
+.form-input,
+.form-btn {
+	display: inline-block;
+	outline: none;
+	border: 2px solid var(--secondary-background-color);
+	padding: 1.5rem;
+	color: var(--light-color-alt);
+}
+
+.form-input {
+	width: 100%;
+	background-color: var(--primary-background-color);
+}
+
+.form-btn {
+	margin-left: -0.5rem;
+	border-left: none;
+	background-color: var(--secondary-background-color);
+	text-transform: uppercase;
+	width: 8rem;
+}
+
+.form-note {
+	font-size: var(--font-size-xsm);
+	align-self: flex-end;
+}
+
+.form-close-btn {
+	position: absolute;
+	top: 1.5rem;
+	right: 1.5rem;
+	border: 2px solid var(--secondary-background-color);
+	width: 4rem;
+	height: 4rem;
+	display: flex;
+}
