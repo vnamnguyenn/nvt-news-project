@@ -1,4 +1,4 @@
-const UserService = require(`../user/userService`);
+const UserService = require(`./userService`);
 
 class UserController {
 
@@ -19,23 +19,19 @@ class UserController {
 
     }
 
-    async createOrUpdate(req, res) {
-        const user = req.body;
-        const { id } = req.params;
-        user.id = id;
-        
-        const data = await UserService.createOrUpdate(user)
+    async create(req, res) {
+        const data = await UserService.create(req.body)
 
         res.json(data)
     }
     
     async update(req, res) {
-        const data = await UserService.update(req.params.id, req.body)
+        const data = await UserService.update(req.body)
         res.json(data)
     }
 
     async deleteByID(req, res) {
-        await UserService.deleteByID(req.params.PK)
+        await UserService.deleteByID(req.params.id)
         res.json(`Success`)
     }
     

@@ -1,4 +1,4 @@
-const UserController = require('../modules/user/userController');
+const UserController = require('../modules/users/userController');
 module.exports = async (app) => {
     app.get('/users/get/:id', UserController.findByID);
     app.get('/users/getAll/', UserController.getAll);
