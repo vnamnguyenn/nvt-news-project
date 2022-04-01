@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const verifyToken = (req, res, next) => {
-	const authHeader = req.headers.token;
+	const authHeader = req.headers.token || req.header('Authorization');
 	if (authHeader) {
 		const token = authHeader.split(' ')[1]; //Bearer 5f0c8...
 		jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
 
 const verifyTokenAndAuthorization = (req, res, next) => {
 	verifyToken(req, res, () => {
-		if (req.user.accountId === req.params.id || req.user.pk == req.params.id || req.user.pk == user || req.user.isAdmin) {
+		if (req.user.accountId === req.params.id || req.user.pk == req.params.id || req.user.isAdmin) {
 			next();
 		} else {
 			res.status(403).json('You are not alowed to do that!');

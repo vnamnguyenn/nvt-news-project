@@ -21,9 +21,48 @@ class PostController {
 		}
 	}
 
+	async featuredArticles(req, res) {
+		try {
+			const data = await PostService.featuredArticles();
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
+	async trendingNews(req, res) {
+		try {
+			const data = await PostService.trendingNews();
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+	async olderPost(req, res) {
+		try {
+			const data = await PostService.OlderPost();
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
+	async quickRead(req, res) {
+		try {
+			const data = await PostService.quickRead();
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
 	async create(req, res) {
 		try {
-			const data = await PostService.create(req.user.pk,req.body);
+			const data = await PostService.create(req.user.pk, req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -33,6 +72,7 @@ class PostController {
 
 	async update(req, res) {
 		try {
+			// const getInfo = await userRepository.findByID(req.user.pk);
 			const data = await PostService.update(req.body);
 			res.status(200).json(data);
 		} catch (err) {
@@ -43,8 +83,10 @@ class PostController {
 
 	async deleteByID(req, res) {
 		try {
-			await PostService.deleteByID(req.params.id);
-			res.json('Delete is success');
+			const data = await PostService.deleteByID(req.user.pk, req.params.postId);
+			if (data) {
+				res.json('Delete is success');
+			}
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({err: 'Something went wrong'});

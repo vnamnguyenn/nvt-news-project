@@ -21,8 +21,48 @@ class PostService {
 		return data;
 	}
 
-	async create(pk,data) {
-		return await PostRepository.create(pk,{
+	async featuredArticles() {
+		const data = await PostRepository.featuredArticles();
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
+	async trendingNews() {
+		const data = await PostRepository.trendingNews();
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
+	async olderPost() {
+		const data = await PostRepository.olderPost();
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
+	async quickRead() {
+		const data = await PostRepository.quickRead();
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
+	async create(pk, data) {
+		return await PostRepository.create(pk, {
 			PostTitle: data.PostTitle,
 			Content: data.Content,
 			Slug: data.Slug,
@@ -33,9 +73,9 @@ class PostService {
 			MetaDescription: data.MetaDescription,
 			MetaKeyword: data.MetaKeyword,
 			ReadingTime: data.ReadingTime,
-			Categories:data.Categories,
+			Categories: data.Categories,
 			Tags: data.Tags,
-			AuthorInfo: data.AuthorInfo
+			AuthorInfo: data.AuthorInfo,
 		});
 	}
 
@@ -50,8 +90,8 @@ class PostService {
 		});
 	}
 
-	async deleteByID(id) {
-		return await PostRepository.deleteByID(id);
+	async deleteByID(id, postId) {
+		return await PostRepository.deleteByID(id, postId);
 	}
 }
 

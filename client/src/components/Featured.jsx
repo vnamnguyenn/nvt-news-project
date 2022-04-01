@@ -1,4 +1,16 @@
+import axios from 'axios';
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+
 const Featured = () => {
+	const [posts, setPosts] = useState([]);
+	useEffect(() => {
+		const fetchPosts = async () => {
+			const res = await axios.get('/post/featured_article');
+			setPosts(res.data);
+		};
+		fetchPosts();
+	}, []);
 	return (
 		<div className="featured-content d-grid">
 			<div className="headline-banner">
@@ -7,63 +19,25 @@ const Featured = () => {
 				</h3>
 				<span className="headline-description">Apple announces a new partnership...</span>
 			</div>
+			{posts.map((p, id) => (
+				<Link
+					to={`post/${p.PostID}`}
+					key={p.PostID}
+					className={`article featured-article featured-article-${id+1}`}
+				>
+					<img src={p.Thumbnail} alt="" className="article-image" />
+					<span className="article-category">{p.PostTitle}</span>
+					<div className="article-data-container">
+						<div className="article-data">
+							<span>{p.PublishedDate}</span>
+							<span className="article-data-spacer"></span>
+							<span>{p.ReadingTime} Min read</span>
+						</div>
 
-			<a href="./post.html" className="article featured-article featured-article-1">
-				<img
-					src="https://res.cloudinary.com/van-nam/image/upload/v1648531528/images/featured/featured-1_khyxmd.jpg"
-					alt=""
-					className="article-image"
-				/>
-				<span className="article-category">Technology</span>
-
-				<div className="article-data-container">
-					<div className="article-data">
-						<span>Dec 5th 2021</span>
-						<span className="article-data-spacer"></span>
-						<span>8 Min read</span>
+						<h3 className="title article-title">{p.PostTitle}</h3>
 					</div>
-
-					<h3 className="title article-title">Is VR the future?</h3>
-				</div>
-			</a>
-
-			<a href="./post.html" className="article featured-article featured-article-2">
-				<img
-					src="https://res.cloudinary.com/van-nam/image/upload/v1648531546/images/featured/featured-3_jlxgsy.jpg"
-					alt=""
-					className="article-image"
-				/>
-				<span className="article-category">Food</span>
-
-				<div className="article-data-container">
-					<div className="article-data">
-						<span>Dec 6th 2021</span>
-						<span className="article-data-spacer"></span>
-						<span>4 Min read</span>
-					</div>
-
-					<h3 className="title article-title">Fine dining 101</h3>
-				</div>
-			</a>
-
-			<a href="./post.html" className="article featured-article featured-article-3">
-				<img
-					src="https://res.cloudinary.com/van-nam/image/upload/v1648531546/images/featured/featured-3_jlxgsy.jpg"
-					alt=""
-					className="article-image"
-				/>
-				<span className="article-category">Health</span>
-
-				<div className="article-data-container">
-					<div className="article-data">
-						<span>Dec 5th 2021</span>
-						<span className="article-data-spacer"></span>
-						<span>5 Min read</span>
-					</div>
-
-					<h3 className="title article-title">Natural fat burner</h3>
-				</div>
-			</a>
+				</Link>
+			))}
 		</div>
 	);
 };

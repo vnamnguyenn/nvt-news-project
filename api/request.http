@@ -1,22 +1,49 @@
-//USER REST API
+//-------USER REST API-------
 ### get All user
 GET http://localhost:9000/api/user
 
 ### find User by ID
 GET http://localhost:9000/api/user/u8d0rghg2ol1fsz9dy 
 
-
-//POST API
-###
-POST http://localhost:9000/api/post
-
-
-#CATEGORY REST API
+//-------CATEGORY REST API-------
 ###
 GET http://localhost:9000/api/category/
 
 
-#AUTH REST API
+//-------POST REST API-------
+###
+POST http://localhost:9000/api/post
+
+### get all post
+GET http://localhost:9000/api/post
+
+### get quick read post
+GET http://localhost:9000/api/post/quick_read
+### Create Post
+{
+    "PostTitle": "Test",
+    "Content": "data.Content",
+    "Slug": "is-it-time-to-start-worrying-about-startup-layoffs",
+    "Thumbnail": "https://techcrunch.com/wp-content/uploads/2020/05/NSussman_Techcrunch_Exchange_v3_GRY.jpg?w=1390&crop=1",
+    "PostImage": "https://techcrunch.com/wp-content/uploads/2020/05/NSussman_Techcrunch_Exchange_v3_GRY.jpg?w=1390&crop=1",
+    "Description": "In a country where 50% of its 100 million people are active smartphone users, two out of every three individuals have little or no access to formal financial services in Egypt.",
+    "MetaTitle": "data.MetaTitle",
+    "MetaDescription": "data.MetaDescription",
+    "MetaKeyword": "data.MetaKeyword",
+    "ReadingTime": "4",
+    "Categories": [
+        {
+            "CategoryId": "c8d0rgh2vsl1f1kgzy",
+            "CategoryName": "Technology"
+        },
+        {
+            "CategoryId": "c8d0rgh3ekl1f2depa",
+            "CategoryName": "Game"
+        }
+    ]
+}
+
+//AUTH REST API
 ### login account
 POST http://localhost:9000/api/signup/
 Content-Type: application/json

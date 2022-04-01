@@ -9,8 +9,8 @@ class AuthRepository {
 	async signup(data) {
 		const accountId = uniqid('u');
 		const hashedPassword = crypto.createHmac('sha512', process.env.PASS_SECRET).update(data.PasswordHash).digest('hex');
-		// const today = new Date();
-		// const currentTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		const today = new Date();
+		const currentTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 		const params = {
 			TableName: this.tableName,
 			Item: {
@@ -26,6 +26,7 @@ class AuthRepository {
 				IsActive: true,
 				Avatar: 'https://www.w3schools.com/howto/img_avatar.png',
 				Description: data.Description,
+				CreatedDate: currentTime,
 			},
 		};
 
