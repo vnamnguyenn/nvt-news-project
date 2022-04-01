@@ -10,7 +10,7 @@ class UserRepository {
 			TableName: this.tableName,
 			Key: {
 				PK: PK,
-				SK: 'f2d13e5f-b67b-4be0-a839-a28019474599',
+				SK: PK,
 			},
 		};
 
@@ -34,7 +34,6 @@ class UserRepository {
 	}
 
 	async create(data) {
-
 		const params = {
 			TableName: this.tableName,
 			Item: {
@@ -86,7 +85,7 @@ class UserRepository {
 			TableName: this.tableName,
 			Key: {
 				PK: PK,
-				SK: 'ACCT#vn13012000@gmail.com',
+				SK: 'ACCT_p8d0rgh5kol1exfazh',
 			},
 		};
 

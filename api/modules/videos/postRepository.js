@@ -1,29 +1,25 @@
 const db = require(`../../config/dynamoDB`);
-const {v4: uuidv4} = require('uuid');
+const uniqid = require('uniqid');
 
 class PostRepository {
 	constructor() {
 		this.tableName = 'Blog';
 	}
 
-	async findByID(PK) {
+	async findByID(id) {
 		const params = {
 			TableName: this.tableName,
-			Key: {
-				PK: PK,
-				SK: 'f2d13e5f-b67b-4be0-a839-a28019474599',
+			IndexName: 'PostIndex',
+			KeyConditionExpression: '#38cd0 = :38cd0',
+			ExpressionAttributeValues: {
+				':38cd0': id,
+			},
+			ExpressionAttributeNames: {
+				'#38cd0': 'PostID',
 			},
 		};
 
-		return await db
-			.get(params, function (err, data) {
-				if (err) {
-					console.error('Unable to read item. Error JSON:', JSON.stringify(err, null, 2));
-				} else {
-					console.log('GetItem succeeded:', JSON.stringify(data, null, 2));
-				}
-			})
-			.promise();
+		return await db.query(params).promise();
 	}
 
 	async getAll() {
@@ -35,12 +31,13 @@ class PostRepository {
 	}
 
 	async create(data) {
+		let id = uniqid('p'); 
 		const params = {
 			TableName: this.tableName,
 			Item: {
-				PostID: uuidv4(),
-				PK: 'ACCT_' + '123',
-				SK: 'POST_' + uuidv4(),
+				PostID: id,
+				PK: 'ACCT_115',
+				SK: ('POST_')+id,
 				UserEmail: 'empty',
 				PostTitle: data.PostTitle,
 				Content: data.Content,
@@ -60,7 +57,7 @@ class PostRepository {
 				UpdatedBy: data.UpdatedBy,
 				CreatedDate: data.CreatedDate,
 				UpdatedDate: data.UpdatedDate,
-				ReadingTime: data.ReadingTime
+				ReadingTime: data.ReadingTime,
 			},
 		};
 
@@ -69,19 +66,29 @@ class PostRepository {
 		return params.Item;
 	}
 
-	async update(PK, data) {
+	async update(data) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: PK,
-				SK: PK,
+				PK: 'ACCT_115',
+				SK: 'POST_8d0rgh66sl1dyvrufp8d0rgh66sl1dyvrue',
 			},
-			UpdateExpression: `set #Role = :Roles`,
-			ExpressionAttributeNames: {
-				'#Role': 'Role',
-			},
+			UpdateExpression: 'SET #1be70 = :1be70, #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73, #1be74 = :1be74, #1be75 = :1be75',
 			ExpressionAttributeValues: {
-				':Roles': data.Role,
+				':1be70': data.Content,
+				':1be71': data.PostImage,
+				':1be72': data.Thumbnail,
+				':1be73': data.ReadingTime,
+				':1be74': data.Published,
+				':1be75': data.PostTitle,
+			},
+			ExpressionAttributeNames: {
+				'#1be70': 'Content',
+				'#1be71': 'PostImage',
+				'#1be72': 'Thumbnail',
+				'#1be73': 'ReadingTime',
+				'#1be74': 'Published',
+				'#1be75': 'PostTitle',
 			},
 			ReturnValues: `UPDATED_NEW`,
 		};
@@ -91,12 +98,12 @@ class PostRepository {
 		return update.Attributes;
 	}
 
-	async deleteByID(PK) {
+	async deleteByID(id) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: PK,
-				SK: 'ACCT#vn13012000@gmail.com',
+				PK: id,
+				SK: 'POST_p8d0rghcvkl1dwokrv',
 			},
 		};
 

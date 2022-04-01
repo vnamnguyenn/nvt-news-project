@@ -5,8 +5,8 @@ class UserService {
 		const data = await UserRepository.findByID(PK);
 
 		if (data) {
-			return data.Item;
-		}
+            return data.Item;
+        }
 
 		return data;
 	}
@@ -25,8 +25,8 @@ class UserService {
 
 		return await UserRepository.create({
 			UserEmail: data.UserEmail,
-			PK: 'ACCT#' + data.UserEmail,
-			SK: 'ACCT#' + data.UserEmail,
+			PK: 'ACCT_' + data.UserEmail,
+			SK: 'ACCT_' + data.UserEmail,
             AccountIndexId: 'ACCT_' + data.UserEmail,
 			FullName: data.FullName,
 			PhoneNumber: data.PhoneNumber,

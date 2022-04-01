@@ -1,6 +1,6 @@
 const db = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
-class PostRepository {
+class CategoryRepository {
 	constructor() {
 		this.tableName = 'Blog';
 	}
@@ -8,13 +8,13 @@ class PostRepository {
 	async findByID(id) {
 		const params = {
 			TableName: this.tableName,
-			IndexName: 'PostIndex',
+			IndexName: 'CategoryIndex',
 			KeyConditionExpression: '#38cd0 = :38cd0',
 			ExpressionAttributeValues: {
 				':38cd0': id,
 			},
 			ExpressionAttributeNames: {
-				'#38cd0': 'PostID',
+				'#38cd0': 'CategoryId',
 			},
 		};
 
@@ -24,42 +24,26 @@ class PostRepository {
 	async getAll() {
 		const params = {
 			TableName: this.tableName,
-			IndexName: 'PostIndex',
+			IndexName: 'CategoryIndex',
 		};
 		return await db.scan(params).promise();
 	}
 
-	async create(pk,data) {
-		let id = uniqid('p');
+	async create(data) {
+		let id = uniqid('c');
 		const params = {
 			TableName: this.tableName,
 			Item: {
-				PostID: id,
-				PK: pk,
-				SK: 'POST_' + id,
-				PostTitle: data.PostTitle,
-				Content: data.Content,
-				Slug: data.Slug,
+				CategoryId: id,
+				PK: 'ACCT_115',
+				SK: 'CAT_' + id,
+				Slug:data.Slug,
+				CategoryName: data.CategoryName,
 				Thumbnail: data.Thumbnail,
-				PostImage: data.PostImage,
-				LikeCount: '0',
-				CommentCount: '0',
-				SaveCount: '0',
-				ViewCount: '0',
-				Description: data.Description,
-				MetaTitle: data.MetaTitle,
-				MetaDescription: data.MetaDescription,
-				MetaKeyword: data.MetaKeyword,
-				Published: data.Published,
-				PublishedDate: data.PublishedDate,
 				CreatedBy: data.CreatedBy,
 				UpdatedBy: data.UpdatedBy,
 				CreatedDate: data.CreatedDate,
 				UpdatedDate: data.UpdatedDate,
-				ReadingTime: data.ReadingTime,
-				Categories: data.Categories,
-				Tags: data.Tags,
-				AuthorInfo: data.AuthorInfo,
 			},
 		};
 
@@ -111,7 +95,7 @@ class PostRepository {
 			TableName: this.tableName,
 			Key: {
 				PK: id,
-				SK: 'POST_p8d0rghil4l1f239no',
+				SK: 'POST_p8d0rghcvkl1dwokrv',
 			},
 		};
 
@@ -119,4 +103,4 @@ class PostRepository {
 	}
 }
 
-module.exports = new PostRepository();
+module.exports = new CategoryRepository();

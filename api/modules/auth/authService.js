@@ -4,9 +4,6 @@ class AuthService {
 	async signup(data) {
 		return await AuthRepository.signup({
 			UserEmail: data.UserEmail,
-			PK: 'ACCT#' + data.UserEmail,
-			SK: 'ACCT#' + data.UserEmail,
-			AccountIndexId: 'ACCT_' + data.UserEmail,
 			FullName: data.FullName,
 			PhoneNumber: data.PhoneNumber,
 			Gender: data.Gender,

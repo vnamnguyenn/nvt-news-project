@@ -1,22 +1,24 @@
-import {Fragment} from 'react';
 import FeaturedSidebar from '../components/FeaturedSidebar';
-import Header from '../layouts/Header';
 import Quickread from '../components/QuickRead';
 import OlderPost from '../components/OlderPost';
 import PopularTags from '../components/PopularTags';
 import NewsLetter from '../components/NewsLetter';
 import Footer from '../layouts/Footer';
+import Header from '../layouts/Header';
+
 function Home() {
 	return (
-		<Fragment>
-			<Header />
-			<FeaturedSidebar />
-			<Quickread/>
-			<OlderPost/>
-			<PopularTags/>
-			<NewsLetter/>
-			<Footer/>
-		</Fragment>
+		<>
+			<div className="home">
+				<Header />
+				<FeaturedSidebar />
+				<Quickread />
+				<OlderPost />
+				<PopularTags />
+				<NewsLetter />
+				<Footer />
+			</div>
+		</>
 	);
 }
 

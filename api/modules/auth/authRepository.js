@@ -1,35 +1,30 @@
 const db = require(`../../config/dynamoDB`);
 const crypto = require('crypto');
-
+const uniqid = require('uniqid');
 class AuthRepository {
 	constructor() {
 		this.tableName = 'Blog';
 	}
 
 	async signup(data) {
-		// const lengthSalt = 16;
-		// const salt = crypto
-		// 	.randomBytes(Math.ceil(lengthSalt / 2))
-		// 	.toString('hex')
-		// 	.slice(0, lengthSalt);
-		const secret = 'nvtnews';
-		const hashedPassword = crypto.createHmac('sha512', secret).update(data.PasswordHash).digest('hex');
-
+		const accountId = uniqid('u');
+		const hashedPassword = crypto.createHmac('sha512', process.env.PASS_SECRET).update(data.PasswordHash).digest('hex');
+		// const today = new Date();
+		// const currentTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 		const params = {
 			TableName: this.tableName,
 			Item: {
+				AccountId: accountId,
 				UserEmail: data.UserEmail,
-				PK: 'ACCT_' + data.UserEmail,
-				SK: 'ACCT_' + data.UserEmail,
-				AccountIndexId: 'ACCT_' + data.UserEmail,
+				PK: 'ACCT_' + accountId,
+				SK: 'ACCT_' + accountId,
 				FullName: data.FullName,
-				PhoneNumber: data.PhoneNumber,
-				Gender: data.Gender,
+				Gender: 'Others',
 				DateOfBirth: data.DateOfBirth,
-				Role: data.Role,
+				isAdmin: false,
 				PasswordHash: hashedPassword,
-				IsActive: data.IsActive,
-				Avatar: data.Avatar,
+				IsActive: true,
+				Avatar: 'https://www.w3schools.com/howto/img_avatar.png',
 				Description: data.Description,
 			},
 		};
@@ -39,9 +34,7 @@ class AuthRepository {
 	}
 
 	async signin(data) {
-		const accountIndexId = 'ACCT_' + data.UserEmail;
-		const secret = 'nvtnews';
-		const hashedPassword = crypto.createHmac('sha512', secret).update(data.PasswordHash).digest('hex');
+		const hashedPassword = crypto.createHmac('sha512', process.env.PASS_SECRET).update(data.PasswordHash).digest('hex');
 
 		const params = {
 			TableName: this.tableName,
@@ -49,11 +42,11 @@ class AuthRepository {
 			KeyConditionExpression: '#ae300 = :ae300',
 			FilterExpression: '#ae301 = :ae301',
 			ExpressionAttributeValues: {
-				':ae300': accountIndexId,
+				':ae300': data.UserEmail,
 				':ae301': hashedPassword,
 			},
 			ExpressionAttributeNames: {
-				'#ae300': 'AccountIndexId',
+				'#ae300': 'UserEmail',
 				'#ae301': 'PasswordHash',
 			},
 		};

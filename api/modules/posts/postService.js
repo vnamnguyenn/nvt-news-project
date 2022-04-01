@@ -21,17 +21,21 @@ class PostService {
 		return data;
 	}
 
-	async create(data) {
-		return await PostRepository.create({
+	async create(pk,data) {
+		return await PostRepository.create(pk,{
 			PostTitle: data.PostTitle,
 			Content: data.Content,
 			Slug: data.Slug,
 			Thumbnail: data.Thumbnail,
 			PostImage: data.PostImage,
+			Description: data.Description,
 			MetaTitle: data.MetaTitle,
 			MetaDescription: data.MetaDescription,
 			MetaKeyword: data.MetaKeyword,
 			ReadingTime: data.ReadingTime,
+			Categories:data.Categories,
+			Tags: data.Tags,
+			AuthorInfo: data.AuthorInfo
 		});
 	}
 

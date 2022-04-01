@@ -1,19 +1,24 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useContext, useRef, useState} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {Context} from '../context/Context';
 
 const SignIn = () => {
+	const emailRef = useRef();
+	const passwordRef = useRef();
+	const {dispatch, isFetching} = useContext(Context);
 	const [values, setValues] = useState({
-		email: '',
-		password: ''
+		UserEmail: '',
+		PasswordHash: '',
 	});
 
 	const inputs = [
 		{
 			id: 1,
-			name: 'email',
+			name: 'UserEmail',
 			placeholder: 'Email',
 			errorMessage: 'Enter your email!',
 			label: 'Email',
@@ -21,22 +26,33 @@ const SignIn = () => {
 		},
 		{
 			id: 2,
-			name: 'password',
+			name: 'PasswordHash',
 			type: 'password',
 			placeholder: 'Password',
 			errorMessage: 'Enter your password!',
 			label: 'Password',
-			required: true
-		}
+			required: true,
+		},
 	];
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		dispatch({type: 'LOGIN_START'});
+		try {
+			const res = await axios.post('/signin', {
+				UserEmail: emailRef.current.value,
+				PasswordHash: passwordRef.current.value,
+			});
+			dispatch({type: 'LOGIN_SUCCESS', payload: res.data});
+		} catch (err) {
+			dispatch({type: 'LOGIN_FAILURE'});
+		}
 	};
 
 	const onChange = (e) => {
 		setValues({...values, [e.target.name]: e.target.value});
 	};
+	console.log(isFetching);
 	return (
 		<Fragment>
 			<Header />

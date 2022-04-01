@@ -1,8 +1,9 @@
 const PostController = require('../modules/posts/postController');
+const {verifyToken,verifyTokenAndAuthorization,verifyTokenAndAdmin} = require("../middleware/verifyToken");
 module.exports = async (app) => {
-    app.get('/post/get/:id', PostController.findByID);
-    app.get('/post/getAll/', PostController.getAll);
-    app.post('/post/create/', PostController.create);
-    app.patch('/post/edit/', PostController.update);
-    app.delete('/post/delete/:id', PostController.deleteByID);
+    app.get('/api/post/:id', PostController.findByID);
+    app.get('/api/post/', PostController.getAll);
+    app.post('/api/post/create/',verifyToken, PostController.create);
+    app.patch('/api/post/edit/', PostController.update);
+    app.delete('/api/post/delete/:id', PostController.deleteByID);
 };

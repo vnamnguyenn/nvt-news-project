@@ -1,1 +1,39 @@
-GET http://localhost:9000/api/users/index/
+//USER REST API
+### get All user
+GET http://localhost:9000/api/user
+
+### find User by ID
+GET http://localhost:9000/api/user/u8d0rghg2ol1fsz9dy 
+
+
+//POST API
+###
+POST http://localhost:9000/api/post
+
+
+#CATEGORY REST API
+###
+GET http://localhost:9000/api/category/
+
+
+#AUTH REST API
+### login account
+POST http://localhost:9000/api/signup/
+Content-Type: application/json
+
+{
+    "UserEmail": "admin@gmail.com",
+    "FullName": "Van Nam Nguyen",
+    "PhoneNumber":"0866658801",
+    "DateOfBirth":"Jan 01 2000",
+    "PasswordHash":"123456aA@"
+}
+
+### login account
+POST http://localhost:9000/api/signin/
+Content-Type: application/json
+
+{
+  "UserEmail": "admin@gmail.com",
+  "PasswordHash": "123456aA@"
+}

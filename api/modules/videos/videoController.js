@@ -23,7 +23,7 @@ class PostController {
 
 	async create(req, res) {
 		try {
-			const data = await PostService.create(req.user.pk,req.body);
+			const data = await PostService.create(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);

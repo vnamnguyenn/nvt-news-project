@@ -2,21 +2,23 @@ import React, {Fragment, useState} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
+import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 const SignUp = () => {
+	const [error, setError] = useState(false);
 	const [values, setValues] = useState({
-		fullName: '',
-		email: '',
-		birthday: '',
-		password: '',
-		confirmPassword: '',
+		FullName: '',
+		UserEmail: '',
+		DateOfBirth: '',
+		PasswordHash: '',
+		ConfirmPassword: '',
 	});
 
 	const inputs = [
 		{
 			id: 1,
-			name: 'fullName',
+			name: 'FullName',
 			type: 'text',
 			placeholder: 'Fullname',
 			errorMessage: 'Enter your name!',
@@ -25,7 +27,7 @@ const SignUp = () => {
 		},
 		{
 			id: 2,
-			name: 'email',
+			name: 'UserEmail',
 			type: 'email',
 			placeholder: 'Email',
 			errorMessage: 'It should be a valid email address!',
@@ -34,14 +36,14 @@ const SignUp = () => {
 		},
 		{
 			id: 3,
-			name: 'birthday',
+			name: 'DateOfBirth',
 			type: 'date',
 			placeholder: 'Birthday',
 			label: 'Birthday',
 		},
 		{
 			id: 4,
-			name: 'password',
+			name: 'PasswordHash',
 			type: 'password',
 			placeholder: 'Password',
 			errorMessage:
@@ -52,7 +54,7 @@ const SignUp = () => {
 		},
 		{
 			id: 5,
-			name: 'confirmPassword',
+			name: 'ConfirmPassword',
 			type: 'password',
 			placeholder: 'Confirm Password',
 			errorMessage: "Passwords don't match!",
@@ -62,8 +64,21 @@ const SignUp = () => {
 		},
 	];
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setError(false);
+		try {
+			const res = await axios.post('/signup', {
+				FullName: values.FullName,
+				UserEmail: values.UserEmail,
+				DateOfBirth: values.DateOfBirth,
+				PasswordHash: values.PasswordHash,
+			});
+			// res.data && window.location.replace('/signin');
+			// console.log(res.data);
+		} catch (err) {
+			setError(true);
+		}
 	};
 
 	const onChange = (e) => {
@@ -80,6 +95,7 @@ const SignUp = () => {
 							<FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
 						))}
 						<button className="btn btn-primary">Submit</button>
+						{error && <span style={{color: 'red', marginTop: '10px'}}>Something went wrong!</span>}
 						<div className="signin-bottom">
 							<span className="new">
 								Already an account?

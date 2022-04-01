@@ -1,9 +1,9 @@
-const PostService = require(`../posts/postService`);
+const CategoryService = require(`./categoryService`);
 
-class PostController {
+class CategoryController {
 	async findByID(req, res) {
 		try {
-			const data = await PostService.findByID(req.params.id);
+			const data = await CategoryService.findByID(req.params.id);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -13,7 +13,7 @@ class PostController {
 
 	async getAll(req, res) {
 		try {
-			const data = await PostService.getAll();
+			const data = await CategoryService.getAll();
 			res.json(data);
 		} catch (err) {
 			console.error(err);
@@ -23,7 +23,7 @@ class PostController {
 
 	async create(req, res) {
 		try {
-			const data = await PostService.create(req.user.pk,req.body);
+			const data = await CategoryService.create(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -33,7 +33,7 @@ class PostController {
 
 	async update(req, res) {
 		try {
-			const data = await PostService.update(req.body);
+			const data = await CategoryService.update(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -43,7 +43,7 @@ class PostController {
 
 	async deleteByID(req, res) {
 		try {
-			await PostService.deleteByID(req.params.id);
+			await CategoryService.deleteByID(req.params.id);
 			res.json('Delete is success');
 		} catch (err) {
 			console.error(err);
@@ -52,4 +52,4 @@ class PostController {
 	}
 }
 
-module.exports = new PostController();
+module.exports = new CategoryController();

@@ -3,10 +3,11 @@ import {Routes, Route} from 'react-router-dom';
 import Home from '../pages/Home';
 import Signin from '../pages/SignIn';
 import NotFound from '../pages/NotFound';
-import News from '../pages/News';
-import NewsList from '../pages/NewsList';
+import Posts from '../pages/Posts';
+import Post from '../pages/Post';
 import Signup from '../pages/SignUp';
-import CategoryList from '../pages/CategoryList';
+import Categories from '../pages/Categories';
+import Category from '../pages/Category';
 
 const ROUTES = () => {
 	return (
@@ -17,15 +18,14 @@ const ROUTES = () => {
 			<Route path="/signup" element={<Signup />} />
 
 			<Route path="/category">
-				<Route index element={<CategoryList />} />
-				<Route path=":id" element={<CategoryList />} />
+				<Route index element={<Categories />} />
+				<Route path=":id" element={<Category />} />
 			</Route>
 
-			<Route path="/news">
-				<Route index element={<NewsList />} />
-				<Route path=":as" element={<News />} />
+			<Route path="/post">
+				<Route index element={<Posts />} />
+				<Route path=":id" element={<Post />} />
 			</Route> 
-
 
 			<Route path="*" element={<NotFound />} />
 		</Routes>

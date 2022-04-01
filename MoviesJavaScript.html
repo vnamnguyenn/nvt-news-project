@@ -32,16 +32,16 @@ var dynamodb = new AWS.DynamoDB();
 var docClient = new AWS.DynamoDB.DocumentClient();
 function createMovies() {
     var params = {
-        TableName : "Users",
+        TableName : "Movies",
         KeySchema: [
-            { AttributeName: "UserID", KeyType: "HASH"},
-            { AttributeName: "Username", KeyType: "RANGE" }
+            { AttributeName: "year", KeyType: "HASH"},
+            { AttributeName: "title", KeyType: "RANGE" }
         ],
-        AttributeDefinitions: [       
-            { AttributeName: "UserID", AttributeType: "S" },
-            { AttributeName: "Username", AttributeType: "S" }
+        AttributeDefinitions: [
+            { AttributeName: "year", AttributeType: "N" },
+            { AttributeName: "title", AttributeType: "S" }
         ],
-        ProvisionedThroughput: {       
+        ProvisionedThroughput: {
             ReadCapacityUnits: 5,
             WriteCapacityUnits: 5
         }
@@ -218,7 +218,7 @@ function scanData() {
             // Print all the movies
             document.getElementById('textarea').innerHTML += "Scan succeeded: " + "\n";
             data.Items.forEach(function(movie) {
-                document.getElementById('textarea').innerHTML += movie.SK+ ": " + movie.PK  + "\n";
+                document.getElementById('textarea').innerHTML += movie.PK+ ": " + movie.SK  + "\n";
             });
             // Continue scanning if we have more movies (per scan 1MB limitation)
             document.getElementById('textarea').innerHTML += "Scanning for more..." + "\n";
