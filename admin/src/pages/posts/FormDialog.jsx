@@ -28,21 +28,20 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
 
   let editorState = EditorState.createEmpty();
   const [description, setDescription] = useState(editorState);
-  const [urlImage, setUrlImage] = useState('');
   const onEditorStateChange = (editorState) => {
     setDescription(editorState);
   };
   const [imageSelected, setImageSelected] = useState('');
-  let getUrl = '';
+  var getUrl = '';
   const uploadImage = (file) => {
     file.preventDefault();
-    console.log(file);
     const formData = new FormData();
     console.log(imageSelected);
     formData.append('file', imageSelected);
     formData.append('upload_preset', 'jtwoxlu7');
     Axios.post('http://api.cloudinary.com/v1_1/van-nam/image/upload', formData).then((Response) => {
-      console.log(Response);
+      // getUrl = Response.data.url;
+      console.log(imageSelected.name);
     });
   };
   const convertToHTML = draftToHtml(convertToRaw(description.getCurrentContent()));
@@ -51,6 +50,8 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
+        maxWidth="lg"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -69,7 +70,7 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               margin="dense"
               fullWidth
             />
-            {/* <TextField
+            <TextField
               id="Thumbnail"
               value={Thumbnail}
               onChange={(e) => onChange(e)}
@@ -78,16 +79,15 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               variant="outlined"
               margin="dense"
               fullWidth
-            /> */}
-            <input
+            />
+            {/* <input
               id="Thumbnail"
               type="file"
               onChange={(e) => {
                 setImageSelected(e.target.files[0]);
               }}
-              value={data.Thumbnail=urlImage}
             />
-            <button onClick={uploadImage}>Upload image</button>
+            <button onClick={uploadImage}>Upload image</button> */}
             <TextField
               id="PostImage"
               value={PostImage}
@@ -108,22 +108,9 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               margin="dense"
               fullWidth
             />
-            {/* <TextField
-              id="Content"
-              onChange={(e) => onChange(e)}
-              value={Content}
-              label="Content"
-              placeholder="Content"
-              multiline
-              minRows={5}
-              variant="outlined"
-              margin="dense"
-            /> */}
-            <div>
-              <label className="font-weight-bold">
-                Description <span className="required"> * </span>
-              </label>
+            <div style={{border:'1px solid gray',padding:'1px 5px',borderRadius:'4px'}}>
               <Editor
+               placeholder='Content'
                 editorState={description}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"

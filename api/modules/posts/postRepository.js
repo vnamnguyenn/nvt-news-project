@@ -118,7 +118,7 @@ class PostRepository {
 				PostTitle: data.PostTitle,
 				Content: data.Content,
 				Slug: data.Slug,
-				Thumbnail: data.Thumbnail,
+				Thumbnail: 'https://res.cloudinary.com/van-nam/image/upload/v1649021615/image/'+data.Thumbnail,
 				PostImage: data.PostImage,
 				LikeCount: '0',
 				CommentCount: '0',

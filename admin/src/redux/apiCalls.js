@@ -19,6 +19,7 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post('/signin', user);
+    res.data && window.location.replace('/posts');
     dispatch(loginSuccess(res.data));
   } catch (err) {
     dispatch(loginFailure());
@@ -49,7 +50,7 @@ export const updatePost = async (postID, post, dispatch) => {
   dispatch(updatePoststart());
   try {
     const res = await userRequest.patch(`/post/edit/${postID}`, post);
-    dispatch(updatePostsuccess({postID, post}));
+    dispatch(updatePostsuccess({ postID, post }));
   } catch (err) {
     dispatch(updatePostFailure());
   }
