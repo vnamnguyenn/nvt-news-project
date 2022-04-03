@@ -14,7 +14,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar__top">
-        <span className="sidebar__logo">NVT Blog</span>
+        <span className="sidebar__logo">NVTNews</span>
       </div>
       <hr />
       <div className="sidebar__center">
@@ -27,10 +27,6 @@ const Sidebar = () => {
             </Link>
           </li>
           <p className="title">List</p>
-          <li>
-            <PersonOutlineIcon className="icon" />
-            <span>Accounts</span>
-          </li>
           <li>
             <Link to={'/posts'}>
               <FeedIcon className="icon" />
@@ -48,6 +44,10 @@ const Sidebar = () => {
           <li>
             <LocalOfferIcon className="icon" />
             <span>Tags</span>
+          </li>
+          <li>
+            <PersonOutlineIcon className="icon" />
+            <span>Accounts</span>
           </li>
           <p className="title">Users</p>
           <li>

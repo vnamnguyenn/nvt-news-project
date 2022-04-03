@@ -40,7 +40,6 @@ export const addPost = async (post, dispatch) => {
   try {
     const res = await userRequest.post(`/post/create`, post);
     dispatch(addPostsuccess(res.data));
-    console.log(res.data);
   } catch (err) {
     dispatch(addPostFailure());
   }

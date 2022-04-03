@@ -141,7 +141,7 @@ function Post() {
     {
       field: 'PostTitle',
       headerName: 'Title',
-      minWidth: 350,
+      minWidth: 500,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -154,7 +154,7 @@ function Post() {
     {
       field: 'AuthorInfo',
       headerName: 'Author',
-      minWidth: 350,
+      minWidth: 170,
       renderCell: (params) => {
         return <div className="productListItem">{params.row.AuthorInfo.FullName}</div>;
       },
