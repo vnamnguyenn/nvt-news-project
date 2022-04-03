@@ -1,15 +1,15 @@
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import {publicRequest} from '../requestMethods';
 // import {Link} from 'react-router-dom';
 
 const Posts = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await axios.get('/post');
+			const res = await publicRequest.get('/post');
 			setPosts(res.data);
 		};
 		fetchPosts();

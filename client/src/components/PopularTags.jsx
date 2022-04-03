@@ -1,50 +1,36 @@
-import React from 'react'
-
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {publicRequest} from '../requestMethods';
 const PopularTags = () => {
-  return (
-    <section className="popular-tags section">
+	const [tags, setTags] = useState([]);
+	useEffect(() => {
+		const fetchTags = async () => {
+			const res = await publicRequest.get('/popular_tag');
+			setTags(res.data);
+		};
+		fetchTags();
+	}, []);
+	return (
+		<section className="popular-tags section">
+			<div className="container">
+				<h2 className="title section-title" data-name="Popular tags">
+					Popular tags
+				</h2>
+				<div className="popular-tags-container d-grid">
+					{tags.map((t, id) => (
+						<Link to="" key={t.TagId} className="article">
+							<span className="tag-name">#{t.TagName}</span>
+							<img
+								src={t.Thumbnail}
+								alt=""
+								className="article-image"
+							/>
+						</Link>
+					))}
+				</div>
+			</div>
+		</section>
+	);
+};
 
-        <div className="container">
-
-            <h2 className="title section-title" data-name="Popular tags">Popular tags</h2>
-
-            <div className="popular-tags-container d-grid">
-
-                <a href="/#" className="article">
-                    <span className="tag-name">#Travel</span>
-                    <img src="https://res.cloudinary.com/van-nam/image/upload/v1648531554/images/tags/travel-tag_y338lu.jpg" alt="" className="article-image"/>
-                </a>
-
-                <a href="/#" className="article">
-                    <span className="tag-name">#Food</span>
-                    <img src="https://res.cloudinary.com/van-nam/image/upload/v1648531565/images/tags/food-tag_dfidyk.jpg" alt="" className="article-image"/>
-                </a>
-
-                <a href="/#" className="article">
-                    <span className="tag-name">#Technology</span>
-                    <img src="https://res.cloudinary.com/van-nam/image/upload/v1648531557/images/tags/technology-tag_wsi5mv.jpg" alt="" className="article-image"/>
-                </a>
-
-                <a href="/#" className="article">
-                    <span className="tag-name">#Health</span>
-                    <img src="https://res.cloudinary.com/van-nam/image/upload/v1648531552/images/tags/health-tag_fwjljg.jpg" alt="" className="article-image"/>
-                </a>
-
-                <a href="/#" className="article">
-                    <span className="tag-name">#Nature</span>
-                    <img src="https://res.cloudinary.com/van-nam/image/upload/v1648531548/images/tags/nature-tag_lughne.jpg" alt="" className="article-image"/>
-                </a>
-
-                <a href="/#" className="article">
-                    <span className="tag-name">#Fitness</span>
-                    <img src="https://res.cloudinary.com/van-nam/image/upload/v1648531538/images/tags/fitness-tag_rq3nbq.jpg" alt="" className="article-image"/>
-                </a>
-
-            </div>
-
-        </div>
-    </section>
-  )
-}
-
-export default PopularTags
+export default PopularTags;

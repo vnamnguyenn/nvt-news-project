@@ -1,10 +1,10 @@
 const Footer = () => {
 	return (
-		<footer className="footer section">
+		<footer className="footer section" id="footer">
 			<div className="footer-container container d-grid">
 				<div className="company-data">
 					<a href="./index.html">
-						<h2 className="logo">NewsFlash</h2>
+						<h2 className="logo">NVTNews</h2>
 					</a>
 					<p className="company-description">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, iure. Harum, animi
@@ -34,7 +34,7 @@ const Footer = () => {
 						</li>
 					</ul>
 
-					<span className="copyright-notice">&copy;2021 NewsFlash. All rights reserved.</span>
+					<span className="copyright-notice">&copy;2022 NVTNEws. All rights reserved.</span>
 				</div>
 
 				<div>

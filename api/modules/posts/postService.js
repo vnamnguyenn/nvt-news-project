@@ -15,6 +15,7 @@ class PostService {
 		const data = await PostRepository.getAll();
 
 		if (data) {
+			console.log(data.Count);
 			return data.Items;
 		}
 
@@ -79,19 +80,23 @@ class PostService {
 		});
 	}
 
-	async update(data) {
-		return await PostRepository.update({
+	async update(pk, postId, data) {
+		return await PostRepository.update(pk, postId, {
+			PostID: postId,
 			Content: data.Content,
 			PostImage: data.PostImage,
 			Thumbnail: data.Thumbnail,
 			ReadingTime: data.ReadingTime,
 			Published: data.Published,
 			PostTitle: data.PostTitle,
+			MetaTitle: data.MetaTitle,
+			MetaDescription: data.MetaDescription,
+			MetaKeyword: data.MetaKeyword,
 		});
 	}
 
-	async deleteByID(id, postId) {
-		return await PostRepository.deleteByID(id, postId);
+	async deleteByID(pk, postId) {
+		return await PostRepository.deleteByID(pk, postId);
 	}
 }
 

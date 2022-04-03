@@ -1,20 +1,30 @@
-import React, {Fragment, useContext, useRef, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
-import {Context} from '../context/Context';
+import {login} from '../redux/apiCalls';
+import styled from 'styled-components';
+import {useDispatch, useSelector} from 'react-redux';
 
+const Button = styled.button`
+	cursor: pointer;
+	&:disabled {
+		color: green;
+		cursor: not-allowed;
+	}
+`;
+
+const Error = styled.span`
+	color: red;
+`;
 const SignIn = () => {
-	const emailRef = useRef();
-	const passwordRef = useRef();
-	const {dispatch, isFetching} = useContext(Context);
+	const dispatch = useDispatch();
+	const {isFetching, error} = useSelector((state) => state.user);
 	const [values, setValues] = useState({
 		UserEmail: '',
 		PasswordHash: '',
 	});
-
 	const inputs = [
 		{
 			id: 1,
@@ -37,22 +47,12 @@ const SignIn = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		dispatch({type: 'LOGIN_START'});
-		try {
-			const res = await axios.post('/signin', {
-				UserEmail: emailRef.current.value,
-				PasswordHash: passwordRef.current.value,
-			});
-			dispatch({type: 'LOGIN_SUCCESS', payload: res.data});
-		} catch (err) {
-			dispatch({type: 'LOGIN_FAILURE'});
-		}
+		login(dispatch, {UserEmail: values.UserEmail, PasswordHash: values.PasswordHash});
 	};
 
 	const onChange = (e) => {
 		setValues({...values, [e.target.name]: e.target.value});
 	};
-	console.log(isFetching);
 	return (
 		<Fragment>
 			<Header />
@@ -63,7 +63,10 @@ const SignIn = () => {
 						{inputs.map((input) => (
 							<FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
 						))}
-						<button className="btn btn-primary">Submit</button>
+						<Button className="btn btn-primary" disabled={isFetching}>
+							Submit
+						</Button>
+						{error && <Error>Something went wrong...</Error>}
 						<div className="signin-bottom">
 							<a href="/recover_password" className="forgot">
 								Forgot your password?

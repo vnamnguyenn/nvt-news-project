@@ -2,9 +2,8 @@ import React, {Fragment, useState} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
-import axios from 'axios';
 import {Link} from 'react-router-dom';
-
+import {publicRequest} from '../requestMethods';
 const SignUp = () => {
 	const [error, setError] = useState(false);
 	const [values, setValues] = useState({
@@ -68,14 +67,14 @@ const SignUp = () => {
 		e.preventDefault();
 		setError(false);
 		try {
-			const res = await axios.post('/signup', {
+			const res = await publicRequest.post('/signup', {
 				FullName: values.FullName,
 				UserEmail: values.UserEmail,
 				DateOfBirth: values.DateOfBirth,
 				PasswordHash: values.PasswordHash,
 			});
 			// res.data && window.location.replace('/signin');
-			// console.log(res.data);
+			console.log(res.data);
 		} catch (err) {
 			setError(true);
 		}

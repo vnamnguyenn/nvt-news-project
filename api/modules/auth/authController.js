@@ -24,10 +24,17 @@ class AuthController {
 				process.env.JWT_SECRET,
 				{expiresIn: '3d'},
 			);
+			const exportData = {
+				AccountId: data.Items[0].AccountId,
+				FullName: data.Items[0].FullName,
+				UserEmail: data.Items[0].UserEmail,
+				Avatar: data.Items[0].Avatar,
+				isAdmin: data.Items[0].isAdmin,
+			};
 			res.status(200).json({
 				success: true,
 				message: 'User logged in successfully',
-				data,
+				exportData,
 				accessToken,
 			});
 		} catch (err) {

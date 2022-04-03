@@ -1,15 +1,15 @@
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
-import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {publicRequest} from '../requestMethods';
 
 const Categories = () => {
 	const [cats, setCats] = useState([]);
 
 	useEffect(() => {
 		const getCats = async () => {
-			const res = await axios.get('/category');
+			const res = await publicRequest.get('/category');
 			setCats(res.data);
 		};
 		getCats();

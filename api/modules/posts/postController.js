@@ -42,7 +42,7 @@ class PostController {
 	}
 	async olderPost(req, res) {
 		try {
-			const data = await PostService.OlderPost();
+			const data = await PostService.olderPost();
 			res.json(data);
 		} catch (err) {
 			console.error(err);
@@ -72,12 +72,10 @@ class PostController {
 
 	async update(req, res) {
 		try {
-			// const getInfo = await userRepository.findByID(req.user.pk);
-			const data = await PostService.update(req.body);
+			const data = await PostService.update(req.user.pk, req.params.postId, req.body);
 			res.status(200).json(data);
 		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
+			res.status(500).json(err);
 		}
 	}
 
@@ -85,7 +83,7 @@ class PostController {
 		try {
 			const data = await PostService.deleteByID(req.user.pk, req.params.postId);
 			if (data) {
-				res.json('Delete is success');
+				res.status(200).json(req.user);
 			}
 		} catch (err) {
 			console.error(err);

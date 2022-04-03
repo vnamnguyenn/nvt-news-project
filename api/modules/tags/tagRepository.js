@@ -2,7 +2,7 @@ const db = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
 const userRepository = require('../users/userRepository');
 const currentTime = require('../../config/currentTime');
-class CategoryRepository {
+class TagRepository {
 	constructor() {
 		this.tableName = 'Blog';
 	}
@@ -10,13 +10,13 @@ class CategoryRepository {
 	async findByID(id) {
 		const params = {
 			TableName: this.tableName,
-			IndexName: 'CategoryIndex',
+			IndexName: 'TagIndex',
 			KeyConditionExpression: '#38cd0 = :38cd0',
 			ExpressionAttributeValues: {
 				':38cd0': id,
 			},
 			ExpressionAttributeNames: {
-				'#38cd0': 'CategoryId',
+				'#38cd0': 'TagId',
 			},
 		};
 
@@ -26,22 +26,30 @@ class CategoryRepository {
 	async getAll() {
 		const params = {
 			TableName: this.tableName,
-			IndexName: 'CategoryIndex',
+			IndexName: 'TagIndex',
+		};
+		return await db.scan(params).promise();
+	}
+
+	async popularTag() {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'TagIndex',
 		};
 		return await db.scan(params).promise();
 	}
 
 	async create(pk, data) {
 		const getUserInfo = await userRepository.findByID(pk);
-		let id = uniqid('c');
+		let id = uniqid('t');
 		const params = {
 			TableName: this.tableName,
 			Item: {
-				CategoryId: id,
+				TagId: id,
 				PK: pk,
-				SK: 'CAT_' + id,
+				SK: 'TAG_' + id,
 				Slug: data.Slug,
-				CategoryName: data.CategoryName,
+				TagName: data.TagName,
 				Thumbnail: data.Thumbnail,
 				CreatedBy: getUserInfo.Item.FullName,
 				CreatedDate: currentTime,
@@ -61,7 +69,7 @@ class CategoryRepository {
 		return params.Item;
 	}
 
-	async update(pk,sk, data) {
+	async update(pk, sk, data) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
@@ -102,4 +110,4 @@ class CategoryRepository {
 	}
 }
 
-module.exports = new CategoryRepository();
+module.exports = new TagRepository();

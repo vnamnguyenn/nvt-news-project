@@ -1,7 +1,7 @@
 const db = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
-const userController = require('../users/userController');
 const userRepository = require('../users/userRepository');
+const currentTime = require('../../config/currentTime');
 class PostRepository {
 	constructor() {
 		this.tableName = 'Blog';
@@ -21,22 +21,6 @@ class PostRepository {
 		};
 
 		return await db.query(params).promise();
-	}
-
-	async olderPost() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-			FilterExpression: 'begins_with(#70900, :70900)',
-			Limit: '6',
-			ExpressionAttributeValues: {
-				':70900': '2022',
-			},
-			ExpressionAttributeNames: {
-				'#70900': 'CreatedDate',
-			},
-		};
-		return await db.scan(params).promise();
 	}
 
 	async featuredArticles() {
@@ -66,6 +50,14 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
+			FilterExpression: 'begins_with(#70900, :70900)',
+			Limit: '6',
+			ExpressionAttributeValues: {
+				':70900': '2022-4',
+			},
+			ExpressionAttributeNames: {
+				'#70900': 'CreatedDate',
+			},
 		};
 		return await db.scan(params).promise();
 	}
@@ -117,18 +109,6 @@ class PostRepository {
 			' ' +
 			today.getFullYear();
 		let id = uniqid('p');
-		const curentCreateAt =
-			today.getFullYear() +
-			'-' +
-			(today.getMonth() + 1) +
-			'-' +
-			today.getDate() +
-			' ' +
-			today.getHours() +
-			':' +
-			today.getMinutes() +
-			':' +
-			today.getSeconds();
 		const params = {
 			TableName: this.tableName,
 			Item: {
@@ -144,19 +124,20 @@ class PostRepository {
 				CommentCount: '0',
 				SaveCount: '0',
 				Description: data.Description,
+				UpdatedDate: currentTime,
 				MetaTitle: data.MetaTitle,
 				MetaDescription: data.MetaDescription,
 				MetaKeyword: data.MetaKeyword,
-				Published: data.Published,
+				Published: 'active',
 				PublishedDate: currentPushlished,
 				CreatedBy: getUserInfo.Item.FullName,
-				CreatedDate: curentCreateAt,
+				CreatedDate: currentTime,
 				ReadingTime: data.ReadingTime,
 				Categories: data.Categories,
 				Tags: data.Tags,
 				AuthorInfo: {
 					PK: getUserInfo.Item.PK,
-					PK: getUserInfo.Item.PK,
+					AccountId: getUserInfo.Item.AccountId,
 					FullName: getUserInfo.Item.FullName,
 					Avatar: getUserInfo.Item.Avatar,
 					Description: getUserInfo.Item.Description,
@@ -177,30 +158,57 @@ class PostRepository {
 		return params.Item;
 	}
 
-	async update(data) {
+	async update(pk, postId, data) {
+		const paramById = {
+			TableName: this.tableName,
+			IndexName: 'PostIndex',
+			KeyConditionExpression: '#38cd0 = :38cd0',
+			ExpressionAttributeValues: {
+				':38cd0': postId,
+			},
+			ExpressionAttributeNames: {
+				'#38cd0': 'PostID',
+			},
+		};
+		const getDataByID = await db.query(paramById).promise();
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: 'ACCT_115',
-				SK: 'POST_8d0rgh66sl1dyvrufp8d0rgh66sl1dyvrue',
+				PK: pk,
+				SK: 'POST_' + postId,
 			},
 			UpdateExpression:
-				'SET #1be70 = :1be70, #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73, #1be74 = :1be74, #1be75 = :1be75',
+				'SET #1be70 = :1be70, #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73, #1be74 = :1be74,' +
+				'#1be75 = :1be75, #1be76 = :1be76, #1be77 = :1be77, #1be78 = :1be78,#1be79 = :1be79, #1be80 = :1be80, #1be81 = :1be81, #1be82 = :1be82',
 			ExpressionAttributeValues: {
 				':1be70': data.Content,
 				':1be71': data.PostImage,
 				':1be72': data.Thumbnail,
 				':1be73': data.ReadingTime,
-				':1be74': data.Published,
+				':1be74': postId,
 				':1be75': data.PostTitle,
+				':1be76': currentTime,
+				':1be77': getDataByID.Items[0].PublishedDate,
+				':1be78': data.Published,
+				':1be79': data.MetaTitle,
+				':1be80': data.MetaDescription,
+				':1be81': data.MetaKeyword,
+				':1be82': getDataByID.Items[0].AuthorInfo,
 			},
 			ExpressionAttributeNames: {
 				'#1be70': 'Content',
 				'#1be71': 'PostImage',
 				'#1be72': 'Thumbnail',
 				'#1be73': 'ReadingTime',
-				'#1be74': 'Published',
+				'#1be74': 'PostID',
 				'#1be75': 'PostTitle',
+				'#1be76': 'UpdatedDate',
+				'#1be77': 'PublishedDate',
+				'#1be78': 'Published',
+				'#1be79': 'MetaTitle',
+				'#1be80': 'MetaDescription',
+				'#1be81': 'MetaKeyword',
+				'#1be82': 'AuthorInfo',
 			},
 			ReturnValues: `UPDATED_NEW`,
 		};
@@ -210,14 +218,15 @@ class PostRepository {
 		return update.Attributes;
 	}
 
-	async deleteByID(id, postId) {
+	async deleteByID(pk, postId) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: id,
+				PK: pk,
 				SK: 'POST_' + postId,
 			},
 		};
+		console.log(params.Key.PK, params.Key.SK);
 
 		return await db.delete(params).promise();
 	}

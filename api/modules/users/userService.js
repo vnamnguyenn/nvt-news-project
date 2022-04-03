@@ -25,8 +25,6 @@ class UserService {
 
 		return await UserRepository.create({
 			UserEmail: data.UserEmail,
-			PK: 'ACCT_' + data.UserEmail,
-			SK: 'ACCT_' + data.UserEmail,
             AccountIndexId: 'ACCT_' + data.UserEmail,
 			FullName: data.FullName,
 			PhoneNumber: data.PhoneNumber,

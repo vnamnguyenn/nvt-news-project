@@ -1,9 +1,9 @@
-const CategoryService = require(`./categoryService`);
+const TagService = require(`./TagService`);
 
-class CategoryController {
+class TagController {
 	async findByID(req, res) {
 		try {
-			const data = await CategoryService.findByID(req.params.id);
+			const data = await TagService.findByID(req.params.id);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -13,7 +13,17 @@ class CategoryController {
 
 	async getAll(req, res) {
 		try {
-			const data = await CategoryService.getAll();
+			const data = await TagService.getAll();
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
+	async popularTag(req, res) {
+		try {
+			const data = await TagService.popularTag();
 			res.json(data);
 		} catch (err) {
 			console.error(err);
@@ -23,7 +33,7 @@ class CategoryController {
 
 	async create(req, res) {
 		try {
-			const data = await CategoryService.create(req.user.pk,req.body);
+			const data = await TagService.create(req.user.pk, req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -33,7 +43,7 @@ class CategoryController {
 
 	async update(req, res) {
 		try {
-			const data = await CategoryService.update(req.body);
+			const data = await TagService.update(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -43,7 +53,7 @@ class CategoryController {
 
 	async deleteByID(req, res) {
 		try {
-			await CategoryService.deleteByID(req.params.id);
+			await TagService.deleteByID(req.params.id);
 			res.json('Delete is success');
 		} catch (err) {
 			console.error(err);
@@ -52,4 +62,4 @@ class CategoryController {
 	}
 }
 
-module.exports = new CategoryController();
+module.exports = new TagController();

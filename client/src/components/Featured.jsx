@@ -1,12 +1,11 @@
-import axios from 'axios';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-
+import {publicRequest} from '../requestMethods';
 const Featured = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await axios.get('/post/featured_article');
+			const res = await publicRequest.get('/post/featured_article');
 			setPosts(res.data);
 		};
 		fetchPosts();
@@ -23,7 +22,7 @@ const Featured = () => {
 				<Link
 					to={`post/${p.PostID}`}
 					key={p.PostID}
-					className={`article featured-article featured-article-${id+1}`}
+					className={`article featured-article featured-article-${id + 1}`}
 				>
 					<img src={p.Thumbnail} alt="" className="article-image" />
 					<span className="article-category">{p.PostTitle}</span>

@@ -21,8 +21,8 @@ class CategoryService {
 		return data;
 	}
 
-	async create(data) {
-		return await CategoryRepository.create({
+	async create(pk,data) {
+		return await CategoryRepository.create(pk,{
 			CategoryName: data.CategoryName,
 			Slug:data.Slug,
 			Thumbnail: data.Thumbnail,
@@ -35,7 +35,7 @@ class CategoryService {
 			PostImage: data.PostImage,
 			Thumbnail: data.Thumbnail,
 			ReadingTime: data.ReadingTime,
-			Published: data.Published,
+			// Published: data.Published,
 			PostTitle: data.PostTitle,
 		});
 	}

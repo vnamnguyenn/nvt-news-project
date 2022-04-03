@@ -1,10 +1,9 @@
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
-import axios from 'axios';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
 import {Link} from 'react-router-dom';
-// import { Context } from "../../context/Context";
+import {publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
 
 const Post = () => {
@@ -12,14 +11,13 @@ const Post = () => {
 	const path = location.pathname.split('/')[2];
 	const [post, setPost] = useState({});
 	const PF = 'http://localhost:9000/images/';
-	// const {user} = useContext(Context);
 	const [title, setTitle] = useState('');
 	const [desc, setDesc] = useState('');
 	const [updateMode, setUpdateMode] = useState(false);
 
 	useEffect(() => {
 		const getPost = async () => {
-			const res = await axios.get('/post/' + path);
+			const res = await publicRequest.get('/post/' + path);
 			//   console.log(res.data);
 			setPost(res.data);
 			setTitle(res.data.PostTitle);
@@ -45,39 +43,89 @@ const Post = () => {
 						</div>
 						<img src={post.PostImage} alt="" />
 					</div>
-
 					<div className="container">
 						<div className="post-content" dangerouslySetInnerHTML={{__html: cleanHTML}} />
-
 						<div className="author d-grid">
 							<div className="author-image-box">
-								<img src="{au.Avatar}" alt="" className="article-image" />
+								<img src={post.AuthorInfo?.Avatar} alt="" className="article-image" />
 							</div>
 							<div className="author-about">
-								<h3 className="author-name">John Doe</h3>
-								<p>
-									Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque quis repellat
-									rerum, possimus cumque dolor repellendus eligendi atque explicabo exercitationem
-									id.
-								</p>
+								<h3 className="author-name">{post.AuthorInfo?.FullName}</h3>
+								<p>{post.AuthorInfo?.Description}</p>
 								<ul className="list social-media">
 									<li className="list-item">
-										<a href="/#" className="list-link">
+										<a className="list-link">
 											<i className="ri-instagram-line"></i>
 										</a>
 									</li>
 									<li className="list-item">
-										<a href="/#" className="list-link">
+										<a className="list-link">
 											<i className="ri-facebook-circle-line"></i>
 										</a>
 									</li>
 									<li className="list-item">
-										<a href="/#" className="list-link">
+										<a className="list-link">
 											<i className="ri-twitter-line"></i>
 										</a>
 									</li>
 								</ul>
 							</div>
+						</div>
+						<div className="article__tags">
+							<h2>Tags</h2>
+							<ul className="menu article__tags__menu">
+								<li className="menu__item">
+									<a href="/column/">Column</a>
+								</li>
+								<li className="menu__item">
+									<a href="/diversity-2/">Diversity</a>
+								</li>
+								<li className="menu__item">
+									<a href="/hiring/">Hiring</a>
+								</li>
+								<li className="menu__item">
+									<a href="/personnel/">Personnel</a>
+								</li>
+								<li className="menu__item">
+									<a href="/startups/">Startups</a>
+								</li>
+								<li className="menu__item">
+									<a href="/talent/">Talent</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/bias/">bias</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/diverse-hiring/">diverse hiring</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/diversity/">diversity</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/ec-column/">EC Column</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/ec-dei/">EC DEI</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/ec-how-to/">EC How To</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/executive/">executive</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/hiring/">hiring</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/inclusion/">inclusion</a>
+								</li>
+								<li className="menu__item">
+									<a href="/tag/interview/">interview</a>
+								</li>
+								<li className="menu__item">
+									<a href="/techcrunchplus/work/">Work</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
