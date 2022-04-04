@@ -2,7 +2,6 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
-import {Link} from 'react-router-dom';
 import {publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
 
@@ -10,18 +9,12 @@ const Post = () => {
 	const location = useLocation();
 	const path = location.pathname.split('/')[2];
 	const [post, setPost] = useState({});
-	const PF = 'http://localhost:9000/images/';
-	const [title, setTitle] = useState('');
-	const [desc, setDesc] = useState('');
-	const [updateMode, setUpdateMode] = useState(false);
 
 	useEffect(() => {
 		const getPost = async () => {
 			const res = await publicRequest.get('/post/' + path);
 			//   console.log(res.data);
 			setPost(res.data);
-			setTitle(res.data.PostTitle);
-			setDesc(res.data.Content);
 		};
 		getPost();
 	}, [path]);

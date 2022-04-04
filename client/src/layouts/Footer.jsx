@@ -34,7 +34,7 @@ const Footer = () => {
 						</li>
 					</ul>
 
-					<span className="copyright-notice">&copy;2022 NVTNEws. All rights reserved.</span>
+					<span className="copyright-notice">&copy;{new Date().getFullYear()} NVTNews. All rights reserved.</span>
 				</div>
 
 				<div>

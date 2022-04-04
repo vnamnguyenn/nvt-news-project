@@ -39,9 +39,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			FilterExpression: 'attribute_exists(#37e20)',
 			Limit: 5,
-			ExpressionAttributeNames: {'#37e20': 'ViewCount'},
 		};
 		return await db.scan(params).promise();
 	}
@@ -50,14 +48,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			FilterExpression: 'begins_with(#70900, :70900)',
 			Limit: '6',
-			ExpressionAttributeValues: {
-				':70900': '2022-4',
-			},
-			ExpressionAttributeNames: {
-				'#70900': 'CreatedDate',
-			},
 		};
 		return await db.scan(params).promise();
 	}
@@ -118,11 +109,11 @@ class PostRepository {
 				PostTitle: data.PostTitle,
 				Content: data.Content,
 				Slug: data.Slug,
-				Thumbnail: 'https://res.cloudinary.com/van-nam/image/upload/v1649021615/image/'+data.Thumbnail,
+				Thumbnail: data.Thumbnail,
 				PostImage: data.PostImage,
-				LikeCount: '0',
-				CommentCount: '0',
-				SaveCount: '0',
+				LikeCount: '10',
+				CommentCount: '10',
+				SaveCount: '10',
 				Description: data.Description,
 				UpdatedDate: currentTime,
 				MetaTitle: data.MetaTitle,
