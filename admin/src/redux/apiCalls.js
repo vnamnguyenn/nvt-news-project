@@ -1,4 +1,4 @@
-import { loginFailure, loginStart, loginSuccess } from './userRedux';
+import { loginFailure, loginStart, loginSuccess, logoutSuccess } from './userRedux';
 import { publicRequest, userRequest } from '../requestMethods';
 import {
   getPostFailure,
@@ -24,6 +24,12 @@ export const login = async (dispatch, user) => {
   } catch (err) {
     dispatch(loginFailure());
   }
+};
+
+export const logout = (dispatch) => {
+  localStorage.removeItem('persist:root');
+  window.location.replace('/signin');
+  dispatch(logoutSuccess());
 };
 
 export const getPosts = async (dispatch) => {

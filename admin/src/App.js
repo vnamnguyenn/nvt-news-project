@@ -1,14 +1,25 @@
 import ROUTES from './routes/routes';
-import {BrowserRouter as Router} from 'react-router-dom';
-
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 const App = () => {
-	return (
-		<div>
-			<Router>
-				<ROUTES />
-			</Router>
-		</div>
-	);
+  return (
+    <div>
+      <Router>
+        <ROUTES />
+      </Router>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </div>
+  );
 };
 
 export default App;

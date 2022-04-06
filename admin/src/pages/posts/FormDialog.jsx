@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import Axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './FormInput.scss';
 
 export default function FormDialog({ open, handleClose, data, onChange, handleFormSubmit }) {
   const {
@@ -36,15 +38,21 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
   const uploadImage = (file) => {
     file.preventDefault();
     const formData = new FormData();
-    console.log(imageSelected);
     formData.append('file', imageSelected);
     formData.append('upload_preset', 'jtwoxlu7');
     Axios.post('http://api.cloudinary.com/v1_1/van-nam/image/upload', formData).then((Response) => {
-      // getUrl = Response.data.url;
-      console.log(imageSelected.name);
+      document.getElementById('Thumbnail').value =
+        'http://res.cloudinary.com/van-nam/image/upload/v1649074277/image/' + imageSelected.name;
     });
   };
   const convertToHTML = draftToHtml(convertToRaw(description.getCurrentContent()));
+  const inputFile = useRef(null);
+
+  const openFile = () => {
+    inputFile.current.click();
+  };
+
+
   return (
     <div>
       <Dialog
@@ -56,7 +64,7 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {PostID ? 'Update user' : 'Create new user'}
+          {PostID ? 'Update post' : 'Create new post'}
         </DialogTitle>
         <DialogContent>
           <form>
@@ -70,24 +78,47 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               margin="dense"
               fullWidth
             />
-            <TextField
-              id="Thumbnail"
-              value={Thumbnail}
-              onChange={(e) => onChange(e)}
-              placeholder="Enter email"
-              label="Thumbnail"
-              variant="outlined"
-              margin="dense"
-              fullWidth
-            />
-            {/* <input
-              id="Thumbnail"
-              type="file"
-              onChange={(e) => {
-                setImageSelected(e.target.files[0]);
-              }}
-            />
-            <button onClick={uploadImage}>Upload image</button> */}
+            <div>
+              <div className="form-controlGroup-inputWrapper">
+                <label className="form-input form-input--file">
+                  <span className="form-input--file-button-left" onClick={openFile}>
+                    Browse
+                  </span>
+                  <input
+                    id="Thumbnail"
+                    onChange={(e) => onChange(e)}
+                    placeholder="Upload Thumbnail using file or url dicrectory"
+                    label="Thumbnail"
+                    value={Thumbnail}
+                    variant="outlined"
+                    margin="dense"
+                    type="text"
+                    className="form-input--file-text"
+                  />
+                  <input
+                    ref={inputFile}
+                    className="form-input-file"
+                    onChange={(e) => {
+                      setImageSelected(e.target.files[0]);
+                    }}
+                    type="file"
+                    id="file"
+                    accept="image/*"
+                    size="14"
+                  />
+                  <button onClick={uploadImage} className="form-input--file-button-right">
+                    Upload
+                  </button>
+                </label>
+              </div>
+              {/* <input
+                type="file"
+                onChange={(e) => {
+                  setImageSelected(e.target.files[0]);
+                }}
+              /> */}
+              {/* <button onClick={uploadImage}>Upload</button> */}
+            </div>
             <TextField
               id="PostImage"
               value={PostImage}
@@ -108,9 +139,9 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               margin="dense"
               fullWidth
             />
-            <div style={{border:'1px solid gray',padding:'1px 5px',borderRadius:'4px'}}>
+            <div style={{ border: '1px solid gray', padding: '1px 5px', borderRadius: '4px' }}>
               <Editor
-               placeholder='Content'
+                placeholder="Content"
                 editorState={description}
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"

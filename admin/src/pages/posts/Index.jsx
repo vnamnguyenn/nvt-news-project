@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost, deletePost, getPosts, updatePost } from '../../redux/apiCalls';
+import { toast } from 'react-toastify';
 import '../../assets/sass/general/list.scss';
 import { Button } from '@mui/material';
 import FormDialog from './FormDialog';
@@ -84,6 +85,15 @@ function Post() {
     const confirm = window.confirm('Are you sure, you want to delete this row', id);
     if (confirm) {
       deletePost(id, dispatch);
+      toast.success('Post deleted successfully', {
+        position: 'bottom-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
     }
   };
 
@@ -91,7 +101,7 @@ function Post() {
     const { value, id } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-
+  //submit record post to database
   const handleFormSubmit = () => {
     if (formData.PostID) {
       updatePost(
@@ -114,9 +124,19 @@ function Post() {
         },
         dispatch
       );
+      //close modal
       handleClose();
+      toast.success('Post updated successfully', {
+        position: 'bottom-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
     } else {
-      // adding new user
+      // adding new post
       addPost(
         {
           PostTitle: formData.PostTitle,
@@ -133,6 +153,15 @@ function Post() {
         dispatch
       );
       handleClose();
+      toast.success('Post created successfully', {
+        position: 'bottom-right',
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
     }
   };
 

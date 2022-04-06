@@ -9,8 +9,17 @@ import CategoryIcon from '@mui/icons-material/Category';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Link } from 'react-router-dom';
+import { logout } from '../../redux/apiCalls';
+import { useDispatch } from 'react-redux';
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    logout(dispatch);
+  };
+  
   return (
     <div className="sidebar">
       <div className="sidebar__top">
@@ -55,8 +64,10 @@ const Sidebar = () => {
             <span>Profile</span>
           </li>
           <li>
-            <ExitToAppIcon className="icon" />
-            <span>Logout</span>
+            <a onClick={handleClick}>
+              <ExitToAppIcon className="icon" />
+              <span>Logout</span>
+            </a>
           </li>
         </ul>
       </div>
