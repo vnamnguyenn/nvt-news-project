@@ -52,7 +52,6 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
     inputFile.current.click();
   };
 
-
   return (
     <div>
       <Dialog
@@ -78,46 +77,37 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               margin="dense"
               fullWidth
             />
-            <div>
-              <div className="form-controlGroup-inputWrapper">
-                <label className="form-input form-input--file">
-                  <span className="form-input--file-button-left" onClick={openFile}>
-                    Browse
-                  </span>
-                  <input
-                    id="Thumbnail"
-                    onChange={(e) => onChange(e)}
-                    placeholder="Upload Thumbnail using file or url dicrectory"
-                    label="Thumbnail"
-                    value={Thumbnail}
-                    variant="outlined"
-                    margin="dense"
-                    type="text"
-                    className="form-input--file-text"
-                  />
-                  <input
-                    ref={inputFile}
-                    className="form-input-file"
-                    onChange={(e) => {
-                      setImageSelected(e.target.files[0]);
-                    }}
-                    type="file"
-                    id="file"
-                    accept="image/*"
-                    size="14"
-                  />
-                  <button onClick={uploadImage} className="form-input--file-button-right">
-                    Upload
-                  </button>
-                </label>
-              </div>
-              {/* <input
-                type="file"
-                onChange={(e) => {
-                  setImageSelected(e.target.files[0]);
-                }}
-              /> */}
-              {/* <button onClick={uploadImage}>Upload</button> */}
+            <div className="form-controlGroup-inputWrapper">
+              <label className="form-input form-input--file">
+                <span className="form-input--file-button-left" onClick={openFile}>
+                  Browse
+                </span>
+                <input
+                  id="Thumbnail"
+                  onChange={(e) => onChange(e)}
+                  placeholder="Upload Thumbnail"
+                  label="Thumbnail"
+                  value={Thumbnail}
+                  variant="outlined"
+                  margin="dense"
+                  type="text"
+                  className="form-input--file-text"
+                />
+                <input
+                  ref={inputFile}
+                  className="form-input-file"
+                  onChange={(e) => {
+                    setImageSelected(e.target.files[0]);
+                  }}
+                  type="file"
+                  id="file"
+                  accept="image/*"
+                  size="14"
+                />
+                <button onClick={uploadImage} className="form-input--file-button-right">
+                  Upload
+                </button>
+              </label>
             </div>
             <TextField
               id="PostImage"

@@ -57,6 +57,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
+			// Limit: '6',
 		};
 		return await db.scan(params).promise();
 	}

@@ -1,5 +1,6 @@
 import { loginFailure, loginStart, loginSuccess, logoutSuccess } from './userRedux';
 import { publicRequest, userRequest } from '../requestMethods';
+import { toast } from 'react-toastify';
 import {
   getPostFailure,
   getPoststart,
@@ -20,8 +21,26 @@ export const login = async (dispatch, user) => {
   try {
     const res = await publicRequest.post('/signin', user);
     res.data && window.location.replace('/posts');
+     toast.success('Logged in successfull', {
+      position: 'bottom-right',
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
     dispatch(loginSuccess(res.data));
   } catch (err) {
+    toast.error('Email and/or Password wrong', {
+      position: 'bottom-right',
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
     dispatch(loginFailure());
   }
 };

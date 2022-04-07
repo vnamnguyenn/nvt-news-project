@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { login } from '../../redux/apiCalls';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function Copyright(props) {
   return (
@@ -46,7 +47,7 @@ export default function SignIn() {
 
     if (password == '') {
       setPasswordError(true);
-    } else {
+    }else {
       setPasswordError(false);
     }
 
