@@ -2,7 +2,6 @@ import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
 import { DeleteOutline } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost, deletePost, getPosts, updatePost } from '../../redux/apiCalls';

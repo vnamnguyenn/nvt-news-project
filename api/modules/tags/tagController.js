@@ -1,4 +1,4 @@
-const TagService = require(`./TagService`);
+const TagService = require(`./tagService`);
 
 class TagController {
 	async findByID(req, res) {

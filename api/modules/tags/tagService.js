@@ -1,4 +1,4 @@
-const TagRepository = require(`./TagRepository`);
+const TagRepository = require(`./tagRepository`);
 
 class TagService {
 	async findByID(id) {

@@ -2,6 +2,8 @@
 
 # dependencies
 **/admin/node_modules
+**/admin/build
+
 **/client/node_modules
 **/api/node_modules
 /.pnp
