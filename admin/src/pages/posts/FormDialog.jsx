@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { getTags } from '../../redux/apiCalls';
 import { TextField } from '@material-ui/core';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -12,6 +13,7 @@ import Axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './FormInput.scss';
+import Autocomplete from '@mui/material/Autocomplete';
 
 export default function FormDialog({ open, handleClose, data, onChange, handleFormSubmit }) {
   const {
@@ -24,6 +26,7 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
     MetaKeyword,
     MetaTitle,
     ReadingTime,
+    Tags,
     // Published,
     Content,
   } = data;
@@ -33,8 +36,13 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
   const onEditorStateChange = (editorState) => {
     setDescription(editorState);
   };
+
+  const inputFile = useRef(null);
+  const openFile = () => {
+    inputFile.current.click();
+  };
+
   const [imageSelected, setImageSelected] = useState('');
-  var getUrl = '';
   const uploadImage = (file) => {
     file.preventDefault();
     const formData = new FormData();
@@ -45,13 +53,19 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
         'http://res.cloudinary.com/van-nam/image/upload/v1649074277/image/' + imageSelected.name;
     });
   };
+
+  // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+  const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },
+    { title: 'The Godfather: Part II', year: 1974 },
+    { title: 'The Dark Knight', year: 2008 },
+    { title: '12 Angry Men', year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: 'Pulp Fiction', year: 1994 },
+  ];
+
   const convertToHTML = draftToHtml(convertToRaw(description.getCurrentContent()));
-  const inputFile = useRef(null);
-
-  const openFile = () => {
-    inputFile.current.click();
-  };
-
   return (
     <div>
       <Dialog
@@ -71,12 +85,30 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
               id="PostTitle"
               value={PostTitle}
               onChange={(e) => onChange(e)}
-              placeholder="Enter name"
+              placeholder="Enter title"
               label="Title"
               variant="outlined"
               margin="dense"
               fullWidth
             />
+            {/* <Autocomplete
+              multiple
+              id="tags-outlined"
+              options={top100Films}
+              getOptionLabel={(option) => option.title}
+              // defaultValue={[top100Films[13]]}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  id="Tags"
+                  onChange={(e) => onChange(e)}
+                  label="Tags"
+                  placeholder="Tags"
+                  variant="outlined"
+                />
+              )}
+            /> */}
             <div className="form-controlGroup-inputWrapper">
               <label className="form-input form-input--file">
                 <span className="form-input--file-button-left" onClick={openFile}>

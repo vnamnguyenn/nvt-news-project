@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.EXPRESS_PORT || 9000;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-const cors = require('cors'); //midleware rest api backend to frontend
+const cors = require('cors'); //midleware using rest api backend to frontend
 app.use(cors());
 
 // upload file (image, video, etc..)

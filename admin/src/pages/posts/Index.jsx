@@ -24,6 +24,7 @@ const initialValue = {
   PublishedDate: '',
   UpdatedDate: '',
   AuthorInfo: '',
+  Tags: '',
 };
 
 function Post() {
@@ -148,6 +149,7 @@ function Post() {
           ReadingTime: formData.ReadingTime,
           MetaDescription: formData.MetaDescription,
           MetaTitle: formData.MetaTitle,
+          Tags: formData.Tags,
           Published: 'active',
         },
         dispatch

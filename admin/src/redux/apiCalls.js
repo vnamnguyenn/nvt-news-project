@@ -21,7 +21,7 @@ export const login = async (dispatch, user) => {
   try {
     const res = await publicRequest.post('/signin', user);
     res.data && window.location.replace('/posts');
-     toast.success('Logged in successfull', {
+    toast.success('Logged in successfull', {
       position: 'bottom-right',
       autoClose: 2500,
       hideProgressBar: false,
@@ -88,5 +88,13 @@ export const deletePost = async (postID, dispatch) => {
     dispatch(deletePostsuccess(postID));
   } catch (err) {
     dispatch(deletePostFailure());
+  }
+};
+
+export const getTags = async () => {
+  try {
+    return await publicRequest.get('/tag');
+  } catch (err) {
+    console.log(err);
   }
 };
