@@ -9,6 +9,7 @@ import Signup from '../pages/SignUp';
 import Categories from '../pages/Categories';
 import Category from '../pages/Category';
 import {useSelector} from 'react-redux';
+import SearchPost from '../pages/SearchPost';
 
 const ROUTES = () => {
 	const navigate = useNavigate();
@@ -31,6 +32,9 @@ const ROUTES = () => {
 			<Route path="/post">
 				<Route index element={<Posts />} />
 				<Route path=":id" element={<Post />} />
+			</Route>
+			<Route path="/search">
+				<Route path=":title" element={<SearchPost />} />
 			</Route>
 		</Routes>
 	);

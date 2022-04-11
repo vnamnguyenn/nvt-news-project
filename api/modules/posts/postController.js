@@ -11,6 +11,16 @@ class PostController {
 		}
 	}
 
+	async search(req, res) {
+		try {
+			const data = await PostService.search(req.params.title);
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
 	async getAll(req, res) {
 		try {
 			const data = await PostService.getAll();

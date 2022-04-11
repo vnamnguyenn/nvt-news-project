@@ -1,9 +1,15 @@
 import DarkMode from '../components/DarkMode';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import {useState, useEffect} from 'react';
 import {logout} from '../redux/apiCalls';
+import SearchPost from '../pages/SearchPost';
+import {useLocation} from 'react-router';
+import {publicRequest} from '../requestMethods';
 const Header = () => {
 	const dispatch = useDispatch();
+	const [posts, setPosts] = useState([]);
+
 	document.querySelector('.sk-cube-grid').style.display = 'none';
 	// Grab elements
 	const selectElement = (selector) => {
@@ -11,6 +17,13 @@ const Header = () => {
 		if (element) return element;
 		throw new Error(`Something went wrong! Make sure that ${selector} exists/is typed correctly.`);
 	};
+
+	const [searchTerm, setSearchTerm] = useState('');
+	const handleChange = (event) => {
+		setSearchTerm(event.target.value);
+	};
+	const {title} = useLocation();
+	// if you want to show the loader when React loads data again
 
 	const toggleMenu = () => {
 		const mobileMenu = selectElement('#menu');
@@ -145,12 +158,21 @@ const Header = () => {
 			{/* search popup */}
 			<div className="search-form-container container" id="search-form-container">
 				<div className="form-container-inner">
-					<form action="" className="form">
-						<input className="form-input" type="text" placeholder="What are you looking for?" />
-						<button className="btn form-btn" type="submit">
-							<i className="ri-search-line"></i>
-						</button>
-					</form>
+					<input
+						className="form-input"
+						type="text"
+						placeholder="What are you looking for?"
+						value={searchTerm}
+						onChange={handleChange}
+					/>
+					<Link
+						to={`/search/${searchTerm}`}
+						className="btn form-btn"
+						onClick={formCloseBtn}
+						type="button"
+					>
+						<i className="ri-search-line"></i>
+					</Link>
 					<span className="form-note">Or press ESC to close.</span>
 				</div>
 				<button className="btn form-close-btn place-items-center" onClick={formCloseBtn}>

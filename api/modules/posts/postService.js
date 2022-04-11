@@ -15,7 +15,16 @@ class PostService {
 		const data = await PostRepository.getAll();
 
 		if (data) {
-			console.log(data.Count);
+			return data.Items;
+		}
+
+		return data;
+	}
+
+	async search(title) {
+		const data = await PostRepository.search(title);
+
+		if (data) {
 			return data.Items;
 		}
 

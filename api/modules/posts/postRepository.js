@@ -53,6 +53,21 @@ class PostRepository {
 		return await db.scan(params).promise();
 	}
 
+	async search(title) {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'PostIndex',
+			FilterExpression: 'contains(#74620, :74620)',
+			ExpressionAttributeValues: {
+				':74620': title,
+			},
+			ExpressionAttributeNames: {
+				'#74620': 'PostTitle',
+			},
+		};
+		return await db.scan(params).promise();
+	}
+
 	async getAll() {
 		const params = {
 			TableName: this.tableName,
