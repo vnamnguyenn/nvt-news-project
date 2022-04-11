@@ -153,7 +153,6 @@ export default function FormDialog({ open, handleClose, data, onChange, handleFo
             />
             <TextField
               id="Description"
-              value={Description}
               onChange={(e) => onChange(e)}
               placeholder="Enter description"
               label="Description"

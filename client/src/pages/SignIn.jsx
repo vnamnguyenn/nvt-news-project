@@ -1,12 +1,11 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState,useEffect} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {Link} from 'react-router-dom';
 import {login} from '../redux/apiCalls';
 import styled from 'styled-components';
-import {useDispatch, useSelector} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
+import {useDispatch,} from 'react-redux';
 const Button = styled.button`
 	cursor: pointer;
 	&:disabled {
@@ -24,6 +23,10 @@ const SignIn = () => {
 		UserEmail: '',
 		PasswordHash: '',
 	});
+
+	useEffect(() => {
+		document.title = 'Sign in';
+	}, []);
 
 	const inputs = [
 		{

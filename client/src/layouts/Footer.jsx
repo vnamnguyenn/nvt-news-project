@@ -7,8 +7,8 @@ const Footer = () => {
 						<h2 className="logo">NVTNews</h2>
 					</a>
 					<p className="company-description">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, iure. Harum, animi
-						dolores, nam, ad magni expedita.
+						NVTNews - Reporting on the business of technology, startups, venture capital funding,
+						and Silicon Valley
 					</p>
 
 					<ul className="list social-media">
@@ -34,7 +34,9 @@ const Footer = () => {
 						</li>
 					</ul>
 
-					<span className="copyright-notice">&copy;{new Date().getFullYear()} NVTNews. All rights reserved.</span>
+					<span className="copyright-notice">
+						&copy;{new Date().getFullYear()} NVTNews. All rights reserved.
+					</span>
 				</div>
 
 				<div>

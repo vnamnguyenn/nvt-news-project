@@ -7,13 +7,13 @@ import DOMPurify from 'dompurify';
 
 const Post = () => {
 	const location = useLocation();
-	const path = location.pathname.split('/')[2];
 	const [post, setPost] = useState({});
+	const path = location.pathname.split('/')[2];
 
 	useEffect(() => {
 		const getPost = async () => {
 			const res = await publicRequest.get('/post/' + path);
-			//   console.log(res.data);
+			document.title = res.data.PostTitle;
 			setPost(res.data);
 		};
 		getPost();
@@ -30,7 +30,7 @@ const Post = () => {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
-			}, 500);
+			}, 400);
 		}
 	}, [loading]);
 	if (loading) {

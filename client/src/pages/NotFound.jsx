@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../assets/css/_notFound.css';
 import {Link} from 'react-router-dom';
 const NotFound = () => {
+	useEffect(() => {
+		document.title = 'ERROR 404!';
+	}, []);
 	return (
 		<div>
 			<header className="top-header"></header>

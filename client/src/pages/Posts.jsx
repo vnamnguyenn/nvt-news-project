@@ -11,6 +11,7 @@ const Posts = () => {
 	useEffect(() => {
 		const fetchPosts = async () => {
 			const res = await publicRequest.get('/post');
+			document.title = 'News | NVT';
 			setPosts(res.data);
 		};
 		fetchPosts();

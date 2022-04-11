@@ -13,6 +13,7 @@
 html,
 body {
 	height: 100%;
+	overflow: hidden;
 }
 
 body {
@@ -40,7 +41,6 @@ select,
 button,
 textarea {
 	margin: 0;
-	font-size: 100%;
 }
 
 html,
@@ -274,12 +274,9 @@ input {
 }
 
 button {
-	border: none;
-	padding: 0;
-	font-size: 0;
-	line-height: 0;
-	background: none;
-	cursor: pointer;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 :focus {

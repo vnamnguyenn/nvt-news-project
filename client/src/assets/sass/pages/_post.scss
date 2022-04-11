@@ -126,3 +126,22 @@
 		padding-right: 4px;
 	}
 }
+.post-content p,
+.post-content span,
+.post-content div {
+	line-height: 1.8 !important;
+	color: var(--light-color) !important;
+	background-color: unset !important;
+	font-size: 16px !important;
+	font-family: var(--font-family) !important;
+	text-align: justify !important;
+}
+
+.post-content a span,
+.post-content a {
+	color: #00a562 !important;
+	border-bottom: 1px solid transparent;
+}
+.post-content a:hover {
+	border-bottom-color: #00a562;
+}

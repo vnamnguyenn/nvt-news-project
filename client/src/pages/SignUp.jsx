@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
@@ -13,6 +13,10 @@ const SignUp = () => {
 		PasswordHash: '',
 		ConfirmPassword: '',
 	});
+
+	useEffect(() => {
+		document.title = 'Sign up';
+	}, []);
 
 	const inputs = [
 		{
