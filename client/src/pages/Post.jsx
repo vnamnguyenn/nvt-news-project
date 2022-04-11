@@ -22,6 +22,20 @@ const Post = () => {
 	const cleanHTML = DOMPurify.sanitize(post.Content, {
 		USE_PROFILES: {html: true},
 	});
+
+	document.querySelector('.sk-cube-grid').style.display = 'block';
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		if (loading) {
+			setTimeout(() => {
+				setLoading(false);
+				document.querySelector('.sk-cube-grid').style.display = 'none';
+			}, 800);
+		}
+	}, [loading]);
+	if (loading) {
+		return null; // render null when app is not ready
+	}
 	return (
 		<>
 			<Header />

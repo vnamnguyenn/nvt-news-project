@@ -1,12 +1,13 @@
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {publicRequest} from '../requestMethods';
 // import {Link} from 'react-router-dom';
 
 const Posts = () => {
 	const [posts, setPosts] = useState([]);
+	// if you want to show the loader when React loads data again
 	useEffect(() => {
 		const fetchPosts = async () => {
 			const res = await publicRequest.get('/post');
@@ -14,6 +15,19 @@ const Posts = () => {
 		};
 		fetchPosts();
 	}, []);
+	document.querySelector('.sk-cube-grid').style.display = 'block';
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		if (loading) {
+			setTimeout(() => {
+				setLoading(false);
+				document.querySelector('.sk-cube-grid').style.display = 'none';
+			}, 500);
+		}
+	}, [loading]);
+	if (loading) {
+		return null; // render null when app is not ready
+	}
 	return (
 		<div>
 			<Header />

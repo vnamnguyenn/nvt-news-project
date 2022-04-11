@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom';
 import {login} from '../redux/apiCalls';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
-
 const Button = styled.button`
 	cursor: pointer;
 	&:disabled {
