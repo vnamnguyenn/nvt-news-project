@@ -73,7 +73,7 @@ const SignUp = () => {
 				DateOfBirth: values.DateOfBirth,
 				PasswordHash: values.PasswordHash,
 			});
-			// res.data && window.location.replace('/signin');
+			res.data && window.location.replace('/signin');
 			console.log(res.data);
 		} catch (err) {
 			setError(true);

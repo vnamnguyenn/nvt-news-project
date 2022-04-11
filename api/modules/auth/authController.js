@@ -15,6 +15,7 @@ class AuthController {
 	async signin(req, res) {
 		try {
 			const data = await AuthService.signin(req.body);
+			
 			const accessToken = jwt.sign(
 				{
 					pk: data.Items[0].PK,
@@ -24,6 +25,7 @@ class AuthController {
 				process.env.JWT_SECRET,
 				{expiresIn: '3d'},
 			);
+
 			const exportData = {
 				AccountId: data.Items[0].AccountId,
 				FullName: data.Items[0].FullName,
@@ -31,8 +33,9 @@ class AuthController {
 				Avatar: data.Items[0].Avatar,
 				isAdmin: data.Items[0].isAdmin,
 			};
+
 			res.status(200).json({
-				success: true,
+				loginSuccess: true,
 				message: 'User logged in successfully',
 				exportData,
 				accessToken,

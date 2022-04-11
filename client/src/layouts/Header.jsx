@@ -1,6 +1,10 @@
 import DarkMode from '../components/DarkMode';
 import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {logout} from '../redux/apiCalls';
 const Header = () => {
+	const dispatch = useDispatch();
+	document.querySelector('.sk-cube-grid').style.display = 'none';
 	// Grab elements
 	const selectElement = (selector) => {
 		const element = document.querySelector(selector);
@@ -29,6 +33,13 @@ const Header = () => {
 		const searchContainer = selectElement('#search-form-container');
 		if (event.key === 'Escape') searchContainer.classList.remove('activated');
 	});
+
+	const user = useSelector((state) => state.user.currentUser);
+
+	const logOutBtn = (e) => {
+		e.preventDefault();
+		logout(dispatch);
+	};
 
 	return (
 		<div>
@@ -70,16 +81,31 @@ const Header = () => {
 									Contact
 								</a>
 							</li>
-							<li className="list-item screen-lg-hidden">
-								<Link to="/login" className="list-link">
-									Sign in
-								</Link>
-							</li>
-							<li className="list-item screen-lg-hidden">
-								<Link to="/register" className="list-link">
-									Sign up
-								</Link>
-							</li>
+							{user ? (
+								<ul>
+									<li className="list-item screen-lg-hidden">
+										<a className="list-link">{user.exportData.FullName}</a>
+									</li>
+									<li className="list-item screen-lg-hidden">
+										<a onClick={logOutBtn} className="list-link">
+											Sign out
+										</a>
+									</li>
+								</ul>
+							) : (
+								<ul>
+									<li className="list-item screen-lg-hidden">
+										<Link to="/login" className="list-link">
+											Sign in
+										</Link>
+									</li>
+									<li className="list-item screen-lg-hidden">
+										<Link to="/register" className="list-link">
+											Sign up
+										</Link>
+									</li>
+								</ul>
+							)}
 						</ul>
 					</div>
 
@@ -96,13 +122,23 @@ const Header = () => {
 							<i className="ri-menu-3-line open-menu-icon"></i>
 							<i className="ri-close-line close-menu-icon"></i>
 						</button>
-
-						<Link to="/signin" className="list-link screen-sm-hidden">
-							Sign in
-						</Link>
-						<Link to="/signup" className="btn sign-up-btn fancy-border screen-sm-hidden">
-							<span>Sign up</span>
-						</Link>
+						{user ? (
+							<>
+								<a className="list-link screen-sm-hidden">{user.exportData.FullName}</a>
+								<a onClick={logOutBtn} className="btn sign-up-btn fancy-border screen-sm-hidden">
+									<span>Sign out</span>
+								</a>
+							</>
+						) : (
+							<>
+								<Link to="/signin" className="list-link screen-sm-hidden">
+									Sign in
+								</Link>
+								<Link to="/signup" className="btn sign-up-btn fancy-border screen-sm-hidden">
+									<span>Sign up</span>
+								</Link>
+							</>
+						)}
 					</div>
 				</nav>
 			</header>

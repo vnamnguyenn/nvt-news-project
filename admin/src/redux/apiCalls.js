@@ -20,7 +20,6 @@ export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post('/signin', user);
-    res.data && window.location.replace('/posts');
     toast.success('Logged in successfull', {
       position: 'bottom-right',
       autoClose: 2500,
@@ -31,6 +30,7 @@ export const login = async (dispatch, user) => {
       progress: undefined,
     });
     dispatch(loginSuccess(res.data));
+    window.location.replace('/posts');
   } catch (err) {
     toast.error('Email and/or Password wrong', {
       position: 'bottom-right',
@@ -46,7 +46,6 @@ export const login = async (dispatch, user) => {
 };
 
 export const logout = (dispatch) => {
-  localStorage.removeItem('persist:root');
   window.location.replace('/signin');
   dispatch(logoutSuccess());
 };

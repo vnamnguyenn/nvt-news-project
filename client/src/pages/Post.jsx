@@ -30,7 +30,7 @@ const Post = () => {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
-			}, 800);
+			}, 500);
 		}
 	}, [loading]);
 	if (loading) {

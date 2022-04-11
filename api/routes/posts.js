@@ -5,13 +5,13 @@ const {
 	verifyTokenAndAdmin,
 } = require('../middleware/verifyToken');
 module.exports = async (app) => {
-	app.get('/api/post/quick_read', PostController.quickRead);
-	app.get('/api/post/featured_article', PostController.featuredArticles);
-	app.get('/api/post/older_post', PostController.olderPost);
-	app.get('/api/post/trending_news', PostController.trendingNews);
-	app.get('/api/post/', PostController.getAll);
-	app.get('/api/post/:id', PostController.findByID);
-	app.post('/api/post/create/', verifyTokenAndAdmin, PostController.create);
-	app.patch('/api/post/edit/:postId', verifyTokenAndAdmin, PostController.update);
-	app.delete('/api/post/delete/:postId', verifyTokenAndAdmin, PostController.deleteByID);
+	app.get('/post/quick_read', PostController.quickRead);
+	app.get('/post/featured_article', PostController.featuredArticles);
+	app.get('/post/older_post', PostController.olderPost);
+	app.get('/post/trending_news', PostController.trendingNews);
+	app.get('/post/', PostController.getAll);
+	app.get('/post/:id', PostController.findByID);
+	app.post('/post/create/', verifyTokenAndAdmin, PostController.create);
+	app.patch('/post/edit/:postId', verifyTokenAndAdmin, PostController.update);
+	app.delete('/post/delete/:postId', verifyTokenAndAdmin, PostController.deleteByID);
 };

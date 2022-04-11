@@ -6,6 +6,7 @@ import Chart from '../../components/chart/Chart';
 import Table from '../../components/table/Table';
 import './dashboard.scss';
 const Dashboard = () => {
+
 	return (
 		<div className="dashboard">
 			<Sidebar />

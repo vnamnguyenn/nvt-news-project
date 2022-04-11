@@ -5,9 +5,9 @@ const {
 	verifyTokenAndAdmin,
 } = require('../middleware/verifyToken');
 module.exports = async (app) => {
-	app.get('/api/category/:id', CategoryController.findByID);
-	app.get('/api/category/', CategoryController.getAll);
-	app.post('/api/category/create/',verifyTokenAndAdmin, CategoryController.create);
-	app.patch('/api/category/edit/', CategoryController.update);
-	app.delete('/api/category/delete/:id', CategoryController.deleteByID);
+	app.get('/category/:id', CategoryController.findByID);
+	app.get('/category/', CategoryController.getAll);
+	app.post('/category/create/',verifyTokenAndAdmin, CategoryController.create);
+	app.patch('/category/edit/', CategoryController.update);
+	app.delete('/category/delete/:id', CategoryController.deleteByID);
 };

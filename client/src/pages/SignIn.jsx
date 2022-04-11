@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import {login} from '../redux/apiCalls';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 const Button = styled.button`
 	cursor: pointer;
 	&:disabled {
@@ -19,11 +20,11 @@ const Error = styled.span`
 `;
 const SignIn = () => {
 	const dispatch = useDispatch();
-	const {isFetching, error} = useSelector((state) => state.user);
 	const [values, setValues] = useState({
 		UserEmail: '',
 		PasswordHash: '',
 	});
+
 	const inputs = [
 		{
 			id: 1,
@@ -62,10 +63,7 @@ const SignIn = () => {
 						{inputs.map((input) => (
 							<FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
 						))}
-						<Button className="btn btn-primary" disabled={isFetching}>
-							Submit
-						</Button>
-						{error && <Error>Something went wrong...</Error>}
+						<Button className="btn btn-primary">Submit</Button>
 						<div className="signin-bottom">
 							<a href="/recover_password" className="forgot">
 								Forgot your password?
