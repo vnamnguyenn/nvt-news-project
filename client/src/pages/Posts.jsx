@@ -3,19 +3,46 @@ import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {publicRequest} from '../requestMethods';
-// import {Link} from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
+import QueryString from 'query-string';
 
-const Posts = () => {
+function Posts() {
 	const [posts, setPosts] = useState([]);
-	// if you want to show the loader when React loads data again
+	const pageSize = 5;
+	const startIndex = 1;
+	//set pagition
+	const [pagination, setPagination] = useState({
+		currentPage: startIndex,
+		limit: pageSize,
+		totalPage: 1,
+	});
+	//get new content when page change
+	const [filters, setFilters] = useState({
+		page: startIndex,
+		limit: pageSize,
+	});
+
+	// fetch data from server
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post');
+			const paramsString = QueryString.stringify(filters);
+			const res = await publicRequest.get(`/post?${paramsString}`);
 			document.title = 'News | NVT';
-			setPosts(res.data);
+			const {data, pagination} = res.data;
+			setPosts(data);
+			setPagination(pagination);
 		};
 		fetchPosts();
-	}, []);
+	}, [filters]);
+
+	function handlePageChange(newPage) {
+		//update content when click page change
+		setFilters({
+			...filters,
+			page: newPage.selected + 1, // index page started = 0
+		});
+	}
+	//loader animation
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
@@ -26,9 +53,11 @@ const Posts = () => {
 			}, 500);
 		}
 	}, [loading]);
+	// render null when app is not ready
 	if (loading) {
-		return null; // render null when app is not ready
+		return null;
 	}
+
 	return (
 		<div>
 			<Header />
@@ -52,11 +81,30 @@ const Posts = () => {
 							</Link>
 						))}
 					</div>
+					<ReactPaginate
+						previousLabel={'<'}
+						nextLabel={'>'}
+						breakLabel={'...'}
+						pageCount={pagination.totalPage}
+						marginPagesDisplayed={2}
+						pageRangeDisplayed={5}
+						onPageChange={handlePageChange}
+						containerClassName={'pagination justify-content-center'}
+						pageClassName={'page-item'}
+						pageLinkClassName={'page-link'}
+						previousClassName={'page-item'}
+						previousLinkClassName={'page-link'}
+						nextClassName={'page-item'}
+						nextLinkClassName={'page-link'}
+						breakClassName={'page-item'}
+						breakLinkClassName={'page-link'}
+						activeClassName={'active'}
+					/>
 				</div>
 			</section>
 			<Footer />
 		</div>
 	);
-};
+}
 
 export default Posts;

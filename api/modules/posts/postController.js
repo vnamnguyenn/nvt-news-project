@@ -24,7 +24,20 @@ class PostController {
 	async getAll(req, res) {
 		try {
 			const data = await PostService.getAll();
-			res.json(data);
+			const page = parseInt(req.query.page);
+			const limit = parseInt(req.query.limit);
+			const startIndex = (page - 1) * limit;
+			const endIndex = page * limit;
+			const postData = {};
+
+			postData.pagination = {
+				currentPage: page,
+				limit: limit,
+				totalPage: Math.ceil(data.length / limit),
+			};
+
+			postData.data = data.slice(startIndex, endIndex);
+			res.json(postData);
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({err: 'Something went wrong'});
