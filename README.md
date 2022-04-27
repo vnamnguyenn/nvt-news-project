@@ -49,13 +49,13 @@ Giới thiệu chung về các công nghệ được sử dụng trong project:
     
 ## Hướng dẫn cài đặt và sử dụng
 Yêu cầu:
-* Cài đặt nodeJS nếu chưa có có thể tải [tại đây](https://nodejs.org/en/)
+* Cài đặt NodeJS nếu chưa có có thể tải [tại đây](https://nodejs.org/en/)
 * Cài đặt [Docker](https://www.docker.com/products/docker-desktop/) để chạy DynamoDB Local, nếu bạn sử dụng DynamoDB AWS Console thì không cần phải cài Docker nữa
 * Cài đặt phần mềm [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.settingup.html) để truy vấn dữ liệu DynamoDB, bạn có thể tham khảo tài liệu sử dụng [tại đây](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.html)
 * Cài đặt [Visual Studio Code](https://code.visualstudio.com/) để soạn thảo và run source code.
 
 
- Để chạy các lệnh dưới đây chúng ta cần mở terminal của Visual Studio Code hoặc có thể thay thế bằng CMD của Windows.
+ Để chạy các lệnh dưới đây chúng ta cần mở Terminal của Visual Studio Code bằng tổ hợp phím
  ```sh
 ctrl + shift + `
 ```
