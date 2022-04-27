@@ -78,7 +78,7 @@ cd api
 npm install
 npm run server
 ```
-Sau khi run source code thành công bạn có thể test API bằng trình duyệt hoặc phần mềm test API như [Postman](https://www.postman.com/downloads/) bằng cách dán đường dẫn sau [http://localhost:9000/](http://localhost:9000/)/đường_dẫn_của_bạn, chúng ta có thể tham khảo video test api với Postman [tại đây](https://youtu.be/E9XeiPn6ZWo)
+Sau khi run source code thành công bạn có thể test API bằng trình duyệt hoặc phần mềm test API như [Postman](https://www.postman.com/downloads/) bằng cách dán đường dẫn sau [http://localhost:9000/đường_dẫn_của_bạn](http://localhost:9000/), chúng ta có thể tham khảo video test api với Postman [tại đây](https://youtu.be/E9XeiPn6ZWo)
 <p align="center">
   <img align="center" src="https://i.imgur.com/rt9c7ra.png" alt="open terminal visual studio code"/>
 </p>
