@@ -67,6 +67,10 @@ Kết nối và khởi chạy Database với docker.
 ```sh
 docker compose up
 ```
+Đổi tên file .env.sample trong thư mục api
+```sh
+.env.sample -> .env
+```
 
 Đầu tiên để run source code phần API chúng ta cần thực hiện các lệnh dưới đây.
 ```sh
