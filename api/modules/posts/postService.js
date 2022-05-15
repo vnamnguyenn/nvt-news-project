@@ -21,6 +21,16 @@ class PostService {
 		return data;
 	}
 
+	async getAllAdmin() {
+		const data = await PostRepository.getAllAdmin();
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
 	async search(title) {
 		const data = await PostRepository.search(title);
 

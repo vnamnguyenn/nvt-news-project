@@ -11,11 +11,9 @@ GET http://localhost:9000/api/category/
 
 
 //-------POST REST API-------
-###
-POST http://localhost:9000/api/post
 
 ### get all post
-GET http://localhost:9000/api/post
+GET http://localhost:9000/api/post?page=1&limit=10
 
 ### get quick read post
 GET http://localhost:9000/api/post/quick_read

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import DashBoard from '../pages/dashBoard/Dashboard';
 import NotFound from '../pages/NotFound';
 import Post from '../pages/posts/Index';
@@ -10,7 +10,7 @@ const ROUTES = () => {
   const user = useSelector((state) => state.user.currentUser);
   return (
     <Routes>
-      {user && (
+      {user && user.exportData.isAdmin === true && (
         <>
           <Route path="/" element={<DashBoard />} />
           <Route path="/posts">
@@ -22,6 +22,7 @@ const ROUTES = () => {
       {user == null && (
         <>
           <Route path="/signin" element={<Signin />} />
+          <Route path="*" element={<Navigate to="/signin" replace />} />
         </>
       )}
       <Route path="*" element={<NotFound />} />

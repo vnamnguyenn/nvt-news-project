@@ -44,6 +44,16 @@ class PostController {
 		}
 	}
 
+	async getAllAdmin(req, res) {
+		try {
+			const data = await PostService.getAllAdmin();
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
 	async featuredArticles(req, res) {
 		try {
 			const data = await PostService.featuredArticles();
