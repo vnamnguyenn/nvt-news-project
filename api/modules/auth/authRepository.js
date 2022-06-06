@@ -8,7 +8,10 @@ class AuthRepository {
 
 	async signup(data) {
 		const accountId = uniqid('u');
-		const hashedPassword = crypto.createHmac('sha512', process.env.PASS_SECRET).update(data.PasswordHash).digest('hex');
+		const hashedPassword = crypto
+			.createHmac('sha512', process.env.PASS_SECRET)
+			.update(data.PasswordHash)
+			.digest('hex');
 		const today = new Date();
 		const currentTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 		const params = {
@@ -21,7 +24,7 @@ class AuthRepository {
 				FullName: data.FullName,
 				Gender: 'Others',
 				DateOfBirth: data.DateOfBirth,
-				isAdmin: false,
+				isAdmin: true,
 				PasswordHash: hashedPassword,
 				IsActive: true,
 				Avatar: 'https://www.w3schools.com/howto/img_avatar.png',
@@ -35,7 +38,10 @@ class AuthRepository {
 	}
 
 	async signin(data) {
-		const hashedPassword = crypto.createHmac('sha512', process.env.PASS_SECRET).update(data.PasswordHash).digest('hex');
+		const hashedPassword = crypto
+			.createHmac('sha512', process.env.PASS_SECRET)
+			.update(data.PasswordHash)
+			.digest('hex');
 
 		const params = {
 			TableName: this.tableName,

@@ -220,7 +220,7 @@ class PostRepository {
 
 	async comment(pk, data) {
 		const getUserInfo = await userRepository.findByID(pk);
-		let id = uniqid('cmt');
+		let id = uniqid('c');
 		const params = {
 			TableName: this.tableName,
 			Item: {

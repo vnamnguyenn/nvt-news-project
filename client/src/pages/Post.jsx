@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
 import {publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
-
+import Comment from '../components/Comment';
 const Post = () => {
 	const location = useLocation();
 	const [post, setPost] = useState({});
@@ -133,6 +133,9 @@ const Post = () => {
 									<a href="/techcrunchplus/work/">Work</a>
 								</li>
 							</ul>
+						</div>
+						<div>
+							<Comment />
 						</div>
 					</div>
 				</div>

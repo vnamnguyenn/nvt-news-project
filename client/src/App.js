@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Routes from './routes/Routes';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
