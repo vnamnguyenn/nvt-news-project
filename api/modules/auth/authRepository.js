@@ -1,4 +1,4 @@
-const db = require(`../../config/dynamoDB`);
+const {docClient} = require(`../../config/dynamoDB`);
 const crypto = require('crypto');
 const uniqid = require('uniqid');
 class AuthRepository {
@@ -30,7 +30,7 @@ class AuthRepository {
 			},
 		};
 
-		await db.put(params).promise();
+		await docClient.put(params).promise();
 		return params.Item;
 	}
 
@@ -52,7 +52,7 @@ class AuthRepository {
 			},
 		};
 
-		return await db.query(params).promise();
+		return await docClient.query(params).promise();
 	}
 }
 

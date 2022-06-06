@@ -1,4 +1,4 @@
-const db = require(`../../config/dynamoDB`);
+const {docClient} = require(`../../config/dynamoDB`);
 
 class UserRepository {
 	constructor() {
@@ -14,7 +14,7 @@ class UserRepository {
 			},
 		};
 
-		return await db
+		return await docClient
 			.get(params, function (err, data) {
 				if (err) {
 					console.error('Unable to read item. Error JSON:', JSON.stringify(err, null, 2));
@@ -30,7 +30,7 @@ class UserRepository {
 			TableName: this.tableName,
 			IndexName: 'AccountIndex',
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async create(data) {
@@ -53,7 +53,7 @@ class UserRepository {
 			},
 		};
 
-		await db.put(params).promise();
+		await docClient.put(params).promise();
 
 		return params.Item;
 	}
@@ -75,7 +75,7 @@ class UserRepository {
 			ReturnValues: `UPDATED_NEW`,
 		};
 
-		const update = await db.update(params).promise();
+		const update = await docClient.update(params).promise();
 
 		return update.Attributes;
 	}
@@ -89,7 +89,7 @@ class UserRepository {
 			},
 		};
 
-		return await db.delete(params).promise();
+		return await docClient.delete(params).promise();
 	}
 }
 

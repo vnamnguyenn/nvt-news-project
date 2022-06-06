@@ -1,4 +1,4 @@
-const db = require(`../../config/dynamoDB`);
+const {docClient} = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
 const userRepository = require('../users/userRepository');
 const currentTime = require('../../config/currentTime');
@@ -20,7 +20,7 @@ class TagRepository {
 			},
 		};
 
-		return await db.query(params).promise();
+		return await docClient.query(params).promise();
 	}
 
 	async getAll() {
@@ -28,7 +28,7 @@ class TagRepository {
 			TableName: this.tableName,
 			IndexName: 'TagIndex',
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async popularTag() {
@@ -36,7 +36,7 @@ class TagRepository {
 			TableName: this.tableName,
 			IndexName: 'TagIndex',
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async create(pk, data) {
@@ -92,7 +92,7 @@ class TagRepository {
 			ReturnValues: `UPDATED_NEW`,
 		};
 
-		const update = await db.update(params).promise();
+		const update = await docClient.update(params).promise();
 
 		return update.Attributes;
 	}
@@ -106,7 +106,7 @@ class TagRepository {
 			},
 		};
 
-		return await db.delete(params).promise();
+		return await docClient.delete(params).promise();
 	}
 }
 

@@ -85,7 +85,6 @@ class PostService {
 		return await PostRepository.create(pk, {
 			PostTitle: data.PostTitle,
 			Content: data.Content,
-			Slug: data.Slug,
 			Thumbnail: data.Thumbnail,
 			PostImage: data.PostImage,
 			Description: data.Description,
@@ -116,6 +115,14 @@ class PostService {
 
 	async deleteByID(pk, postId) {
 		return await PostRepository.deleteByID(pk, postId);
+	}
+
+	async comment(pk, data) {
+		return await PostRepository.comment(pk, {
+			PostID: data.PostID,
+			CommentContent: data.CommentContent,
+			ParentCommentId: data.ParentCommentId,
+		});
 	}
 }
 

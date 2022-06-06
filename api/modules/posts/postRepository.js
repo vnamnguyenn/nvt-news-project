@@ -1,7 +1,7 @@
-const db = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
+const {docClient} = require(`../../config/dynamoDB`);
 const userRepository = require('../users/userRepository');
-const currentTime = require('../../config/currentTime');
+const {currentTime, currentTimePrefixMonth} = require('../../config/currentTime');
 class PostRepository {
 	constructor() {
 		this.tableName = 'Blog';
@@ -20,7 +20,7 @@ class PostRepository {
 			},
 		};
 
-		return await db.query(params).promise();
+		return await docClient.query(params).promise();
 	}
 
 	async featuredArticles() {
@@ -32,7 +32,7 @@ class PostRepository {
 			ExpressionAttributeNames: {'#128c0': 'LikeCount', '#128c1': 'CommentCount'},
 			ExpressionAttributeValues: {':128c0': '0', ':128c1': '0'},
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async trendingNews() {
@@ -41,7 +41,7 @@ class PostRepository {
 			IndexName: 'PostIndex',
 			Limit: 5,
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async olderPost() {
@@ -50,7 +50,7 @@ class PostRepository {
 			IndexName: 'PostIndex',
 			Limit: '6',
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async search(title) {
@@ -65,7 +65,7 @@ class PostRepository {
 				'#74620': 'PostTitle',
 			},
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async getAll() {
@@ -73,7 +73,7 @@ class PostRepository {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async getAllAdmin() {
@@ -81,7 +81,7 @@ class PostRepository {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	//Get post Readingtime lessthan 6 minutes
@@ -96,32 +96,11 @@ class PostRepository {
 			ExpressionAttributeNames: {'#15a90': 'ReadingTime', '#15a91': 'CreatedDate'},
 			ExpressionAttributeValues: {':15a90': '6', ':15a91': getDate},
 		};
-		return await db.scan(params).promise();
+		return await docClient.scan(params).promise();
 	}
 
 	async create(pk, data) {
 		const getUserInfo = await userRepository.findByID(pk);
-		const today = new Date();
-		const monthNames = [
-			'Jan',
-			'Feb',
-			'Mar',
-			'Apr',
-			'May',
-			'Jun',
-			'Jul',
-			'Aug',
-			'Sep',
-			'Oct',
-			'Nov',
-			'Dec',
-		];
-		const currentPushlished =
-			monthNames[today.getMonth() + 1] +
-			' ' +
-			(today.getDate() < 10 ? '0' + today.getDate() : today.getDate()) +
-			' ' +
-			today.getFullYear();
 		let id = uniqid('p');
 		const params = {
 			TableName: this.tableName,
@@ -131,20 +110,14 @@ class PostRepository {
 				SK: 'POST_' + id,
 				PostTitle: data.PostTitle,
 				Content: data.Content,
-				Slug: data.Slug,
 				Thumbnail: data.Thumbnail,
 				PostImage: data.PostImage,
-				LikeCount: '10',
-				CommentCount: '10',
-				SaveCount: '10',
 				Description: data.Description,
-				UpdatedDate: currentTime,
 				MetaTitle: data.MetaTitle,
 				MetaDescription: data.MetaDescription,
 				MetaKeyword: data.MetaKeyword,
 				Published: 'active',
-				PublishedDate: currentPushlished,
-				CreatedBy: getUserInfo.Item.FullName,
+				PublishedDate: currentTimePrefixMonth,
 				CreatedDate: currentTime,
 				ReadingTime: data.ReadingTime,
 				Categories: data.Categories,
@@ -159,7 +132,7 @@ class PostRepository {
 			},
 		};
 
-		await db
+		await docClient
 			.put(params, function (err, data) {
 				if (err) {
 					console.error('Something went wrong:', JSON.stringify(err, null, 2));
@@ -184,7 +157,7 @@ class PostRepository {
 				'#38cd0': 'PostID',
 			},
 		};
-		const getDataByID = await db.query(paramById).promise();
+		const getDataByID = await docClient.query(paramById).promise();
 		const params = {
 			TableName: this.tableName,
 			Key: {
@@ -227,7 +200,7 @@ class PostRepository {
 			ReturnValues: `UPDATED_NEW`,
 		};
 
-		const update = await db.update(params).promise();
+		const update = await docClient.update(params).promise();
 
 		return update.Attributes;
 	}
@@ -242,7 +215,32 @@ class PostRepository {
 		};
 		console.log(params.Key.PK, params.Key.SK);
 
-		return await db.delete(params).promise();
+		return await docClient.delete(params).promise();
+	}
+
+	async comment(pk, data) {
+		const getUserInfo = await userRepository.findByID(pk);
+		let id = uniqid('cmt');
+		const params = {
+			TableName: this.tableName,
+			Item: {
+				PK: pk,
+				SK: 'CMT_' + id,
+				CommentId: id,
+				PostID: data.PostID,
+				CommentContent: data.CommentContent,
+				ParentCommentId: data.ParentCommentId,
+				CreatedDate: currentTime,
+				AccountInfo: {
+					PK: getUserInfo.Item.PK,
+					AccountId: getUserInfo.Item.AccountId,
+					FullName: getUserInfo.Item.FullName,
+					Avatar: getUserInfo.Item.Avatar,
+				},
+			},
+		};
+		await docClient.put(params).promise();
+		return params.Item;
 	}
 }
 
