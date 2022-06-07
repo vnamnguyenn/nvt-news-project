@@ -116,14 +116,6 @@ class PostService {
 	async deleteByID(pk, postId) {
 		return await PostRepository.deleteByID(pk, postId);
 	}
-
-	async comment(pk, data) {
-		return await PostRepository.comment(pk, {
-			PostID: data.PostID,
-			CommentContent: data.CommentContent,
-			ParentCommentId: data.ParentCommentId,
-		});
-	}
 }
 
 module.exports = new PostService();

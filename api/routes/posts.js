@@ -14,7 +14,6 @@ module.exports = async (app) => {
 	app.get('/api/search/:title', PostController.search);
 	app.get('/api/post/:id', PostController.findByID);
 	app.post('/api/post/create/', verifyTokenAndAdmin, PostController.create);
-	app.post('/api/post/comment_post/', PostController.comment);
 	app.patch('/api/post/edit/:postId', verifyTokenAndAdmin, PostController.update);
 	app.delete('/api/post/delete/:postId', verifyTokenAndAdmin, PostController.deleteByID);
 };

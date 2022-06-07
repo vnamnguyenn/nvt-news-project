@@ -29,6 +29,7 @@ require('./routes/tags')(app);
 require('./routes/categories')(app);
 require('./routes/users')(app);
 require('./routes/posts')(app);
+require('./routes/comments')(app);
 app.listen(port, () => {
 	console.log(`App listening at http://localhost:${port}`);
 });

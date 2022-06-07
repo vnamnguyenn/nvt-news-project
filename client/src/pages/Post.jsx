@@ -61,17 +61,17 @@ const Post = () => {
 								<p>{post.AuthorInfo?.Description}</p>
 								<ul className="list social-media">
 									<li className="list-item">
-										<a className="list-link">
+										<a href="/" className="list-link">
 											<i className="ri-instagram-line"></i>
 										</a>
 									</li>
 									<li className="list-item">
-										<a className="list-link">
+										<a href="/" className="list-link">
 											<i className="ri-facebook-circle-line"></i>
 										</a>
 									</li>
 									<li className="list-item">
-										<a className="list-link">
+										<a href="/" className="list-link">
 											<i className="ri-twitter-line"></i>
 										</a>
 									</li>
@@ -134,9 +134,7 @@ const Post = () => {
 								</li>
 							</ul>
 						</div>
-						<div>
-							<Comment />
-						</div>
+						<Comment />
 					</div>
 				</div>
 			</section>

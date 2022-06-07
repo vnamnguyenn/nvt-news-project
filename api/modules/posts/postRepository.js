@@ -217,31 +217,6 @@ class PostRepository {
 
 		return await docClient.delete(params).promise();
 	}
-
-	async comment(pk, data) {
-		const getUserInfo = await userRepository.findByID(pk);
-		let id = uniqid('c');
-		const params = {
-			TableName: this.tableName,
-			Item: {
-				PK: pk,
-				SK: 'CMT_' + id,
-				CommentId: id,
-				PostID: data.PostID,
-				CommentContent: data.CommentContent,
-				ParentCommentId: data.ParentCommentId,
-				CreatedDate: currentTime,
-				AccountInfo: {
-					PK: getUserInfo.Item.PK,
-					AccountId: getUserInfo.Item.AccountId,
-					FullName: getUserInfo.Item.FullName,
-					Avatar: getUserInfo.Item.Avatar,
-				},
-			},
-		};
-		await docClient.put(params).promise();
-		return params.Item;
-	}
 }
 
 module.exports = new PostRepository();

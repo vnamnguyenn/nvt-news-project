@@ -123,16 +123,6 @@ class PostController {
 			res.status(500).json({err: 'Something went wrong'});
 		}
 	}
-
-	async comment(req, res) {
-		try {
-			const data = await PostService.comment(req.user.pk, req.body);
-			res.status(200).json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
 }
 
 module.exports = new PostController();
