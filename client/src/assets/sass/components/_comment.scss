@@ -15,25 +15,27 @@
 	background: #fff;
 	min-height: 100px !important;
 	border: 1px solid #dadada;
-	border-radius: 4px;
+	border-radius: 3px;
 	padding: 10px 1.5%;
 	font-size: 14px;
 	color: #333;
 	outline: none;
+	margin-top: 15px;
 }
 .create-comment .submmit-comment {
-	margin-top: 10px;
+	margin-top: 5px;
 	width: 100%;
 	display: flex;
 	justify-content: end;
+	gap: 7px;
 }
 .create-comment .submmit-comment button {
-	border-radius: 5px;
+	border-radius: 3px;
 	width: 100px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 45px;
+	height: 35px;
 }
 
 .comments-container h1 a {
@@ -106,6 +108,7 @@
 }
 
 .comments-list .comment-box {
+	border-radius: 3px;
 	width: 680px;
 	float: right;
 	position: relative;
@@ -225,10 +228,16 @@
 .comment-box .comment-open .btn-send {
 	text-decoration: none;
 }
-.comment-box .btn-reply {
-	cursor: pointer;
-	align-items: center;
+
+.comment-box .comment-open {
+	padding-left: unset;
 	display: flex;
+	gap: 8px;
+}
+.comment-box .btn-action {
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
 }
 .comment-box .comment-name.by-author,
 .comment-box .comment-name.by-author a {

@@ -19,7 +19,7 @@ class CommentRepository {
 				ParentPostID: data.ParentPostID,
 				CommentContent: data.CommentContent,
 				ParentCommentId: data.ParentCommentId,
-				CreatedDate: new Date(),
+				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 				AccountInfo: {
 					AccountId: getUserInfo.Item.AccountId,
 					FullName: getUserInfo.Item.FullName,
@@ -37,6 +37,40 @@ class CommentRepository {
 			})
 			.promise();
 		return params.Item;
+	}
+
+	async updateByID(pk, CommentId, data) {
+		const params = {
+			TableName: this.tableName,
+			Key: {
+				PK: pk,
+				SK: 'CMT_' + CommentId,
+			},
+			UpdateExpression: 'SET #27820 = :27820',
+			ExpressionAttributeValues: {
+				':27820': data.CommentContent,
+			},
+			ExpressionAttributeNames: {
+				'#27820': 'CommentContent',
+			},
+			ReturnValues: `UPDATED_NEW`,
+		};
+
+		const update = await docClient.update(params).promise();
+
+		return update.Attributes;
+	}
+
+	async deleteByID(pk, CommentId) {
+		const params = {
+			TableName: this.tableName,
+			Key: {
+				PK: pk,
+				SK: 'CMT_' + CommentId,
+			},
+		};
+
+		return await docClient.delete(params).promise();
 	}
 
 	async getComment(postID) {

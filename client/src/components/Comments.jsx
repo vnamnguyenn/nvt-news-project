@@ -1,10 +1,12 @@
 import {useState, useEffect} from 'react';
 import {publicRequest, userRequest} from '../requestMethods';
-import AddComment from './AddComment';
+import CommentForm from './CommentForm';
 import Comment from './Comment';
+import {toast} from 'react-toastify';
 
 const Comments = ({postID}) => {
 	const [backendComments, setBackendComments] = useState([]);
+	const [activeComment, setActiveComment] = useState(null);
 	const rootComments = backendComments.filter(
 		(backendComment) => backendComment.ParentCommentId === null,
 	);
@@ -16,15 +18,107 @@ const Comments = ({postID}) => {
 	};
 
 	const addComment = async (text, parentId) => {
-		console.log('submit', text, parentId);
-		await userRequest
-			.post('/comment/create/', {
-				ParentPostID: postID,
-				CommentContent: text,
-				ParentCommentId: parentId === undefined ? null : parentId,
-			})
-			.then((comment) => setBackendComments([comment.data, ...backendComments]));
-		console.log(backendComments);
+		try {
+			await userRequest
+				.post('/comment/create/', {
+					ParentPostID: postID,
+					CommentContent: text,
+					ParentCommentId: parentId === undefined ? null : parentId,
+				})
+				.then((comment) => setBackendComments([comment.data, ...backendComments]));
+			setActiveComment(null);
+			toast.success('Add Comment in successfully', {
+				position: 'bottom-right',
+				autoClose: 2500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+		} catch (error) {
+			toast.error('Create new comment is Failed', {
+				position: 'bottom-right',
+				autoClose: 2500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+		}
+	};
+
+	const updateComment = async (text, commentId) => {
+		try {
+			await userRequest
+				.patch('/comment/edit/' + commentId, {
+					CommentContent: text,
+				})
+				.then(() => {
+					const updateBackendComments = backendComments.map((backendComment) => {
+						if (backendComment.CommentId === commentId) {
+							return {...backendComment, CommentContent: text};
+						}
+
+						return backendComment;
+					});
+
+					setBackendComments(updateBackendComments);
+					setActiveComment(null);
+				});
+			toast.success('You comment is updated', {
+				position: 'bottom-right',
+				autoClose: 2500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+		} catch (error) {
+			toast.error('Comment update is Failed', {
+				position: 'bottom-right',
+				autoClose: 2500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+		}
+	};
+
+	const deleteComment = async (commentId) => {
+		if (window.confirm('Are you sure that you want to remove comment?')) {
+			try {
+				await userRequest.delete('/comment/delete/' + commentId).then(() => {
+					const updateBackendComments = backendComments.filter(
+						(backendComment) => backendComment.CommentId !== commentId,
+					);
+					setBackendComments(updateBackendComments);
+				});
+				toast.success('Delete Comment in successfully', {
+					position: 'bottom-right',
+					autoClose: 2500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: false,
+					progress: undefined,
+				});
+			} catch (error) {
+				toast.error('Delete comment is Failed', {
+					position: 'bottom-right',
+					autoClose: 2500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: false,
+					progress: undefined,
+				});
+			}
+		}
 	};
 
 	useEffect(() => {
@@ -37,14 +131,19 @@ const Comments = ({postID}) => {
 
 	return (
 		<div className="create-comment">
-			<AddComment submitLabel="Write" handleSubmit={addComment} />
-			<h2>User Comments ({rootComments.length})</h2>
+			<CommentForm submitLabel="Write" handleSubmit={addComment} />
+			<h2>Comments ({rootComments.length})</h2>
 			<ul id="comments-list" className="comments-list">
 				{rootComments.map((rootComment) => (
 					<Comment
 						key={rootComment.CommentId}
 						replies={getReplies(rootComment.CommentId)}
 						comment={rootComment}
+						deleteComment={deleteComment}
+						activeComment={activeComment}
+						setActiveComment={setActiveComment}
+						addComment={addComment}
+						updateComment={updateComment}
 					/>
 				))}
 			</ul>

@@ -1,9 +1,33 @@
 import {useSelector} from 'react-redux';
 import ReactTooltip from 'react-tooltip';
+import CommentForm from './CommentForm';
 
-const Comment = ({comment, replies}) => {
+const Comment = ({
+	comment,
+	replies,
+	deleteComment,
+	activeComment,
+	setActiveComment,
+	parentId = null,
+	addComment,
+	updateComment,
+}) => {
 	const currentUser = useSelector((state) => state.user.currentUser);
+
 	const canReply = Boolean(currentUser == null ? currentUser : currentUser.exportData.AccountId);
+	const isReplying =
+		activeComment && activeComment.type === 'replying' && activeComment.id === comment.CommentId;
+	const isEditing =
+		activeComment && activeComment.type === 'editing' && activeComment.id === comment.CommentId;
+	const replyId = parentId ? parentId : comment.CommentId;
+	const canEdit =
+		currentUser == null
+			? currentUser
+			: currentUser.exportData.AccountId === comment.AccountInfo.AccountId;
+	const canDelete =
+		currentUser == null
+			? currentUser
+			: currentUser.exportData.AccountId === comment.AccountInfo.AccountId;
 
 	return (
 		<div className="create-comment">
@@ -11,15 +35,12 @@ const Comment = ({comment, replies}) => {
 				<li key={comment.CommentId}>
 					<div className="comment-main-level">
 						<div className="comment-avatar">
-							<img
-								src="{rootComment.AccountInfo.Avatar} {rootComment.AccountInfo.FullName}"
-								alt=""
-							/>
+							<img src={comment.AccountInfo.Avatar} alt="" />
 						</div>
 						<div className="comment-box">
 							<div className="comment-head">
 								<h6 className="comment-name by-author">
-									<a href="/column/">Van Nam</a>
+									<a href="/column/">{comment.AccountInfo.FullName}</a>
 								</h6>
 								<span className="posted-time">{comment.CreatedDate}</span>
 
@@ -38,18 +59,25 @@ const Comment = ({comment, replies}) => {
 								{comment.CommentContent}
 								<div className="comment-open">
 									{canReply && (
-										<a href="/column/" className="btn-reply">
-											<svg
-												data-tip="Reply comment"
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												width="18"
-												height="18"
-											>
-												<path fill="none" d="M0 0H24V24H0z" />
-												<path d="M11 20L1 12l10-8v5c5.523 0 10 4.477 10 10 0 .273-.01.543-.032.81C19.46 16.95 16.458 15 13 15h-2v5z" />
-											</svg>
-										</a>
+										<div
+											onClick={() => setActiveComment({id: comment.CommentId, type: 'replying'})}
+											className="btn-action"
+										>
+											Reply
+										</div>
+									)}
+									{canEdit && (
+										<div
+											onClick={() => setActiveComment({id: comment.CommentId, type: 'editing'})}
+											className="btn-action"
+										>
+											Edit
+										</div>
+									)}
+									{canDelete && (
+										<div onClick={() => deleteComment(comment.CommentId)} className="btn-action">
+											Delete
+										</div>
 									)}
 								</div>
 							</div>
@@ -65,10 +93,32 @@ const Comment = ({comment, replies}) => {
 							</div>
 						</div>
 					</div>
+					{isEditing && (
+						<CommentForm
+							submitLabel="Edit"
+							hasCanleButton
+							handleCanle={() => setActiveComment(null)}
+							initialText={comment.CommentContent}
+							handleSubmit={(text) => updateComment(text, comment.CommentId)}
+						/>
+					)}
+					{isReplying && (
+						<CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, replyId)} />
+					)}
 					{replies.length > 0 && (
 						<ul className="comments-list reply-list">
 							{replies.map((reply) => (
-								<Comment key={reply.CommentId} replies={[]} comment={reply} />
+								<Comment
+									key={reply.CommentId}
+									replies={[]}
+									parentId={comment.CommentId}
+									comment={reply}
+									deleteComment={deleteComment}
+									activeComment={activeComment}
+									setActiveComment={setActiveComment}
+									addComment={addComment}
+									updateComment={updateComment}
+								/>
 							))}
 						</ul>
 					)}

@@ -1,7 +1,13 @@
 import React, {useState} from 'react';
 
-function AddComment({handleSubmit, submitLabel}) {
-	const [text, setText] = useState('');
+function CommentForm({
+	handleSubmit,
+	submitLabel,
+	hasCanleButton = false,
+	initialText = '',
+	handleCanle,
+}) {
+	const [text, setText] = useState(initialText);
 	const isTextareaDisabled = text.length === 0;
 	const onSubmit = (event) => {
 		event.preventDefault();
@@ -14,10 +20,16 @@ function AddComment({handleSubmit, submitLabel}) {
 				<textarea
 					value={text}
 					onChange={(e) => setText(e.target.value)}
-					placeholder="Please coment at the mo"
+					placeholder="Add comment"
 				></textarea>
 			</div>
 			<div className="submmit-comment">
+				{hasCanleButton && (
+					<button type="button" onClick={handleCanle} className="btn btn-cancle">
+						cancle
+					</button>
+				)}
+
 				<button disabled={isTextareaDisabled} className="btn btn-primary">
 					{submitLabel}
 				</button>
@@ -26,4 +38,4 @@ function AddComment({handleSubmit, submitLabel}) {
 	);
 }
 
-export default AddComment;
+export default CommentForm;

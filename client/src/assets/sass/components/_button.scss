@@ -2,11 +2,29 @@
 	background-color: #d6364b;
 	width: 100%;
 	padding: 15px;
-    border: 2px solid var(--secondary-background-color);
-    color: #fff;
-    font-weight: 600;
+	outline: none;
+	border: none;
+	color: #fff;
+	font-weight: 600;
 }
-.btn-primary:hover,.btn-primary:focus{
+.btn-primary:hover,
+.btn-primary:focus {
 	background-color: #df253e;
-    color: #fff!important;
+	color: #fff !important;
+}
+
+.btn-cancle {
+	background-color: #cccccc;
+	width: 100%;
+	padding: 15px;
+	outline: none;
+	border: none;
+	color: #fff;
+	font-weight: 600;
+	outline: none;
+}
+.btn-cancle:hover,
+.btn-cancle:focus {
+	background-color: #a8a1a1;
+	color: #fff !important;
 }
