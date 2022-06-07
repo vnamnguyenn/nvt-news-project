@@ -15,7 +15,7 @@ class AuthController {
 	async signin(req, res) {
 		try {
 			const data = await AuthService.signin(req.body);
-			
+
 			const accessToken = jwt.sign(
 				{
 					pk: data.Items[0].PK,

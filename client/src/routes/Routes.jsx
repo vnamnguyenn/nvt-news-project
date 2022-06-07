@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Home from '../pages/Home';
 import Signin from '../pages/SignIn';
 import NotFound from '../pages/NotFound';
@@ -12,7 +12,6 @@ import {useSelector} from 'react-redux';
 import SearchPost from '../pages/SearchPost';
 
 const ROUTES = () => {
-	const navigate = useNavigate();
 	const user = useSelector((state) => state.user.currentUser);
 	return (
 		<Routes>

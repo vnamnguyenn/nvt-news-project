@@ -1,6 +1,11 @@
-import { loginFailure, loginStart, loginSuccess, logoutSuccess } from './userRedux';
-import { publicRequest, userRequest } from '../requestMethods';
-import { toast } from 'react-toastify';
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+  logoutSuccess,
+} from "./userRedux";
+import { publicRequest, userRequest } from "../requestMethods";
+import { toast } from "react-toastify";
 import {
   getPostFailure,
   getPoststart,
@@ -14,14 +19,14 @@ import {
   addPostFailure,
   addPoststart,
   addPostsuccess,
-} from './postRedux';
+} from "./postRedux";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
-    const res = await publicRequest.post('/signin', user);
-    toast.success('Logged in successfull', {
-      position: 'bottom-right',
+    const res = await publicRequest.post("/signin", user);
+    toast.success("Logged in successfull", {
+      position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
@@ -30,10 +35,10 @@ export const login = async (dispatch, user) => {
       progress: undefined,
     });
     dispatch(loginSuccess(res.data));
-    window.location.replace('/posts');
+    window.location.replace("/posts");
   } catch (err) {
-    toast.error('Email and/or Password wrong', {
-      position: 'bottom-right',
+    toast.error("Email and/or Password wrong", {
+      position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
@@ -46,14 +51,14 @@ export const login = async (dispatch, user) => {
 };
 
 export const logout = (dispatch) => {
-  window.location.replace('/signin');
+  window.location.replace("/signin");
   dispatch(logoutSuccess());
 };
 
 export const getPosts = async (dispatch) => {
   dispatch(getPoststart());
   try {
-    const res = await publicRequest.get('/post_admin');
+    const res = await publicRequest.get("/post_admin");
     dispatch(getPostsuccess(res.data));
   } catch (err) {
     dispatch(getPostFailure());
@@ -92,7 +97,7 @@ export const deletePost = async (postID, dispatch) => {
 
 export const getTags = async () => {
   try {
-    return await publicRequest.get('/tag');
+    return await publicRequest.get("/tag");
   } catch (err) {
     console.log(err);
   }

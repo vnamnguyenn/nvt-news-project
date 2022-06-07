@@ -5,7 +5,6 @@ const {
 	verifyTokenAndAdmin,
 } = require('../middleware/verifyToken');
 module.exports = async (app) => {
-	app.post('/api/comment/create/', commentController.create);
+	app.post('/api/comment/create/', verifyToken, commentController.create);
 	app.get('/api/comment/get_comment/:postID', commentController.getComment);
-	app.get('/api/comment/get_reply/:commentID', commentController.getReply);
 };

@@ -3,7 +3,7 @@ const CommentRepository = require(`../comments/commentRepository`);
 class CommentService {
 	async create(pk, data) {
 		return await CommentRepository.create(pk, {
-			PostID: data.PostID,
+			ParentPostID: data.ParentPostID,
 			CommentContent: data.CommentContent,
 			ParentCommentId: data.ParentCommentId,
 		});
@@ -11,16 +11,6 @@ class CommentService {
 
 	async getComment(postID) {
 		const data = await CommentRepository.getComment(postID);
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
-	async getReply(commentID) {
-		const data = await CommentRepository.getReply(commentID);
 
 		if (data) {
 			return data.Items;

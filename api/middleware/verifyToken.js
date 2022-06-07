@@ -9,13 +9,14 @@ const verifyToken = (req, res, next) => {
 			next();
 		});
 	} else {
+		console.log(authHeader);
 		return res.status(401).json('You are not authenticated!');
 	}
 };
 
 const verifyTokenAndAuthorization = (req, res, next) => {
 	verifyToken(req, res, () => {
-		if (req.user.accountId === req.params.id || req.user.pk == req.params.id || req.user.isAdmin) {
+		if (req.user.accountId === req.params.id || req.user.pk == req.params.id) {
 			next();
 		} else {
 			res.status(403).json('You are not alowed to do that!');

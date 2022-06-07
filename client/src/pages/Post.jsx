@@ -4,20 +4,20 @@ import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
 import {publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
-import Comment from '../components/Comment';
+import Comments from '../components/Comments';
 const Post = () => {
 	const location = useLocation();
 	const [post, setPost] = useState({});
-	const path = location.pathname.split('/')[2];
+	const postID = location.pathname.split('/')[2];
 
 	useEffect(() => {
 		const getPost = async () => {
-			const res = await publicRequest.get('/post/' + path);
+			const res = await publicRequest.get('/post/' + postID);
 			document.title = res.data.PostTitle;
 			setPost(res.data);
 		};
 		getPost();
-	}, [path]);
+	}, [postID]);
 
 	const cleanHTML = DOMPurify.sanitize(post.Content, {
 		USE_PROFILES: {html: true},
@@ -25,6 +25,7 @@ const Post = () => {
 
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	const [loading, setLoading] = useState(true);
+
 	useEffect(() => {
 		if (loading) {
 			setTimeout(() => {
@@ -134,7 +135,9 @@ const Post = () => {
 								</li>
 							</ul>
 						</div>
-						<Comment />
+						<div className="comments-container">
+							<Comments postID={postID} />
+						</div>
 					</div>
 				</div>
 			</section>
