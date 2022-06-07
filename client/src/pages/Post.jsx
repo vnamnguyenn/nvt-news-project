@@ -136,7 +136,7 @@ const Post = () => {
 							</ul>
 						</div>
 						<div className="comments-container">
-							<Comments postID={postID} />
+							<Comments postAuthorID={post.AuthorInfo.AccountId} postID={postID} />
 						</div>
 					</div>
 				</div>

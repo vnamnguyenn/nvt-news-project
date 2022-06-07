@@ -3,6 +3,7 @@ import ReactTooltip from 'react-tooltip';
 import CommentForm from './CommentForm';
 
 const Comment = ({
+	postAuthor,
 	comment,
 	replies,
 	deleteComment,
@@ -13,6 +14,7 @@ const Comment = ({
 	updateComment,
 }) => {
 	const currentUser = useSelector((state) => state.user.currentUser);
+	const getAuthor = postAuthor === comment.AccountInfo.AccountId;
 
 	const canReply = Boolean(currentUser == null ? currentUser : currentUser.exportData.AccountId);
 	const isReplying =
@@ -39,9 +41,15 @@ const Comment = ({
 						</div>
 						<div className="comment-box">
 							<div className="comment-head">
-								<h6 className="comment-name by-author">
-									<a href="/column/">{comment.AccountInfo.FullName}</a>
-								</h6>
+								{getAuthor ? (
+									<h6 className="comment-name by-author">
+										<a href="/column/">{comment.AccountInfo.FullName}</a>
+									</h6>
+								) : (
+									<h6 className="comment-name">
+										<a href="/column/">{comment.AccountInfo.FullName}</a>
+									</h6>
+								)}
 								<span className="posted-time">{comment.CreatedDate}</span>
 
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
@@ -97,13 +105,19 @@ const Comment = ({
 						<CommentForm
 							submitLabel="Edit"
 							hasCanleButton
+							logged={true}
 							handleCanle={() => setActiveComment(null)}
 							initialText={comment.CommentContent}
 							handleSubmit={(text) => updateComment(text, comment.CommentId)}
 						/>
 					)}
 					{isReplying && (
-						<CommentForm submitLabel="Reply" handleSubmit={(text) => addComment(text, replyId)} />
+						<CommentForm
+							initialText={`@${comment.AccountInfo.FullName} `}
+							logged={true}
+							submitLabel="Reply"
+							handleSubmit={(text) => addComment(text, replyId)}
+						/>
 					)}
 					{replies.length > 0 && (
 						<ul className="comments-list reply-list">
@@ -118,6 +132,7 @@ const Comment = ({
 									setActiveComment={setActiveComment}
 									addComment={addComment}
 									updateComment={updateComment}
+									postAuthor={postAuthor}
 								/>
 							))}
 						</ul>

@@ -4,7 +4,7 @@ import CommentForm from './CommentForm';
 import Comment from './Comment';
 import {toast} from 'react-toastify';
 
-const Comments = ({postID}) => {
+const Comments = ({postID, postAuthorID}) => {
 	const [backendComments, setBackendComments] = useState([]);
 	const [activeComment, setActiveComment] = useState(null);
 	const rootComments = backendComments.filter(
@@ -144,6 +144,7 @@ const Comments = ({postID}) => {
 						setActiveComment={setActiveComment}
 						addComment={addComment}
 						updateComment={updateComment}
+						postAuthor={postAuthorID}
 					/>
 				))}
 			</ul>

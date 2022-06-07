@@ -37,6 +37,11 @@
 	align-items: center;
 	height: 35px;
 }
+.create-comment .submmit-comment button:disabled {
+	background-color: #d75a6b;
+	cursor: not-allowed !important;
+	pointer-events: all !important;
+}
 
 .comments-container h1 a {
 	font-size: 18px;
@@ -144,7 +149,7 @@
 .comment-box .comment-head {
 	background: var(--secondary-background-color);
 	padding: 10px 12px;
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid var(--primary-background-color);
 	overflow: hidden;
 	-webkit-border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
@@ -195,7 +200,7 @@
 	-webkit-border-radius: 0 0 0px 0px;
 	-moz-border-radius: 0 0 0px 0px;
 	border-radius: 0 0 0px 0px;
-	border-bottom: 0.5px solid #e5e5e5;
+	border-bottom: 0.5px solid var(--secondary-background-color);
 }
 
 .comment-box .comment-footer {
@@ -241,11 +246,11 @@
 }
 .comment-box .comment-name.by-author,
 .comment-box .comment-name.by-author a {
-	color: #03658c;
+	color: #017e4b;
 }
 .comment-box .comment-name.by-author:after {
 	/*content: '';*/
-	background: #03658c;
+	background: #017e4b;
 	color: #fff;
 	font-size: 12px;
 	padding: 3px 5px;
