@@ -1,28 +1,37 @@
-import Navbar from '../../components/navbar/Navbar';
-import Sidebar from '../../components/sidebar/Sidebar';
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@material-ui/data-grid';
-import { DeleteOutline } from '@material-ui/icons';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPost, deletePost, getPosts, updatePost } from '../../redux/apiCalls';
-import { toast } from 'react-toastify';
-import '../../assets/sass/general/list.scss';
-import { Button } from '@mui/material';
-import FormDialog from './FormDialog';
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@material-ui/data-grid";
+import { DeleteOutline } from "@material-ui/icons";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addPost,
+  deletePost,
+  getPosts,
+  updatePost,
+} from "../../redux/apiCalls";
+import { toast } from "react-toastify";
+import "../../assets/sass/general/list.scss";
+import { Button } from "@mui/material";
+import FormDialog from "./FormDialog";
 const initialValue = {
-  PostTitle: '',
-  Thumbnail: '',
-  PostImage: '',
-  Description: '',
-  Content: '',
-  ReadingTime: '',
-  MetaDescription: '',
-  MetaTitle: '',
-  MetaKeyword: '',
-  Published: '',
-  PublishedDate: '',
-  UpdatedDate: '',
-  AuthorInfo: '',
+  PostTitle: "",
+  Thumbnail: "",
+  PostImage: "",
+  Description: "",
+  Content: "",
+  ReadingTime: "5",
+  MetaDescription: "",
+  MetaTitle: "",
+  MetaKeyword: "",
+  Published: "",
+  PublishedDate: "",
+  UpdatedDate: "",
+  AuthorInfo: "",
 };
 
 function Post() {
@@ -43,10 +52,8 @@ function Post() {
     setFormData(initialValue);
   };
 
-  // setting update row data to form data and opening pop up window
   const handleUpdate = (
     PostID,
-    Thumbnail,
     PostImage,
     Description,
     Content,
@@ -63,7 +70,7 @@ function Post() {
     setFormData({
       PostID: PostID,
       PostTitle: PostTitle,
-      Thumbnail: Thumbnail,
+      Thumbnail: PostImage,
       PostImage: PostImage,
       Description: Description,
       Content: Content,
@@ -81,11 +88,14 @@ function Post() {
 
   //Deletepost
   const handleDelete = (id) => {
-    const confirm = window.confirm('Are you sure, you want to delete this row', id);
+    const confirm = window.confirm(
+      "Are you sure, you want to delete this row",
+      id
+    );
     if (confirm) {
       deletePost(id, dispatch);
-      toast.success('Post deleted successfully', {
-        position: 'bottom-right',
+      toast.success("Post deleted successfully", {
+        position: "bottom-right",
         autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
@@ -100,7 +110,7 @@ function Post() {
     const { value, id } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-  //submit record post to database
+
   const handleFormSubmit = () => {
     if (formData.PostID) {
       updatePost(
@@ -125,8 +135,8 @@ function Post() {
       );
       //close modal
       handleClose();
-      toast.success('Post updated successfully', {
-        position: 'bottom-right',
+      toast.success("Post updated successfully", {
+        position: "bottom-right",
         autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
@@ -140,20 +150,21 @@ function Post() {
         {
           PostTitle: formData.PostTitle,
           Content: formData.Content,
-          Thumbnail: formData.Thumbnail,
+          Thumbnail: formData.PostImage,
           PostImage: formData.PostImage,
           Description: formData.Description,
+          Tags: formData.Tags,
           MetaKeyword: formData.MetaKeyword,
           ReadingTime: formData.ReadingTime,
           MetaDescription: formData.MetaDescription,
           MetaTitle: formData.MetaTitle,
-          Published: 'active',
+          Published: "active",
         },
         dispatch
       );
       handleClose();
-      toast.success('Post created successfully', {
-        position: 'bottom-right',
+      toast.success("Post created successfully", {
+        position: "bottom-right",
         autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
@@ -167,8 +178,8 @@ function Post() {
   //set column show in page
   const columns = [
     {
-      field: 'PostTitle',
-      headerName: 'Title',
+      field: "PostTitle",
+      headerName: "Title",
       minWidth: 500,
       renderCell: (params) => {
         return (
@@ -180,42 +191,50 @@ function Post() {
       },
     },
     {
-      field: 'AuthorInfo',
-      headerName: 'Author',
+      field: "AuthorInfo",
+      headerName: "Author",
       minWidth: 170,
       renderCell: (params) => {
-        return <div className="productListItem">{params.row.AuthorInfo.FullName}</div>;
+        return (
+          <div className="productListItem">
+            {params.row.AuthorInfo.FullName}
+          </div>
+        );
       },
     },
     {
-      field: 'PublishedDate',
-      headerName: 'Published Date',
+      field: "PublishedDate",
+      headerName: "Published Date",
       width: 175,
     },
     {
-      field: 'UpdatedDate',
-      headerName: 'Updated Date',
+      field: "UpdatedDate",
+      headerName: "Updated Date",
       width: 175,
     },
     {
-      field: 'ReadingTime',
-      headerName: 'Reading Time',
+      field: "ReadingTime",
+      headerName: "Reading Time",
       width: 180,
       renderCell: (params) => {
-        return <div className="productListItem">{params.row.ReadingTime} Min read</div>;
+        return (
+          <div className="productListItem">
+            {params.row.ReadingTime} Min read
+          </div>
+        );
       },
     },
     {
-      field: 'Published',
-      headerName: 'Status',
+      field: "Published",
+      headerName: "Status",
       width: 160,
       renderCell: (params) => {
         return <div className="productListItem">{params.row.Published}</div>;
       },
     },
     {
-      field: 'PostID',
-      headerName: 'Action',
+      field: "PostID",
+      headerName: "Action",
       width: 150,
       renderCell: (params) => {
         return (
@@ -225,7 +244,6 @@ function Post() {
               onClick={() =>
                 handleUpdate(
                   params.row.PostID,
-                  params.row.Thumbnail,
                   params.row.PostImage,
                   params.row.Description,
                   params.row.Content,
@@ -266,7 +284,7 @@ function Post() {
       <Sidebar />
       <div className="list__container">
         <Navbar />
-        <div className="productList" style={{ width: 'auto' }}>
+        <div className="productList" style={{ width: "auto" }}>
           <div className="datatableTitle">
             <Button onClick={handleClickOpen}>Add New</Button>
           </div>

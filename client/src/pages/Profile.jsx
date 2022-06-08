@@ -4,7 +4,7 @@ import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateProfile} from '../redux/apiCalls';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 const Profile = () => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.user.currentUser);
@@ -13,7 +13,7 @@ const Profile = () => {
 	const obj = {
 		FullName: currentUser.exportData.FullName,
 		UserEmail: currentUser.exportData.UserEmail,
-		Avatar: '',
+		Avatar: currentUser.exportData.Avatar,
 	};
 
 	const [values, setValues] = useState(obj);
@@ -46,6 +46,7 @@ const Profile = () => {
 			console.log(values);
 			try {
 				await publicRequest.post('/upload', data);
+				document.getElementById('file').value = null;
 			} catch (err) {}
 		}
 		try {
@@ -66,6 +67,16 @@ const Profile = () => {
 		<Fragment>
 			<Header />
 			<section className="section section-header-offset">
+				{file ? (
+					<div className="container image-profile">
+						<img src={URL.createObjectURL(file)} alt="" />
+					</div>
+				) : (
+					<div className="container image-profile">
+						<img src={`${baseImageUrl}${values.Avatar}`} alt="" />
+					</div>
+				)}
+
 				<div className="signin-container container">
 					<form onSubmit={handleSubmit}>
 						<h1 className="title">Update Profile</h1>
@@ -82,6 +93,7 @@ const Profile = () => {
 								className="form-input"
 								accept="image/png, image/gif, image/jpeg"
 								type="file"
+								id="file"
 								onChange={(e) => setFile(e.target.files[0])}
 							/>
 						</div>

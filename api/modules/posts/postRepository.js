@@ -118,7 +118,7 @@ class PostRepository {
 				MetaKeyword: data.MetaKeyword,
 				Published: 'active',
 				PublishedDate: currentTimePrefixMonth,
-				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
+				UpdatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 				ReadingTime: data.ReadingTime,
 				Categories: data.Categories,
 				Tags: data.Tags,
