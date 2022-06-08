@@ -15,3 +15,5 @@ export const userRequest = axios.create({
 	baseURL: BASE_URL,
 	headers: {token: `Bearer ${TOKEN}`},
 });
+
+export const baseImageUrl = 'http://localhost:9000/images/';

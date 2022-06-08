@@ -22,6 +22,11 @@
 				padding: 10px 15px;
 			}
 
+			input:disabled {
+				cursor: not-allowed !important;
+				pointer-events: all !important;
+			}
+
 			label {
 				color: gray;
 			}
@@ -42,7 +47,7 @@
 		}
 	}
 
-	.btn-primary{
+	.btn-primary {
 		margin-top: 20px;
 		margin-bottom: 25px;
 	}
@@ -56,7 +61,6 @@
 		.forgot {
 			display: inline-block;
 			margin: 0 0 10px;
-
 		}
 		.new {
 			display: block;

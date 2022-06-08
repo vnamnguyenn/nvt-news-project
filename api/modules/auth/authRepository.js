@@ -1,9 +1,47 @@
 const {docClient} = require(`../../config/dynamoDB`);
 const crypto = require('crypto');
 const uniqid = require('uniqid');
+const userRepository = require('../users/userRepository');
 class AuthRepository {
 	constructor() {
 		this.tableName = 'Blog';
+	}
+
+	async findByID(pk) {
+		const params = {
+			TableName: this.tableName,
+			Key: {
+				PK: pk,
+				SK: pk,
+			},
+		};
+
+		return await docClient.get(params).promise();
+	}
+
+	async updateByID(pk, data) {
+		const getUserInfo = await userRepository.findByID(pk);
+		const params = {
+			TableName: this.tableName,
+			Key: {
+				PK: pk,
+				SK: pk,
+			},
+			UpdateExpression: 'SET #11740 = :11740, #11741 = :11741',
+			ExpressionAttributeValues: {
+				':11740': data.FullName,
+				':11741': data.Avatar == '' ? getUserInfo.Item.Avatar : data.Avatar,
+			},
+			ExpressionAttributeNames: {
+				'#11740': 'FullName',
+				'#11741': 'Avatar',
+			},
+			ReturnValues: `UPDATED_NEW`,
+		};
+
+		const update = await docClient.update(params).promise();
+
+		return update.Attributes;
 	}
 
 	async signup(data) {

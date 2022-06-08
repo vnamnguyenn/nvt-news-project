@@ -2,9 +2,10 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
 import Comments from '../components/Comments';
+
 const Post = () => {
 	const location = useLocation();
 	const [post, setPost] = useState({});
@@ -55,7 +56,11 @@ const Post = () => {
 						<div className="post-content" dangerouslySetInnerHTML={{__html: cleanHTML}} />
 						<div className="author d-grid">
 							<div className="author-image-box">
-								<img src={post.AuthorInfo?.Avatar} alt="" className="article-image" />
+								<img
+									src={`${baseImageUrl}${post.AuthorInfo?.Avatar}`}
+									alt=""
+									className="article-image"
+								/>
 							</div>
 							<div className="author-about">
 								<h3 className="author-name">{post.AuthorInfo?.FullName}</h3>

@@ -97,7 +97,9 @@ const Header = () => {
 							{user ? (
 								<ul>
 									<li className="list-item screen-lg-hidden">
-										<a className="list-link">{user.exportData.FullName}</a>
+										<Link to="/profile" className="list-link">
+											{user.exportData.FullName}
+										</Link>
 									</li>
 									<li className="list-item screen-lg-hidden">
 										<a onClick={logOutBtn} className="list-link">
@@ -137,7 +139,9 @@ const Header = () => {
 						</button>
 						{user ? (
 							<>
-								<a className="list-link screen-sm-hidden">{user.exportData.FullName}</a>
+								<Link to="/profile" className="list-link screen-sm-hidden">
+									{user.exportData.FullName}
+								</Link>
 								<a onClick={logOutBtn} className="btn sign-up-btn fancy-border screen-sm-hidden">
 									<span>Sign out</span>
 								</a>

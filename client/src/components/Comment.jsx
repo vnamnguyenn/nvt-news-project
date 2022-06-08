@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import CommentForm from './CommentForm';
-
+import {baseImageUrl} from '../requestMethods';
 const Comment = ({
 	postAuthor,
 	comment,
@@ -37,7 +37,7 @@ const Comment = ({
 				<li key={comment.CommentId}>
 					<div className="comment-main-level">
 						<div className="comment-avatar">
-							<img src={comment.AccountInfo.Avatar} alt="" />
+							<img src={`${baseImageUrl}${comment.AccountInfo.Avatar}`} alt="" />
 						</div>
 						<div className="comment-box">
 							<div className="comment-head">
@@ -140,44 +140,6 @@ const Comment = ({
 
 					<ReactTooltip />
 				</li>
-
-				{/* <li>
-				<div className="comment-main-level">
-					<div className="comment-avatar">
-						<img src="http://dummyimg.com/60" alt="" />
-					</div>
-
-					<div className="comment-box">
-						<div className="comment-head">
-							<h6 className="comment-name">
-								<a href="/column/">Lorena Rojero</a>
-							</h6>
-							<span className="posted-time">Posted on DD-MM-YYYY HH:MM</span>
-							<i className="ri-facebook-line"></i>
-							<i className="ri-service-fill"></i>
-						</div>
-						<div className="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure
-							laudantium vitae, praesentium optio, sapiente distinctio illo?
-							<div className="comment-open">
-								<a href="/column/" className="btn-reply">
-									<i className="ri-reply-fill"></i>
-								</a>
-							</div>
-						</div>
-						<div className="comment-footer">
-							<div className="comment-form">
-								<textarea className="form-control" name="" id=""></textarea>
-								<div className="pull-right send-button">
-									<a href="/column/" className="btn-send">
-										send
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</li> */}
 			</ul>
 		</div>
 	);

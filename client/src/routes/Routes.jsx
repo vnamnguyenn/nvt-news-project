@@ -10,6 +10,7 @@ import Categories from '../pages/Categories';
 import Category from '../pages/Category';
 import {useSelector} from 'react-redux';
 import SearchPost from '../pages/SearchPost';
+import Profile from '../pages/Profile';
 
 const ROUTES = () => {
 	const user = useSelector((state) => state.user.currentUser);
@@ -17,7 +18,11 @@ const ROUTES = () => {
 		<Routes>
 			<Route path="*" element={<NotFound />} />
 			<Route path="/" element={<Home />} />
-			{user == null && (
+			{user ? (
+				<>
+					<Route path="/profile" element={<Profile />} />
+				</>
+			) : (
 				<>
 					<Route path="/signin" element={<Signin />} />
 					<Route path="/signup" element={<Signup />} />

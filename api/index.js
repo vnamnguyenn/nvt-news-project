@@ -4,11 +4,11 @@ require('dotenv').config();
 const app = express();
 const port = process.env.EXPRESS_PORT || 9000;
 const bodyParser = require('body-parser');
+const path = require('path');
 app.use(bodyParser.json());
 const cors = require('cors'); //midleware using rest api backend to frontend
 app.use(cors());
-
-// upload file (image, video, etc..)
+app.use('/images', express.static(path.join(__dirname, '/images')));
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
 		cb(null, 'images');

@@ -12,6 +12,7 @@ const FormInput = (props) => {
 		<div className="auth-input">
 			<label>{label}</label>
 			<input
+				id={id}
 				className="form-input"
 				{...inputProps}
 				onChange={onChange}
