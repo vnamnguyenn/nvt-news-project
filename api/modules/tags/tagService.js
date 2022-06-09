@@ -31,10 +31,9 @@ class TagService {
 		return data;
 	}
 
-	async create(pk,data) {
-		return await TagRepository.create(pk,{
+	async create(pk, data) {
+		return await TagRepository.create(pk, {
 			TagName: data.TagName,
-			Slug:data.Slug,
 			Thumbnail: data.Thumbnail,
 		});
 	}

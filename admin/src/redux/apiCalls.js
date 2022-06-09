@@ -4,6 +4,7 @@ import {
   loginSuccess,
   logoutSuccess,
 } from "./userRedux";
+
 import { publicRequest, userRequest } from "../requestMethods";
 import { toast } from "react-toastify";
 import {
@@ -20,6 +21,21 @@ import {
   addPoststart,
   addPostsuccess,
 } from "./postRedux";
+
+import {
+  getTagFailure,
+  getTagstart,
+  getTagsuccess,
+  deleteTagFailure,
+  deleteTagstart,
+  deleteTagsuccess,
+  updateTagFailure,
+  updateTagstart,
+  updateTagsuccess,
+  addTagFailure,
+  addTagstart,
+  addTagsuccess,
+} from "./tagRedux";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
@@ -53,6 +69,16 @@ export const login = async (dispatch, user) => {
 export const logout = (dispatch) => {
   window.location.replace("/signin");
   dispatch(logoutSuccess());
+};
+
+export const getTags = async (dispatch) => {
+  dispatch(getTagstart());
+  try {
+    const res = await publicRequest.get("/tag");
+    dispatch(getTagsuccess(res.data));
+  } catch (err) {
+    dispatch(getTagFailure());
+  }
 };
 
 export const getPosts = async (dispatch) => {
@@ -92,13 +118,5 @@ export const deletePost = async (postID, dispatch) => {
     dispatch(deletePostsuccess(postID));
   } catch (err) {
     dispatch(deletePostFailure());
-  }
-};
-
-export const getTags = async () => {
-  try {
-    return await publicRequest.get("/tag");
-  } catch (err) {
-    console.log(err);
   }
 };

@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
+import { baseImageUrl, publicRequest } from "../../requestMethods";
 const initialValue = {
   PostTitle: "",
   Thumbnail: "",
@@ -32,6 +33,7 @@ const initialValue = {
   PublishedDate: "",
   UpdatedDate: "",
   AuthorInfo: "",
+  Tags: "",
 };
 
 function Post() {
@@ -65,7 +67,8 @@ function Post() {
     MetaDescription,
     MetaTitle,
     MetaKeyword,
-    AuthorInfo
+    AuthorInfo,
+    Tags
   ) => {
     setFormData({
       PostID: PostID,
@@ -82,6 +85,7 @@ function Post() {
       UpdatedDate: UpdatedDate,
       Published: Published,
       AuthorInfo: AuthorInfo,
+      Tags: Tags,
     });
     handleClickOpen();
   };
@@ -108,10 +112,22 @@ function Post() {
 
   const onChange = (e) => {
     const { value, id } = e.target;
-    setFormData({ ...formData, [id]: value });
+
+    if (id === "PostImage") {
+      console.log(e.target.files[0]);
+      setFormData({ ...formData, [id]: e.target.files[0] });
+    } else {
+      // console.log(id);
+      setFormData({ ...formData, [id]: value });
+    }
   };
 
   const handleFormSubmit = () => {
+    const data = new FormData();
+    const imageName = Date.now() + formData.PostImage.name;
+    data.append("name", imageName);
+    data.append("file", formData.PostImage);
+    publicRequest.post("/upload", data);
     if (formData.PostID) {
       updatePost(
         formData.PostID,
@@ -130,6 +146,7 @@ function Post() {
           UpdatedDate: formData.UpdatedDate,
           PublishedDate: formData.PublishedDate,
           AuthorInfo: formData.AuthorInfo,
+          Tags: formData.Tags,
         },
         dispatch
       );
@@ -145,13 +162,13 @@ function Post() {
         progress: undefined,
       });
     } else {
-      // adding new post
+      console.log("submitimage", formData.PostImage);
       addPost(
         {
           PostTitle: formData.PostTitle,
           Content: formData.Content,
-          Thumbnail: formData.PostImage,
-          PostImage: formData.PostImage,
+          Thumbnail: imageName,
+          PostImage: imageName,
           Description: formData.Description,
           Tags: formData.Tags,
           MetaKeyword: formData.MetaKeyword,
@@ -184,7 +201,11 @@ function Post() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.Thumbnail} alt="" />
+            <img
+              className="productListImg"
+              src={baseImageUrl + params.row.PostImage}
+              alt=""
+            />
             {params.row.PostTitle}
           </div>
         );
@@ -255,7 +276,8 @@ function Post() {
                   params.row.MetaDescription,
                   params.row.MetaTitle,
                   params.row.MetaKeyword,
-                  params.row.AuthorInfo
+                  params.row.AuthorInfo,
+                  params.row.Tags
                 )
               }
             >

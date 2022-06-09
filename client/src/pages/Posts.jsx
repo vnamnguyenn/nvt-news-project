@@ -2,7 +2,7 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import ReactPaginate from 'react-paginate';
 import QueryString from 'query-string';
 
@@ -67,7 +67,7 @@ function Posts() {
 						{posts.map((p) => (
 							<Link to={p.PostID} key={p.PostID} className="article d-grid">
 								<div className="older-posts-article-image-wrapper">
-									<img src={p.Thumbnail} alt="" className="article-image" />
+									<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
 								</div>
 								<div className="article-data-container">
 									<div className="article-data">

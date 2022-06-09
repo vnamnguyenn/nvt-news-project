@@ -50,7 +50,7 @@ const Post = () => {
 							<span className="article-data-spacer"></span>
 							<span>{post.ReadingTime} Min read</span>
 						</div>
-						<img src={post.PostImage} alt="" />
+						<img src={baseImageUrl + post.PostImage} alt="" />
 					</div>
 					<div className="container">
 						<div className="post-content" dangerouslySetInnerHTML={{__html: cleanHTML}} />
