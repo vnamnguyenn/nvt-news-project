@@ -67,7 +67,6 @@ export const login = async (dispatch, user) => {
 };
 
 export const logout = (dispatch) => {
-  window.location.replace("/signin");
   dispatch(logoutSuccess());
 };
 
@@ -78,6 +77,54 @@ export const getTags = async (dispatch) => {
     dispatch(getTagsuccess(res.data));
   } catch (err) {
     dispatch(getTagFailure());
+  }
+};
+
+export const addTag = async (tag, dispatch) => {
+  dispatch(addTagstart());
+  try {
+    const res = await userRequest.post(`/tag/create`, tag);
+    dispatch(addTagsuccess(res.data));
+  } catch (err) {
+    dispatch(addTagFailure());
+  }
+};
+
+export const updateTag = async (TagId, tagName, tag, dispatch) => {
+  dispatch(updateTagstart());
+  try {
+    await userRequest.patch(`/tag/edit/${TagId}`, tag);
+    dispatch(updateTagsuccess({ TagId, tag }));
+    toast.success(`Update '${tagName}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(updateTagFailure());
+  }
+};
+
+export const deleteTag = async (tagId, tagName, dispatch) => {
+  dispatch(deleteTagstart());
+  try {
+    await userRequest.delete(`/tag/delete/${tagId}`);
+    dispatch(deleteTagsuccess(tagId));
+    toast.success(`Delete '${tagName}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(deleteTagFailure());
   }
 };
 
@@ -104,7 +151,7 @@ export const addPost = async (post, dispatch) => {
 export const updatePost = async (postID, post, dispatch) => {
   dispatch(updatePoststart());
   try {
-    const res = await userRequest.patch(`/post/edit/${postID}`, post);
+    await userRequest.patch(`/post/edit/${postID}`, post);
     dispatch(updatePostsuccess({ postID, post }));
   } catch (err) {
     dispatch(updatePostFailure());

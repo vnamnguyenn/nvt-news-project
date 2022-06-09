@@ -21,8 +21,8 @@ import FormDialog from "./FormDialog";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
 const initialValue = {
   PostTitle: "",
-  Thumbnail: "",
-  PostImage: "",
+  Thumbnail: undefined,
+  PostImage: undefined,
   Description: "",
   Content: "",
   ReadingTime: "5",
@@ -33,6 +33,7 @@ const initialValue = {
   PublishedDate: "",
   UpdatedDate: "",
   AuthorInfo: "",
+  EmptyImage: "",
   Tags: [],
 };
 
@@ -61,14 +62,14 @@ function Post() {
     Content,
     ReadingTime,
     PostTitle,
-    Published,
-    PublishedDate,
-    UpdatedDate,
     MetaDescription,
     MetaTitle,
     MetaKeyword,
-    AuthorInfo,
-    Tags
+    Tags,
+    Categories,
+    PublishedDate,
+    Published,
+    AuthorInfo
   ) => {
     setFormData({
       PostID: PostID,
@@ -82,10 +83,11 @@ function Post() {
       MetaTitle: MetaTitle,
       MetaKeyword: MetaKeyword,
       PublishedDate: PublishedDate,
-      UpdatedDate: UpdatedDate,
+      UpdatedDate: PublishedDate,
       Published: Published,
       AuthorInfo: AuthorInfo,
       Tags: Tags,
+      EmptyImage: PostImage,
     });
     handleClickOpen();
   };
@@ -129,7 +131,10 @@ function Post() {
 
   const handleFormSubmit = () => {
     const data = new FormData();
-    const imageName = Date.now() + formData.PostImage.name;
+    const imageName =
+      formData.PostImage === undefined
+        ? formData.EmptyImage
+        : Date.now() + formData.PostImage.name;
     data.append("name", imageName);
     data.append("file", formData.PostImage);
     publicRequest.post("/upload", data);
@@ -201,7 +206,7 @@ function Post() {
     {
       field: "PostTitle",
       headerName: "Title",
-      minWidth: 500,
+      minWidth: 300,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -218,7 +223,7 @@ function Post() {
     {
       field: "AuthorInfo",
       headerName: "Author",
-      minWidth: 170,
+      minWidth: 130,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -230,17 +235,17 @@ function Post() {
     {
       field: "PublishedDate",
       headerName: "Published Date",
-      width: 175,
+      width: 130,
     },
     {
       field: "UpdatedDate",
       headerName: "Updated Date",
-      width: 175,
+      width: 130,
     },
     {
       field: "ReadingTime",
       headerName: "Reading Time",
-      width: 180,
+      width: 130,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -274,14 +279,14 @@ function Post() {
                   params.row.Content,
                   params.row.ReadingTime,
                   params.row.PostTitle,
-                  params.row.Published,
-                  params.row.PublishedDate,
-                  params.row.UpdatedDate,
                   params.row.MetaDescription,
                   params.row.MetaTitle,
                   params.row.MetaKeyword,
-                  params.row.AuthorInfo,
-                  params.row.Tags
+                  params.row.Tags,
+                  params.row.Categories,
+                  params.row.PublishedDate,
+                  params.row.Published,
+                  params.row.AuthorInfo
                 )
               }
             >

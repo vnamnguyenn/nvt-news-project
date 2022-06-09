@@ -29,108 +29,58 @@ export default function FormDialog({
   onChange,
   handleFormSubmit,
 }) {
-  const {
-    PostID,
-    PostTitle,
-    PostImage,
-    Description,
-    MetaDescription,
-    MetaKeyword,
-    MetaTitle,
-    ReadingTime,
-    Tags,
-    // Published,
-    Content,
-  } = data;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    getTags(dispatch);
-  }, []);
-  const tags = useSelector((state) => state.tag.tags);
-  const [tagValue, setTagvalue] = useState();
-  const [listTag, setTistTag] = useState(tags);
-  const [imageSelected, setImageSelected] = useState("");
-  const { contentBlocks, entityMap } = convertFromHTML(Content);
-  const editorState = EditorState.createWithContent(
-    ContentState.createFromBlockArray(contentBlocks, entityMap)
-  );
+  const { TagId, Thumbnail, TagName } = data;
 
-  const [content, setContent] = useState(editorState);
-  const onEditorStateChange = (editorState) => {
-    setContent(editorState);
-  };
-
-  data.Content = draftToHtml(convertToRaw(content.getCurrentContent()));
-  const inputFile = useRef(null);
-  const openFile = () => {
-    inputFile.current.click();
-  };
-
-  const uploadImage = (e) => {
-    e.preventDefault();
-    if (imageSelected) {
-      const data = new FormData();
-      const filename = Date.now() + imageSelected.name;
-      data.append("name", filename);
-      data.append("file", imageSelected);
-      document.getElementById("PostImage").value = filename;
-      try {
-        publicRequest.post("/upload", data);
-      } catch (err) {}
-    }
-  };
-
-  // window.confirm(localStorage.getItem("items"));
   return (
     <div>
       <Dialog
         open={open}
         onClose={handleClose}
-        fullWidth
-        maxWidth="lg"
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {PostID ? "Update post" : "Create new post"}
+          {TagId ? "Update tag" : "Create new tag"}
         </DialogTitle>
         <DialogContent>
           <form>
             <TextField
-              id="PostTitle"
-              value={PostTitle}
+              required
+              id="TagName"
+              value={TagName}
               onChange={(e) => onChange(e)}
-              placeholder="Enter title"
-              label="Title"
+              placeholder="Enter Tag Name"
+              label="Name"
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               margin="dense"
               fullWidth
             />
-
             <TextField
-              id="MetaTitle"
-              value={MetaTitle}
+              required
+              id="Thumbnail"
+              type="file"
               onChange={(e) => onChange(e)}
-              placeholder="Enter MetaTitle"
-              label="MetaTitle"
+              label="Image"
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               margin="dense"
               fullWidth
             />
           </form>
         </DialogContent>
-        {/* <DialogActions>
-        <Button onClick={handleClose} color="secondary" variant="outlined">
-          Cancel
-        </Button>
-        <Button
-          color="primary"
-          onClick={() => handleFormSubmit()}
-          variant="contained"
-        >
-          {PostID ? "Update" : "Submit"}
-        </Button>
-      </DialogActions> */}
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary" variant="outlined">
+            Cancel
+          </Button>
+          <Button
+            color="primary"
+            onClick={() => handleFormSubmit()}
+            variant="contained"
+          >
+            {TagId ? "Update" : "Submit"}
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   );

@@ -67,22 +67,35 @@ class TagRepository {
 	}
 
 	async update(pk, tagId, data) {
+		const paramById = {
+			TableName: this.tableName,
+			IndexName: 'TagIndex',
+			KeyConditionExpression: '#caec0 = :caec0',
+			ExpressionAttributeValues: {
+				':caec0': tagId,
+			},
+			ExpressionAttributeNames: {
+				'#caec0': 'TagId',
+			},
+		};
+		const getDataByID = await docClient.query(paramById).promise();
+		console.log(getDataByID);
 		const params = {
 			TableName: this.tableName,
 			Key: {
 				PK: pk,
 				SK: 'TAG_' + tagId,
 			},
-			UpdateExpression: 'SET #1be70 = :1be70, #1be72 = :1be72, #1be72 = :1be72',
+			UpdateExpression: 'SET #14b60 = :14b60, #14b61 = :14b61, #14b62 = :14b62',
 			ExpressionAttributeValues: {
-				':1be70': data.TagName,
-				':1be72': data.UpdatedDate,
-				':1be72': data.Thumbnail,
+				':14b60': data.TagName,
+				':14b61': data.Thumbnail,
+				':14b62': currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 			ExpressionAttributeNames: {
-				'#1be70': 'CategoryName',
-				'#1be72': 'UpdatedDate',
-				'#1be73': 'Thumbnail',
+				'#14b60': 'TagName',
+				'#14b61': 'Thumbnail',
+				'#14b62': 'UpdatedDate',
 			},
 			ReturnValues: `UPDATED_NEW`,
 		};
@@ -92,12 +105,12 @@ class TagRepository {
 		return update.Attributes;
 	}
 
-	async deleteByID(id) {
+	async deleteByID(pk, tagId) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: id,
-				SK: 'POST_p8d0rghcvkl1dwokrv',
+				PK: pk,
+				SK: 'TAG_' + tagId,
 			},
 		};
 

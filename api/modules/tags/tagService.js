@@ -38,19 +38,16 @@ class TagService {
 		});
 	}
 
-	async update(data) {
-		return await TagRepository.update({
-			Content: data.Content,
-			PostImage: data.PostImage,
+	async update(pk, tagId, data) {
+		return await TagRepository.update(pk, tagId, {
+			TagName: data.TagName,
 			Thumbnail: data.Thumbnail,
-			ReadingTime: data.ReadingTime,
-			Published: data.Published,
-			PostTitle: data.PostTitle,
 		});
+		console.log(data);
 	}
 
-	async deleteByID(id) {
-		return await TagRepository.deleteByID(id);
+	async deleteByID(pk, tagId) {
+		return await TagRepository.deleteByID(pk, tagId);
 	}
 }
 

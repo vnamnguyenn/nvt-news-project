@@ -43,7 +43,8 @@ class TagController {
 
 	async update(req, res) {
 		try {
-			const data = await TagService.update(req.body);
+			const data = await TagService.update(req.user.pk, req.params.tagId, req.body);
+			console.log(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -53,8 +54,10 @@ class TagController {
 
 	async deleteByID(req, res) {
 		try {
-			await TagService.deleteByID(req.params.id);
-			res.json('Delete is success');
+			const data = await TagService.deleteByID(req.user.pk, req.params.tagId);
+			if (data) {
+				res.json('Delete is success');
+			}
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({err: 'Something went wrong'});

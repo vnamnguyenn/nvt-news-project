@@ -39,7 +39,6 @@ export default function FormDialog({
     MetaTitle,
     ReadingTime,
     Tags,
-    // Published,
     Content,
   } = data;
   const dispatch = useDispatch();
@@ -78,6 +77,7 @@ export default function FormDialog({
         <DialogContent>
           <form>
             <TextField
+              required
               id="PostTitle"
               value={PostTitle}
               onChange={(e) => onChange(e)}
@@ -85,9 +85,11 @@ export default function FormDialog({
               label="Title"
               variant="outlined"
               margin="dense"
+              InputLabelProps={{ shrink: true }}
               fullWidth
             />
             <Autocomplete
+              required
               multiple
               options={listTag}
               id="Tags"
@@ -104,18 +106,19 @@ export default function FormDialog({
                 />
               )}
             />
-            <div className="form-controlGroup-inputWrapper">
-              <label className="form-input form-input--file">
-                <input
-                  onChange={(e) => onChange(e)}
-                  type="file"
-                  id="PostImage"
-                  accept="image/*"
-                  size="14"
-                />
-              </label>
-            </div>
             <TextField
+              required
+              id="PostImage"
+              type="file"
+              onChange={(e) => onChange(e)}
+              label="Image"
+              InputLabelProps={{ shrink: true }}
+              variant="outlined"
+              margin="dense"
+              fullWidth
+            />
+            <TextField
+              required
               id="Description"
               value={Description}
               onChange={(e) => onChange(e)}
@@ -124,6 +127,7 @@ export default function FormDialog({
               variant="outlined"
               margin="dense"
               fullWidth
+              InputLabelProps={{ shrink: true }}
             />
             <div
               style={{
@@ -150,8 +154,10 @@ export default function FormDialog({
               variant="outlined"
               margin="dense"
               fullWidth
+              InputLabelProps={{ shrink: true }}
             />
             <TextField
+              required
               id="ReadingTime"
               value={ReadingTime}
               onChange={(e) => onChange(e)}
@@ -159,6 +165,7 @@ export default function FormDialog({
               variant="outlined"
               margin="dense"
               fullWidth
+              InputLabelProps={{ shrink: true }}
             />
             <TextField
               id="MetaDescription"
@@ -169,6 +176,7 @@ export default function FormDialog({
               variant="outlined"
               margin="dense"
               fullWidth
+              InputLabelProps={{ shrink: true }}
             />
             <TextField
               id="MetaKeyword"
@@ -179,6 +187,7 @@ export default function FormDialog({
               variant="outlined"
               margin="dense"
               fullWidth
+              InputLabelProps={{ shrink: true }}
             />
             <TextField
               id="MetaTitle"
@@ -189,6 +198,7 @@ export default function FormDialog({
               variant="outlined"
               margin="dense"
               fullWidth
+              InputLabelProps={{ shrink: true }}
             />
           </form>
         </DialogContent>

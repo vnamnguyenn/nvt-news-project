@@ -15,8 +15,7 @@ import { useDispatch } from "react-redux";
 const Sidebar = () => {
   const dispatch = useDispatch();
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  const handleClick = () => {
     logout(dispatch);
   };
 
@@ -43,34 +42,21 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <VideoLibraryIcon className="icon" />
-            <span>Videos</span>
-          </li>
-          <li>
             <CategoryIcon className="icon" />
             <span>Categories</span>
           </li>
           <li>
-            <LocalOfferIcon className="icon" />
             <Link to={"/tags"}>
               <LocalOfferIcon className="icon" />
               <span>Tags</span>
             </Link>
           </li>
-          <li>
-            <PersonOutlineIcon className="icon" />
-            <span>Accounts</span>
-          </li>
           <p className="title">Users</p>
-          <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li>
-          <li>
-            <a onClick={handleClick}>
+          <li onClick={handleClick}>
+            <div>
               <ExitToAppIcon className="icon" />
               <span>Logout</span>
-            </a>
+            </div>
           </li>
         </ul>
       </div>

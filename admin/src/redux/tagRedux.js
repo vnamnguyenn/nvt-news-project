@@ -59,6 +59,7 @@ export const tagSlice = createSlice({
       state.error = false;
     },
     updateTagsuccess: (state, action) => {
+      console.log(state.tags);
       state.isFetching = false;
       state.tags[
         state.tags.findIndex((item) => item.TagId === action.payload.TagId)
