@@ -5,6 +5,7 @@ import {useLocation} from 'react-router';
 import {baseImageUrl, publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
 import Comments from '../components/Comments';
+import {Link} from 'react-router-dom';
 
 const Post = () => {
 	const location = useLocation();
@@ -87,57 +88,11 @@ const Post = () => {
 						<div className="article__tags">
 							<h2>Tags</h2>
 							<ul className="menu article__tags__menu">
-								<li className="menu__item">
-									<a href="/column/">Column</a>
-								</li>
-								<li className="menu__item">
-									<a href="/diversity-2/">Diversity</a>
-								</li>
-								<li className="menu__item">
-									<a href="/hiring/">Hiring</a>
-								</li>
-								<li className="menu__item">
-									<a href="/personnel/">Personnel</a>
-								</li>
-								<li className="menu__item">
-									<a href="/startups/">Startups</a>
-								</li>
-								<li className="menu__item">
-									<a href="/talent/">Talent</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/bias/">bias</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/diverse-hiring/">diverse hiring</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/diversity/">diversity</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/ec-column/">EC Column</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/ec-dei/">EC DEI</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/ec-how-to/">EC How To</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/executive/">executive</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/hiring/">hiring</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/inclusion/">inclusion</a>
-								</li>
-								<li className="menu__item">
-									<a href="/tag/interview/">interview</a>
-								</li>
-								<li className="menu__item">
-									<a href="/techcrunchplus/work/">Work</a>
-								</li>
+								{post.Tags.map((tag) => (
+									<li className="menu__item" key={tag.TagId}>
+										<Link to={`/tag/${tag.TagId}`}>{tag.TagName}</Link>
+									</li>
+								))}
 							</ul>
 						</div>
 						<div className="comments-container">

@@ -43,46 +43,25 @@ export default function FormDialog({
     Content,
   } = data;
   const dispatch = useDispatch();
-  useEffect(() => {
-    getTags(dispatch);
-  }, []);
+
   const tags = useSelector((state) => state.tag.tags);
   const [tagValue, setTagvalue] = useState();
   const [listTag, setTistTag] = useState(tags);
-  const [imageSelected, setImageSelected] = useState("");
+  useEffect(() => {
+    getTags(dispatch);
+  }, []);
   const { contentBlocks, entityMap } = convertFromHTML(Content);
   const editorState = EditorState.createWithContent(
     ContentState.createFromBlockArray(contentBlocks, entityMap)
   );
-
+  console.log(Tags);
   const [content, setContent] = useState(editorState);
   const onEditorStateChange = (editorState) => {
     setContent(editorState);
   };
 
   data.Content = draftToHtml(convertToRaw(content.getCurrentContent()));
-  const inputFile = useRef(null);
-  const openFile = () => {
-    inputFile.current.click();
-  };
 
-  const uploadImage = (e) => {
-    e.preventDefault();
-    // if (imageSelected) {
-    //   const data = new FormData();
-    //   const filename = Date.now() + imageSelected;
-    //   data.append("name", filename);
-    //   data.append("file", imageSelected);
-    //   document.getElementById("PostImage").value = filename;
-    //   try {
-    //     publicRequest.post("/upload", data);
-    //   } catch (err) {}
-    // }
-
-    console.log(imageSelected);
-  };
-
-  // window.confirm(localStorage.getItem("items"));
   return (
     <div>
       <Dialog
@@ -108,89 +87,32 @@ export default function FormDialog({
               margin="dense"
               fullWidth
             />
-            <div
-              style={{
-                border: "1px solid #808080",
-                borderBottom: "unset",
-                borderTop: "unset",
-                borderRadius: "4px",
-              }}
-            >
-              <Autocomplete
-                multiple
-                options={listTag}
-                variant="standard"
-                getOptionLabel={(option) => option.TagName}
-                onChange={(e, value) => setTagvalue(value)}
-                filterSelectedOptions
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder="Choose Tags"
-                    variant="outlined"
-                  />
-                )}
-              />
-
-              <TextField
-                style={{ marginBottom: "unset" }}
-                id="Tags"
-                value={JSON.stringify(tagValue)}
-                onMouseOver={(e) => onChange(e)}
-                placeholder="Tag value"
-                hidden
-                fullWidth
-                inputProps={{
-                  readOnly: true,
-                  underline: {
-                    "&&&:before": {
-                      borderBottom: "none",
-                    },
-                    "&&:after": {
-                      borderBottom: "none",
-                    },
-                  },
-                }}
-              />
-            </div>
+            <Autocomplete
+              multiple
+              options={listTag}
+              id="Tags"
+              variant="outlined"
+              defaultValue={Tags}
+              getOptionLabel={(option) => option.TagName}
+              onChange={(e, value) => onChange(e, value)}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Choose Tags"
+                  variant="outlined"
+                />
+              )}
+            />
             <div className="form-controlGroup-inputWrapper">
               <label className="form-input form-input--file">
-                {/* <span
-                  className="form-input--file-button-left"
-                  onClick={openFile}
-                >
-                  Browse
-                </span> */}
-                {/* <input
-                  id="PostImage"
-                  onClick={(e) => onChange(e)}
-                  onMouseOver={(e) => onChange(e)}
-                  onChange={(e) => onChange(e)}
-                  onMouseOut={(e) => onChange(e)}
-                  placeholder="Upload Image"
-                  label="Image"
-                  value={PostImage}
-                  type="text"
-                  className="form-input--file-text"
-                /> */}
                 <input
-                  ref={inputFile}
-                  // className="form-input-file"
-                  // onChange={(e) => {
-                  //   setImageSelected(e.target.files[0]);
-                  // }}
                   onChange={(e) => onChange(e)}
                   type="file"
                   id="PostImage"
                   accept="image/*"
                   size="14"
                 />
-                {/* <button
-                  onClick={uploadImage}
-                  className="form-input--file-button-right"
-                >
-                  Upload
-                </button> */}
               </label>
             </div>
             <TextField

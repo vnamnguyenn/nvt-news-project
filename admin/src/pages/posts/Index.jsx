@@ -33,7 +33,7 @@ const initialValue = {
   PublishedDate: "",
   UpdatedDate: "",
   AuthorInfo: "",
-  Tags: "",
+  Tags: [],
 };
 
 function Post() {
@@ -110,15 +110,20 @@ function Post() {
     }
   };
 
-  const onChange = (e) => {
+  const onChange = (e, val) => {
     const { value, id } = e.target;
-
-    if (id === "PostImage") {
-      console.log(e.target.files[0]);
-      setFormData({ ...formData, [id]: e.target.files[0] });
-    } else {
-      // console.log(id);
-      setFormData({ ...formData, [id]: value });
+    let tagId;
+    if (id.startsWith("Tags-option")) {
+      tagId = id;
+    }
+    console.log(val);
+    switch (id) {
+      case "PostImage":
+        return setFormData({ ...formData, [id]: e.target.files[0] });
+      case tagId:
+        return setFormData({ ...formData, Tags: val });
+      default:
+        return setFormData({ ...formData, [id]: value });
     }
   };
 
@@ -135,8 +140,8 @@ function Post() {
           PostID: formData.PostID,
           PostTitle: formData.PostTitle,
           Content: formData.Content,
-          Thumbnail: formData.Thumbnail,
-          PostImage: formData.PostImage,
+          Thumbnail: imageName,
+          PostImage: imageName,
           ReadingTime: formData.ReadingTime,
           Published: formData.Published,
           Description: formData.Description,
@@ -162,7 +167,6 @@ function Post() {
         progress: undefined,
       });
     } else {
-      console.log("submitimage", formData.PostImage);
       addPost(
         {
           PostTitle: formData.PostTitle,
