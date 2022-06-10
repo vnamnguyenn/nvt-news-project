@@ -34,6 +34,7 @@ class TagRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'TagIndex',
+			Limit: '6',
 		};
 		return await docClient.scan(params).promise();
 	}

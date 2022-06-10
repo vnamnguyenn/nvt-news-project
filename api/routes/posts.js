@@ -11,6 +11,7 @@ module.exports = async (app) => {
 	app.get('/api/post/trending_news', PostController.trendingNews);
 	app.get('/api/post/', PostController.getAll);
 	app.get('/api/post_admin/', PostController.getAllAdmin);
+	app.get('/api/post_by_category/', PostController.getByCategoryId);
 	app.get('/api/search/:title', PostController.search);
 	app.get('/api/post/:id', PostController.findByID);
 	app.post('/api/post/create/', verifyTokenAndAdmin, PostController.create);

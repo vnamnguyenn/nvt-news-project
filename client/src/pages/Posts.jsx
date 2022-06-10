@@ -42,6 +42,7 @@ function Posts() {
 			page: newPage.selected + 1, // index page started = 0
 		});
 	}
+	
 	//loader animation
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	const [loading, setLoading] = useState(true);

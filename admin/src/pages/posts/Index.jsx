@@ -336,7 +336,9 @@ function Post() {
         <Navbar />
         <div className="productList" style={{ width: "auto" }}>
           <div className="datatableTitle">
-            <Button onClick={handleClickOpen}>Add New Post</Button>
+            <Button onClick={handleClickOpen} class="add-new">
+              Add New Post
+            </Button>
           </div>
           <DataGrid
             autoHeight

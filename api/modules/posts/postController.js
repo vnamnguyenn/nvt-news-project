@@ -54,6 +54,17 @@ class PostController {
 		}
 	}
 
+	async getByCategoryId(req, res) {
+		try {
+			let data = await PostService.getByCategoryId();
+			res.json(data);
+			// }
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
 	async featuredArticles(req, res) {
 		try {
 			const data = await PostService.featuredArticles();

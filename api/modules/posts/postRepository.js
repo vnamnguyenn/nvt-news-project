@@ -27,10 +27,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			FilterExpression: '#128c0 >= :128c0 And #128c1 >= :128c1',
-			Limit: 3,
-			ExpressionAttributeNames: {'#128c0': 'LikeCount', '#128c1': 'CommentCount'},
-			ExpressionAttributeValues: {':128c0': '0', ':128c1': '0'},
+			Limit: '4',
 		};
 		return await docClient.scan(params).promise();
 	}
@@ -39,7 +36,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			Limit: 5,
+			Limit: '5',
 		};
 		return await docClient.scan(params).promise();
 	}
@@ -48,7 +45,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			Limit: '6',
+			Limit: '4',
 		};
 		return await docClient.scan(params).promise();
 	}
@@ -84,17 +81,20 @@ class PostRepository {
 		return await docClient.scan(params).promise();
 	}
 
-	//Get post Readingtime lessthan 6 minutes
-	async quickRead() {
-		const today = new Date();
-		const getDate =
-			today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' 23:59:00';
+	async getByCategoryId() {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			FilterExpression: '#15a90 < :15a90 And (#15a91 < :15a91)',
-			ExpressionAttributeNames: {'#15a90': 'ReadingTime', '#15a91': 'CreatedDate'},
-			ExpressionAttributeValues: {':15a90': '6', ':15a91': getDate},
+		};
+		return await docClient.scan(params).promise();
+	}
+
+	//Get post Readingtime lessthan 6 minutes
+	async quickRead() {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'PostIndex',
+			Limit: '6',
 		};
 		return await docClient.scan(params).promise();
 	}

@@ -219,7 +219,9 @@ function Category() {
           <Navbar />
           <div className="productList" style={{ width: "auto" }}>
             <div className="datatableTitle">
-              <Button onClick={handleClickOpen}>Add New Category</Button>
+              <Button onClick={handleClickOpen} class="add-new">
+                Add New Category
+              </Button>
             </div>
             <DataGrid
               autoHeight

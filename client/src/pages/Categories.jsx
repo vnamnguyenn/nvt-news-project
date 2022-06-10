@@ -15,6 +15,22 @@ const Categories = () => {
 		document.title = 'Categories | NVT';
 		getCats();
 	}, []);
+
+	//loader animation
+	document.querySelector('.sk-cube-grid').style.display = 'block';
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
+		if (loading) {
+			setTimeout(() => {
+				setLoading(false);
+				document.querySelector('.sk-cube-grid').style.display = 'none';
+			}, 500);
+		}
+	}, [loading]);
+	// render null when app is not ready
+	if (loading) {
+		return null;
+	}
 	return (
 		<div>
 			<Header />

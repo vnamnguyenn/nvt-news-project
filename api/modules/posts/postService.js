@@ -31,6 +31,23 @@ class PostService {
 		return data;
 	}
 
+	async getByCategoryId() {
+		const data = await PostRepository.getByCategoryId();
+
+		// for (let i = 0; i < data.Items.length; i++) {
+		// 	for (let j = 0; j < data.Items[i].Categories.length; j++) {
+		// 		const categoryId = data.Items[i].Categories[j].CategoryId;
+		// 	}
+		// }
+		// console.log(data.Count);
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
 	async search(title) {
 		const data = await PostRepository.search(title);
 
