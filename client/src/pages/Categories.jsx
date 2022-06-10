@@ -2,7 +2,7 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 
 const Categories = () => {
 	const [cats, setCats] = useState([]);
@@ -12,6 +12,7 @@ const Categories = () => {
 			const res = await publicRequest.get('/category');
 			setCats(res.data);
 		};
+		document.title = 'Categories | NVT';
 		getCats();
 	}, []);
 	return (
@@ -23,7 +24,11 @@ const Categories = () => {
 						{cats.map((c) => (
 							<Link to={c.CategoryId} className="article" key={c.CategoryId}>
 								<span className="tag-name">{c.CategoryName}</span>
-								<img src={c.Thumbnail} alt={c.CategoryName} className="article-image" />
+								<img
+									src={baseImageUrl + c.Thumbnail}
+									alt={c.CategoryName}
+									className="article-image"
+								/>
 							</Link>
 						))}
 					</div>

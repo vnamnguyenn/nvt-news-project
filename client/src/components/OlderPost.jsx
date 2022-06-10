@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 
 const OlderPost = () => {
 	const [posts, setPosts] = useState([]);
@@ -21,7 +21,7 @@ const OlderPost = () => {
 					{posts.map((p) => (
 						<Link to={`post/${p.PostID}`} key={p.PostID} className="article d-grid">
 							<div className="older-posts-article-image-wrapper">
-								<img src={p.Thumbnail} alt="" className="article-image" />
+								<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
 							</div>
 							<div className="article-data-container">
 								<div className="article-data">

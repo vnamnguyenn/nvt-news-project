@@ -13,7 +13,7 @@ export default function FormDialog({
   onChange,
   handleFormSubmit,
 }) {
-  const { TagId, Thumbnail, TagName } = data;
+  const { TagId, TagName } = data;
 
   return (
     <div>

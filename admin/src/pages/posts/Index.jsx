@@ -1,24 +1,24 @@
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
 import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarExport,
 } from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addPost,
   deletePost,
   getPosts,
   updatePost,
 } from "../../redux/apiCalls";
-import { toast } from "react-toastify";
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import { DeleteOutline } from "@material-ui/icons";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { baseImageUrl, publicRequest } from "../../requestMethods";
 import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
-import { baseImageUrl, publicRequest } from "../../requestMethods";
+
 const initialValue = {
   PostTitle: "",
   Thumbnail: undefined,
@@ -40,15 +40,19 @@ const initialValue = {
 function Post() {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState(10);
-  const posts = useSelector((state) => state.post.posts);
+  const posts = useSelector((state) => state.post.posts); //fetch post data
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
+
   const userId =
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
+
   useEffect(() => {
     getPosts(dispatch);
+    document.title = "Admin Dashboard - Posts";
   }, []);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -99,28 +103,15 @@ function Post() {
     handleClickOpen();
   };
 
-  //Deletepost
+  //Delete post
   const handleDelete = (id, title, PK) => {
-    if (userId === PK) {
-      const confirm = window.confirm(
-        `Are you sure, you want to delete '${title}'`
-      );
-      if (confirm) {
-        deletePost(id, title, dispatch);
-      }
-    } else {
-      toast.error(`You are not owner of '${title}' `, {
-        position: "bottom-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
+    const confirm = window.confirm(
+      `Are you sure, you want to delete '${title}'`
+    );
+    if (confirm) {
+      deletePost(id, title, dispatch);
     }
   };
-
   const onChange = (e, val) => {
     const { value, id } = e.target;
     let tagId, categoryId;
@@ -168,6 +159,7 @@ function Post() {
     if (formData.PostID) {
       updatePost(
         formData.PostID,
+        formData.PostTitle,
         {
           PostID: formData.PostID,
           PostTitle: formData.PostTitle,
@@ -190,15 +182,6 @@ function Post() {
       );
       //close modal
       handleClose();
-      toast.success("Post updated successfully", {
-        position: "bottom-right",
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
     } else {
       addPost(
         {
@@ -218,15 +201,6 @@ function Post() {
         dispatch
       );
       handleClose();
-      toast.success("Post created successfully", {
-        position: "bottom-right",
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
     }
   };
 

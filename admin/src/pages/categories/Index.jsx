@@ -1,42 +1,44 @@
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridToolbarExport,
-} from "@material-ui/data-grid";
-import { DeleteOutline } from "@material-ui/icons";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addCategory,
   deleteCategory,
   getCategories,
   updateCategory,
 } from "../../redux/apiCalls";
-import { toast } from "react-toastify";
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@material-ui/data-grid";
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import { DeleteOutline } from "@material-ui/icons";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { baseImageUrl, publicRequest } from "../../requestMethods";
 import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
-import { baseImageUrl, publicRequest } from "../../requestMethods";
 
 const initialValue = {
   CategoryName: "",
   Thumbnail: undefined,
   EmptyThumnail: "",
 };
+
 function Category() {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState(10);
-  const categories = useSelector((state) => state.category.categories);
+  const categories = useSelector((state) => state.category.categories); //fetch category data
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
+
   const userId =
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
 
   useEffect(() => {
     getCategories(dispatch);
+    document.title = "Admin Dashboard - Categories";
   }, []);
 
   const handleClickOpen = () => {
@@ -94,7 +96,6 @@ function Category() {
     data.append("name", imageName);
     data.append("file", formData.Thumbnail);
     publicRequest.post("/upload", data);
-
     if (formData.CategoryId) {
       updateCategory(
         formData.CategoryId,
@@ -123,15 +124,6 @@ function Category() {
         dispatch
       );
       handleClose();
-      toast.success("Post created successfully", {
-        position: "bottom-right",
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
     }
   };
   //set column show in page

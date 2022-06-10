@@ -1,29 +1,29 @@
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
 import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarExport,
 } from "@material-ui/data-grid";
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import { DeleteOutline } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTag, deleteTag, getTags, updateTag } from "../../redux/apiCalls";
-import { toast } from "react-toastify";
+import { baseImageUrl, publicRequest } from "../../requestMethods";
 import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
-import { baseImageUrl, publicRequest } from "../../requestMethods";
 
 const initialValue = {
   TagName: "",
   Thumbnail: undefined,
   EmptyThumnail: "",
 };
+
 function Tag() {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState(10);
-  const tags = useSelector((state) => state.tag.tags);
+  const tags = useSelector((state) => state.tag.tags); //fetch tags data
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
   const userId =
@@ -31,6 +31,7 @@ function Tag() {
     useSelector((state) => state.user.currentUser.exportData.AccountId);
   useEffect(() => {
     getTags(dispatch);
+    document.title = "Admin Dashboard - Tags";
   }, []);
 
   const handleClickOpen = () => {
@@ -110,15 +111,6 @@ function Tag() {
         dispatch
       );
       handleClose();
-      toast.success("Post created successfully", {
-        position: "bottom-right",
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
     }
   };
   //set column show in page

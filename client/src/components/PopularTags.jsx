@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 const PopularTags = () => {
 	const [tags, setTags] = useState([]);
 	useEffect(() => {
@@ -20,11 +20,7 @@ const PopularTags = () => {
 					{tags.map((t, id) => (
 						<Link to="" key={t.TagId} className="article">
 							<span className="tag-name">#{t.TagName}</span>
-							<img
-								src={t.Thumbnail}
-								alt=""
-								className="article-image"
-							/>
+							<img src={baseImageUrl + t.Thumbnail} alt="" className="article-image" />
 						</Link>
 					))}
 				</div>

@@ -86,11 +86,6 @@ const Header = () => {
 							</li>
 							<li className="list-item">
 								<a href="/#" className="list-link">
-									Audio
-								</a>
-							</li>
-							<li className="list-item">
-								<a href="/#" className="list-link">
 									Contact
 								</a>
 							</li>

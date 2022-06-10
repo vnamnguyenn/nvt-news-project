@@ -51,7 +51,6 @@ import {
   deleteCategorysuccess,
   deleteCategoryFailure,
 } from "./categoryRedux";
-import { useSelector } from "react-redux";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
@@ -101,6 +100,15 @@ export const addTag = async (tag, dispatch) => {
   try {
     const res = await userRequest.post(`/tag/create`, tag);
     dispatch(addTagsuccess(res.data));
+    toast.success("Create tag in successfully", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   } catch (err) {
     dispatch(addTagFailure());
   }
@@ -113,7 +121,7 @@ export const updateTag = async (TagId, tagName, tag, dispatch) => {
     dispatch(updateTagsuccess({ TagId, tag }));
     toast.success(`Update '${tagName}' in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 4000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -132,7 +140,7 @@ export const deleteTag = async (tagId, tagName, dispatch) => {
     dispatch(deleteTagsuccess(tagId));
     toast.success(`Delete '${tagName}' in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 4000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -159,6 +167,15 @@ export const addCategory = async (category, dispatch) => {
   try {
     const res = await userRequest.post(`/category/create/`, category);
     dispatch(addCategorysuccess(res.data));
+    toast.success("Create category in successfully", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   } catch (err) {
     dispatch(addCategoryFailure());
   }
@@ -176,7 +193,7 @@ export const updateCategory = async (
     dispatch(updateCategorysuccess({ CategoryId, category }));
     toast.success(`Update '${CategoryName}' in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 4000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -195,7 +212,7 @@ export const deleteCategory = async (CategoryId, tagName, dispatch) => {
     dispatch(deleteCategorysuccess(CategoryId));
     toast.success(`Delete '${tagName}' in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 4000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -222,16 +239,34 @@ export const addPost = async (post, dispatch) => {
   try {
     const res = await userRequest.post(`/post/create`, post);
     dispatch(addPostsuccess(res.data));
+    toast.success("Create post in successfully", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   } catch (err) {
     dispatch(addPostFailure());
   }
 };
 
-export const updatePost = async (postID, post, dispatch) => {
+export const updatePost = async (postID, postTitle, post, dispatch) => {
   dispatch(updatePoststart());
   try {
     await userRequest.patch(`/post/edit/${postID}`, post);
     dispatch(updatePostsuccess({ postID, post }));
+    toast.success(`Update '${postTitle}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   } catch (err) {
     dispatch(updatePostFailure());
   }

@@ -30,7 +30,6 @@ export default function FormDialog({
   const {
     PostID,
     PostTitle,
-    PostImage,
     Description,
     MetaDescription,
     MetaKeyword,
@@ -38,26 +37,24 @@ export default function FormDialog({
     ReadingTime,
     Tags,
     Categories,
-    Content,
-    Published,
   } = data;
-  const dispatch = useDispatch();
 
-  const tags = useSelector((state) => state.tag.tags);
-  const categories = useSelector((state) => state.category.categories);
+  const dispatch = useDispatch();
+  const tags = useSelector((state) => state.tag.tags); //fetch tags data
+  const categories = useSelector((state) => state.category.categories); //fetch categories data
   const [listTag, setListTag] = useState(tags);
   const [listCategory, setListCategory] = useState(categories);
-  const [publish, setPublish] = useState(Published);
+  const editorState = EditorState.createEmpty();
+  const [content, setContent] = useState(editorState);
+  const convertToHTML = draftToHtml(convertToRaw(content.getCurrentContent()));
+
   useEffect(() => {
     getTags(dispatch);
   }, []);
-  const editorState = EditorState.createEmpty();
-  const [content, setContent] = useState(editorState);
+
   const onEditorStateChange = (editorState) => {
     setContent(editorState);
   };
-
-  const convertToHTML = draftToHtml(convertToRaw(content.getCurrentContent()));
 
   return (
     <div>

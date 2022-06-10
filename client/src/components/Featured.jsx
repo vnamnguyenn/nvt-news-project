@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 const Featured = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
@@ -24,7 +24,7 @@ const Featured = () => {
 					key={p.PostID}
 					className={`article featured-article featured-article-${id + 1}`}
 				>
-					<img src={p.Thumbnail} alt="" className="article-image" />
+					<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
 					{/* <span className="article-category">Category</span> */}
 					<div className="article-data-container">
 						<div className="article-data">

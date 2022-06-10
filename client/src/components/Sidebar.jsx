@@ -1,7 +1,7 @@
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 const Sidebar = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
@@ -18,7 +18,7 @@ const Sidebar = () => {
 				<Link to={`post/${p.PostID}`} key={p.PostID} className="trending-news-box">
 					<div className="trending-news-img-box">
 						<span className="trending-number place-items-center">0{id + 1}</span>
-						<img src={p.Thumbnail} alt="" className="article-image" />
+						<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
 					</div>
 					<div className="trending-news-data">
 						<div className="article-data">

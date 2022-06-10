@@ -1,6 +1,6 @@
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Pagination, Navigation} from 'swiper';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import 'swiper/css';
@@ -41,7 +41,7 @@ const Quickread = () => {
 						{posts.map((p) => (
 							<SwiperSlide key={p.PostID} className="article swiper-slide">
 								<Link to={`post/${p.PostID}`}>
-									<img src={p.Thumbnail} alt="" className="article-image" />
+									<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
 									<div className="article-data-container">
 										<div className="article-data">
 											<span>{p.PublishedDate}</span>

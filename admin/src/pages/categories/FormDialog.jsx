@@ -16,7 +16,7 @@ export default function FormDialog({
   onChange,
   handleFormSubmit,
 }) {
-  const { CategoryId, Thumbnail, CategoryName } = data;
+  const { CategoryId, CategoryName } = data;
 
   return (
     <div>
