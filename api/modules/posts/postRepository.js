@@ -36,7 +36,7 @@ class PostRepository {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'PostIndex',
-			Limit: '5',
+			Limit: '4',
 		};
 		return await docClient.scan(params).promise();
 	}
