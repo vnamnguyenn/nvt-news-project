@@ -51,6 +51,7 @@ import {
   deleteCategorysuccess,
   deleteCategoryFailure,
 } from "./categoryRedux";
+import { useSelector } from "react-redux";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
@@ -236,12 +237,30 @@ export const updatePost = async (postID, post, dispatch) => {
   }
 };
 
-export const deletePost = async (postID, dispatch) => {
+export const deletePost = async (postID, title, dispatch) => {
   dispatch(deletePoststart());
   try {
     await userRequest.delete(`/post/delete/${postID}`);
     dispatch(deletePostsuccess(postID));
+    toast.success(`Delete '${title}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   } catch (err) {
     dispatch(deletePostFailure());
+    toast.error(`Delete is Failed ${err}`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   }
 };

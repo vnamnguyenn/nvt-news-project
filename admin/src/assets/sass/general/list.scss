@@ -29,10 +29,26 @@
       cursor: pointer;
       margin-right: 20px;
     }
-
     .productListDelete {
       color: red;
       cursor: pointer;
+    }
+    .productListEditDisabled {
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: #c7c7c7;
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    }
+
+    .productListDeleteDisabled {
+      color: #c7c7c7;
+      cursor: not-allowed !important;
+      pointer-events: none;
     }
   }
 }

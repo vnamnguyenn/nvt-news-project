@@ -33,8 +33,6 @@ const initialValue = {
   PublishedDate: "",
   UpdatedDate: "",
   AuthorInfo: "",
-  EmptyImage: "",
-  EmptyThumbnail: "",
   Tags: [],
   Categories: [],
 };
@@ -45,7 +43,9 @@ function Post() {
   const posts = useSelector((state) => state.post.posts);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
-
+  const userId =
+    "ACCT_" +
+    useSelector((state) => state.user.currentUser.exportData.AccountId);
   useEffect(() => {
     getPosts(dispatch);
   }, []);
@@ -72,7 +72,8 @@ function Post() {
     PublishedDate,
     Published,
     AuthorInfo,
-    Thumbnail
+    Thumbnail,
+    PK
   ) => {
     setFormData({
       PostID: PostID,
@@ -93,21 +94,24 @@ function Post() {
       Categories: Categories,
       EmptyImage: PostImage,
       EmptyThumbnail: Thumbnail,
+      PK: PK,
     });
     handleClickOpen();
   };
 
   //Deletepost
-  const handleDelete = (id) => {
-    const confirm = window.confirm(
-      "Are you sure, you want to delete this row",
-      id
-    );
-    if (confirm) {
-      deletePost(id, dispatch);
-      toast.success("Post deleted successfully", {
+  const handleDelete = (id, title, PK) => {
+    if (userId === PK) {
+      const confirm = window.confirm(
+        `Are you sure, you want to delete '${title}'`
+      );
+      if (confirm) {
+        deletePost(id, title, dispatch);
+      }
+    } else {
+      toast.error(`You are not owner of '${title}' `, {
         position: "bottom-right",
-        autoClose: 2500,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -180,6 +184,7 @@ function Post() {
           AuthorInfo: formData.AuthorInfo,
           Tags: formData.Tags,
           Categories: formData.Categories,
+          PK: formData.PK,
         },
         dispatch
       );
@@ -291,38 +296,53 @@ function Post() {
       headerName: "Action",
       width: 150,
       renderCell: (params) => {
-        return (
-          // {user.exportData.}
-          <>
-            <button
-              className="productListEdit"
-              onClick={() =>
-                handleUpdate(
-                  params.row.PostID,
-                  params.row.PostImage,
-                  params.row.Description,
-                  params.row.ReadingTime,
-                  params.row.PostTitle,
-                  params.row.MetaDescription,
-                  params.row.MetaTitle,
-                  params.row.MetaKeyword,
-                  params.row.Tags,
-                  params.row.Categories,
-                  params.row.PublishedDate,
-                  params.row.Published,
-                  params.row.AuthorInfo,
-                  params.row.Thumbnail
-                )
-              }
-            >
-              Edit
-            </button>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => handleDelete(params.row.PostID)}
-            />
-          </>
-        );
+        if (userId === params.row.PK) {
+          return (
+            <>
+              <button
+                className="productListEdit"
+                onClick={() =>
+                  handleUpdate(
+                    params.row.PostID,
+                    params.row.PostImage,
+                    params.row.Description,
+                    params.row.ReadingTime,
+                    params.row.PostTitle,
+                    params.row.MetaDescription,
+                    params.row.MetaTitle,
+                    params.row.MetaKeyword,
+                    params.row.Tags,
+                    params.row.Categories,
+                    params.row.PublishedDate,
+                    params.row.Published,
+                    params.row.AuthorInfo,
+                    params.row.Thumbnail,
+                    params.row.PK
+                  )
+                }
+              >
+                Edit
+              </button>
+              <DeleteOutline
+                className="productListDelete"
+                onClick={() =>
+                  handleDelete(
+                    params.row.PostID,
+                    params.row.PostTitle,
+                    params.row.PK
+                  )
+                }
+              />
+            </>
+          );
+        } else {
+          return (
+            <>
+              <button className="productListEditDisabled">Edit</button>
+              <DeleteOutline className="productListDeleteDisabled" />
+            </>
+          );
+        }
       },
     },
   ];

@@ -31,6 +31,9 @@ function Category() {
   const categories = useSelector((state) => state.category.categories);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
+  const userId =
+    "ACCT_" +
+    useSelector((state) => state.user.currentUser.exportData.AccountId);
 
   useEffect(() => {
     getCategories(dispatch);
@@ -45,12 +48,19 @@ function Category() {
     setFormData(initialValue);
   };
 
-  const handleUpdate = (CategoryId, CategoryName, Thumbnail, CreatedDate) => {
+  const handleUpdate = (
+    CategoryId,
+    CategoryName,
+    Thumbnail,
+    CreatedDate,
+    PK
+  ) => {
     setFormData({
       CategoryId: CategoryId,
       CategoryName: CategoryName,
       EmptyThumnail: Thumbnail,
       CreatedDate: CreatedDate,
+      PK: PK,
     });
     handleClickOpen();
   };
@@ -84,6 +94,7 @@ function Category() {
     data.append("name", imageName);
     data.append("file", formData.Thumbnail);
     publicRequest.post("/upload", data);
+
     if (formData.CategoryId) {
       updateCategory(
         formData.CategoryId,
@@ -93,6 +104,11 @@ function Category() {
           CategoryName: formData.CategoryName,
           Thumbnail: imageName,
           CreatedDate: formData.CreatedDate,
+          PK: formData.PK,
+          UpdatedDate:
+            new Date().toLocaleDateString("vi-VN") +
+            " " +
+            new Date().toLocaleTimeString("vi-VN"),
         },
         dispatch
       );
@@ -158,29 +174,39 @@ function Category() {
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
-        return (
-          <>
-            <button
-              className="productListEdit"
-              onClick={() =>
-                handleUpdate(
-                  params.row.CategoryId,
-                  params.row.CategoryName,
-                  params.row.Thumbnail,
-                  params.row.CreatedDate
-                )
-              }
-            >
-              Edit
-            </button>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() =>
-                handleDelete(params.row.CategoryId, params.row.CategoryName)
-              }
-            />
-          </>
-        );
+        if (userId === params.row.PK) {
+          return (
+            <>
+              <button
+                className="productListEdit"
+                onClick={() =>
+                  handleUpdate(
+                    params.row.CategoryId,
+                    params.row.CategoryName,
+                    params.row.Thumbnail,
+                    params.row.CreatedDate,
+                    params.row.PK
+                  )
+                }
+              >
+                Edit
+              </button>
+              <DeleteOutline
+                className="productListDelete"
+                onClick={() =>
+                  handleDelete(params.row.CategoryId, params.row.CategoryName)
+                }
+              />
+            </>
+          );
+        } else {
+          return (
+            <>
+              <button className="productListEditDisabled">Edit</button>
+              <DeleteOutline className="productListDeleteDisabled" />
+            </>
+          );
+        }
       },
     },
   ];

@@ -26,7 +26,9 @@ function Tag() {
   const tags = useSelector((state) => state.tag.tags);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
-
+  const userId =
+    "ACCT_" +
+    useSelector((state) => state.user.currentUser.exportData.AccountId);
   useEffect(() => {
     getTags(dispatch);
   }, []);
@@ -40,12 +42,13 @@ function Tag() {
     setFormData(initialValue);
   };
 
-  const handleUpdate = (TagId, TagName, Thumbnail, CreatedDate) => {
+  const handleUpdate = (TagId, TagName, Thumbnail, CreatedDate, PK) => {
     setFormData({
       TagId: TagId,
       TagName: TagName,
       EmptyThumnail: Thumbnail,
       CreatedDate: CreatedDate,
+      PK: PK,
     });
     handleClickOpen();
   };
@@ -88,6 +91,11 @@ function Tag() {
           TagName: formData.TagName,
           Thumbnail: imageName,
           CreatedDate: formData.CreatedDate,
+          PK: formData.PK,
+          UpdatedDate:
+            new Date().toLocaleDateString("vi-VN") +
+            " " +
+            new Date().toLocaleTimeString("vi-VN"),
         },
         dispatch
       );
@@ -153,27 +161,39 @@ function Tag() {
       headerName: "Action",
       width: 200,
       renderCell: (params) => {
-        return (
-          <>
-            <button
-              className="productListEdit"
-              onClick={() =>
-                handleUpdate(
-                  params.row.TagId,
-                  params.row.TagName,
-                  params.row.Thumbnail,
-                  params.row.CreatedDate
-                )
-              }
-            >
-              Edit
-            </button>
-            <DeleteOutline
-              className="productListDelete"
-              onClick={() => handleDelete(params.row.TagId, params.row.TagName)}
-            />
-          </>
-        );
+        if (userId === params.row.PK) {
+          return (
+            <>
+              <button
+                className="productListEdit"
+                onClick={() =>
+                  handleUpdate(
+                    params.row.TagId,
+                    params.row.TagName,
+                    params.row.Thumbnail,
+                    params.row.CreatedDate,
+                    params.row.PK
+                  )
+                }
+              >
+                Edit
+              </button>
+              <DeleteOutline
+                className="productListDelete"
+                onClick={() =>
+                  handleDelete(params.row.TagId, params.row.TagName)
+                }
+              />
+            </>
+          );
+        } else {
+          return (
+            <>
+              <button className="productListEditDisabled">Edit</button>
+              <DeleteOutline className="productListDeleteDisabled" />
+            </>
+          );
+        }
       },
     },
   ];
