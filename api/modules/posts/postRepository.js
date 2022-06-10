@@ -153,7 +153,8 @@ class PostRepository {
 				SK: 'POST_' + postId,
 			},
 			UpdateExpression:
-				'SET #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73,	#1be75 = :1be75, #1be76 = :1be76, #1be77 = :1be77, #1be78 = :1be78,#1be79 = :1be79, #1be80 = :1be80, #1be81 = :1be81,#1be82 = :1be82',
+				'SET #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73,	#1be75 = :1be75, #1be76 = :1be76,' +
+				'#1be77 = :1be77, #1be78 = :1be78,#1be79 = :1be79, #1be80 = :1be80, #1be81 = :1be81,#1be82 = :1be82,#1be83 = :1be83',
 			ExpressionAttributeValues: {
 				':1be71': data.PostImage,
 				':1be72': data.Thumbnail,
@@ -166,6 +167,7 @@ class PostRepository {
 				':1be80': data.MetaDescription,
 				':1be81': data.MetaKeyword,
 				':1be82': data.Tags,
+				':1be83': data.Categories,
 			},
 			ExpressionAttributeNames: {
 				'#1be71': 'PostImage',
@@ -179,6 +181,7 @@ class PostRepository {
 				'#1be80': 'MetaDescription',
 				'#1be81': 'MetaKeyword',
 				'#1be82': 'Tags',
+				'#1be83': 'Categories',
 			},
 			ReturnValues: `UPDATED_NEW`,
 		};

@@ -1,26 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { TextField } from "@material-ui/core";
-import {
-  EditorState,
-  convertToRaw,
-  ContentState,
-  convertFromHTML,
-} from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
+
 import "react-toastify/dist/ReactToastify.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "./FormInput.scss";
-import Autocomplete from "@mui/material/Autocomplete";
-import { publicRequest } from "../../requestMethods";
-import { Checkbox } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getTags } from "../../redux/apiCalls";
 
 export default function FormDialog({
   open,
@@ -29,7 +16,7 @@ export default function FormDialog({
   onChange,
   handleFormSubmit,
 }) {
-  const { TagId, Thumbnail, TagName } = data;
+  const { CategoryId, Thumbnail, CategoryName } = data;
 
   return (
     <div>
@@ -40,16 +27,16 @@ export default function FormDialog({
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {TagId ? "Update tag" : "Create new tag"}
+          {CategoryId ? "Update category" : "Create new category"}
         </DialogTitle>
         <DialogContent>
           <form>
             <TextField
               required
-              id="TagName"
-              value={TagName}
+              id="CategoryName"
+              value={CategoryName}
               onChange={(e) => onChange(e)}
-              placeholder="Enter Tag Name"
+              placeholder="Enter Category Name"
               label="Name"
               InputLabelProps={{ shrink: true }}
               variant="outlined"
@@ -78,7 +65,7 @@ export default function FormDialog({
             onClick={() => handleFormSubmit()}
             variant="contained"
           >
-            {TagId ? "Update" : "Submit"}
+            {CategoryId ? "Update" : "Submit"}
           </Button>
         </DialogActions>
       </Dialog>

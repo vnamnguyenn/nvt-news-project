@@ -1,7 +1,8 @@
-import ROUTES from './routes/routes';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import ROUTES from "./routes/routes";
+import { BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "../src/assets/sass/FormInput.scss";
+
 const App = () => {
   return (
     <div>

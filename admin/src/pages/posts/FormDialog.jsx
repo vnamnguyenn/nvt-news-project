@@ -15,7 +15,6 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-toastify/dist/ReactToastify.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "./FormInput.scss";
 import Autocomplete from "@mui/material/Autocomplete";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -38,14 +37,16 @@ export default function FormDialog({
     MetaTitle,
     ReadingTime,
     Tags,
+    Categories,
     Content,
     Published,
   } = data;
   const dispatch = useDispatch();
 
   const tags = useSelector((state) => state.tag.tags);
-  const [tagValue, setTagvalue] = useState();
-  const [listTag, setTistTag] = useState(tags);
+  const categories = useSelector((state) => state.category.categories);
+  const [listTag, setListTag] = useState(tags);
+  const [listCategory, setListCategory] = useState(categories);
   const [publish, setPublish] = useState(Published);
   useEffect(() => {
     getTags(dispatch);
@@ -87,6 +88,7 @@ export default function FormDialog({
             />
             <Autocomplete
               required
+              style={{ marginTop: "5px" }}
               multiple
               options={listTag}
               id="Tags"
@@ -98,10 +100,40 @@ export default function FormDialog({
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  placeholder="Choose Tags"
+                  placeholder="Choose Tag"
                   variant="outlined"
                 />
               )}
+            />
+            <Autocomplete
+              style={{ marginTop: "8px" }}
+              multiple
+              options={listCategory}
+              id="Categories"
+              fullWidth
+              autoHighlight
+              defaultValue={Categories}
+              getOptionLabel={(option) => option.CategoryName}
+              onChange={(e, value) => onChange(e, value)}
+              filterSelectedOptions
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Choose Category"
+                  variant="outlined"
+                />
+              )}
+            />
+            <TextField
+              required
+              id="Thumbnail"
+              type="file"
+              onChange={(e) => onChange(e)}
+              label="Thumbnail"
+              InputLabelProps={{ shrink: true }}
+              variant="outlined"
+              margin="dense"
+              fullWidth
             />
             <TextField
               required

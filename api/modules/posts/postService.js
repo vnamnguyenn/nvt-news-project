@@ -111,6 +111,7 @@ class PostService {
 			MetaDescription: data.MetaDescription,
 			MetaKeyword: data.MetaKeyword,
 			Tags: data.Tags,
+			Categories: data.Categories,
 		});
 	}
 

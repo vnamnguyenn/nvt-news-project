@@ -34,7 +34,9 @@ const initialValue = {
   UpdatedDate: "",
   AuthorInfo: "",
   EmptyImage: "",
+  EmptyThumbnail: "",
   Tags: [],
+  Categories: [],
 };
 
 function Post() {
@@ -69,12 +71,12 @@ function Post() {
     Categories,
     PublishedDate,
     Published,
-    AuthorInfo
+    AuthorInfo,
+    Thumbnail
   ) => {
     setFormData({
       PostID: PostID,
       PostTitle: PostTitle,
-      Thumbnail: PostImage,
       Description: Description,
       ReadingTime: ReadingTime,
       MetaDescription: MetaDescription,
@@ -88,7 +90,9 @@ function Post() {
       Published: Published,
       AuthorInfo: AuthorInfo,
       Tags: Tags,
+      Categories: Categories,
       EmptyImage: PostImage,
+      EmptyThumbnail: Thumbnail,
     });
     handleClickOpen();
   };
@@ -115,40 +119,55 @@ function Post() {
 
   const onChange = (e, val) => {
     const { value, id } = e.target;
-    // console.log(e.target);
-    let tagId;
+    let tagId, categoryId;
     if (id.startsWith("Tags-option")) {
       tagId = id;
+    }
+    if (id.startsWith("Categories-option")) {
+      categoryId = id;
     }
     switch (id) {
       case "PostImage":
         return setFormData({ ...formData, [id]: e.target.files[0] });
+      case "Thumbnail":
+        return setFormData({ ...formData, [id]: e.target.files[0] });
       case tagId:
         return setFormData({ ...formData, Tags: val });
+      case categoryId:
+        return setFormData({ ...formData, Categories: val });
       default:
         return setFormData({ ...formData, [id]: value });
     }
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
     document.getElementById("Content").click();
-    console.log(formData.PostImage);
     const data = new FormData();
+    const data2 = new FormData();
+
     const imageName =
       formData.PostImage === undefined
         ? formData.EmptyImage
         : Date.now() + formData.PostImage.name;
     data.append("name", imageName);
     data.append("file", formData.PostImage);
-    publicRequest.post("/upload", data);
-    console.log("update iamge", imageName);
+
+    const ThumbnailName =
+      formData.Thumbnail === undefined
+        ? formData.EmptyThumbnail
+        : Date.now() + formData.Thumbnail.name;
+    data2.append("name", ThumbnailName);
+    data2.append("file", formData.Thumbnail);
+
+    await publicRequest.post("/upload", data);
+    await publicRequest.post("/upload", data2);
     if (formData.PostID) {
       updatePost(
         formData.PostID,
         {
           PostID: formData.PostID,
           PostTitle: formData.PostTitle,
-          Thumbnail: imageName,
+          Thumbnail: ThumbnailName,
           PostImage: imageName,
           ReadingTime: formData.ReadingTime,
           Published: formData.Published,
@@ -160,6 +179,7 @@ function Post() {
           PublishedDate: formData.PublishedDate,
           AuthorInfo: formData.AuthorInfo,
           Tags: formData.Tags,
+          Categories: formData.Categories,
         },
         dispatch
       );
@@ -179,10 +199,11 @@ function Post() {
         {
           PostTitle: formData.PostTitle,
           Content: formData.Content,
-          Thumbnail: imageName,
+          Thumbnail: ThumbnailName,
           PostImage: imageName,
           Description: formData.Description,
           Tags: formData.Tags,
+          Categories: formData.Categories,
           MetaKeyword: formData.MetaKeyword,
           ReadingTime: formData.ReadingTime,
           MetaDescription: formData.MetaDescription,
@@ -271,6 +292,7 @@ function Post() {
       width: 150,
       renderCell: (params) => {
         return (
+          // {user.exportData.}
           <>
             <button
               className="productListEdit"
@@ -288,7 +310,8 @@ function Post() {
                   params.row.Categories,
                   params.row.PublishedDate,
                   params.row.Published,
-                  params.row.AuthorInfo
+                  params.row.AuthorInfo,
+                  params.row.Thumbnail
                 )
               }
             >
@@ -319,7 +342,7 @@ function Post() {
         <Navbar />
         <div className="productList" style={{ width: "auto" }}>
           <div className="datatableTitle">
-            <Button onClick={handleClickOpen}>Add New</Button>
+            <Button onClick={handleClickOpen}>Add New Post</Button>
           </div>
           <DataGrid
             autoHeight
@@ -330,7 +353,7 @@ function Post() {
             getRowId={(row) => row.PostID}
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            rowsPerPageOptions={[10, 25, 50, 100]}
+            rowsPerPageOptions={[5, 10, 25, 50, 100]}
             pagination
             checkboxSelection
             components={{

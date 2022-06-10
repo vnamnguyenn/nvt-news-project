@@ -146,29 +146,34 @@ export const deleteTag = async (tagId, tagName, dispatch) => {
 export const getCategories = async (dispatch) => {
   dispatch(getCategorystart());
   try {
-    const res = await publicRequest.get("/tag");
+    const res = await publicRequest.get("/category");
     dispatch(getCategorysuccess(res.data));
   } catch (err) {
     dispatch(getCategoryFailure());
   }
 };
 
-export const addCategory = async (tag, dispatch) => {
+export const addCategory = async (category, dispatch) => {
   dispatch(addCategorystart());
   try {
-    const res = await userRequest.post(`/category/create/`, tag);
+    const res = await userRequest.post(`/category/create/`, category);
     dispatch(addCategorysuccess(res.data));
   } catch (err) {
     dispatch(addCategoryFailure());
   }
 };
 
-export const updateCategory = async (TagId, tagName, tag, dispatch) => {
+export const updateCategory = async (
+  CategoryId,
+  CategoryName,
+  category,
+  dispatch
+) => {
   dispatch(updateCategorystart());
   try {
-    await userRequest.patch(`/category/edit/${TagId}`, tag);
-    dispatch(updateCategorysuccess({ TagId, tag }));
-    toast.success(`Update '${tagName}' in successfully`, {
+    await userRequest.patch(`/category/edit/${CategoryId}`, category);
+    dispatch(updateCategorysuccess({ CategoryId, category }));
+    toast.success(`Update '${CategoryName}' in successfully`, {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -182,11 +187,11 @@ export const updateCategory = async (TagId, tagName, tag, dispatch) => {
   }
 };
 
-export const deleteCategory = async (tagId, tagName, dispatch) => {
+export const deleteCategory = async (CategoryId, tagName, dispatch) => {
   dispatch(deleteCategorystart());
   try {
-    await userRequest.delete(`/category/delete/${tagId}`);
-    dispatch(deleteCategorysuccess(tagId));
+    await userRequest.delete(`/category/delete/${CategoryId}`);
+    dispatch(deleteCategorysuccess(CategoryId));
     toast.success(`Delete '${tagName}' in successfully`, {
       position: "bottom-right",
       autoClose: 2500,
