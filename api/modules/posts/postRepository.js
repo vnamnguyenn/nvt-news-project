@@ -116,7 +116,7 @@ class PostRepository {
 				MetaTitle: data.MetaTitle,
 				MetaDescription: data.MetaDescription,
 				MetaKeyword: data.MetaKeyword,
-				Published: 'active',
+				Published: data.Published,
 				PublishedDate: currentTimePrefixMonth,
 				UpdatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 				ReadingTime: data.ReadingTime,
@@ -146,18 +146,6 @@ class PostRepository {
 	}
 
 	async update(pk, postId, data) {
-		const paramById = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-			KeyConditionExpression: '#38cd0 = :38cd0',
-			ExpressionAttributeValues: {
-				':38cd0': postId,
-			},
-			ExpressionAttributeNames: {
-				'#38cd0': 'PostID',
-			},
-		};
-		const getDataByID = await docClient.query(paramById).promise();
 		const params = {
 			TableName: this.tableName,
 			Key: {
@@ -165,37 +153,32 @@ class PostRepository {
 				SK: 'POST_' + postId,
 			},
 			UpdateExpression:
-				'SET #1be70 = :1be70, #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73, #1be74 = :1be74,' +
-				'#1be75 = :1be75, #1be76 = :1be76, #1be77 = :1be77, #1be78 = :1be78,#1be79 = :1be79, #1be80 = :1be80, #1be81 = :1be81, #1be82 = :1be82',
+				'SET #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73,	#1be75 = :1be75, #1be76 = :1be76, #1be77 = :1be77, #1be78 = :1be78,#1be79 = :1be79, #1be80 = :1be80, #1be81 = :1be81,#1be82 = :1be82',
 			ExpressionAttributeValues: {
-				':1be70': data.Content,
 				':1be71': data.PostImage,
 				':1be72': data.Thumbnail,
 				':1be73': data.ReadingTime,
-				':1be74': postId,
 				':1be75': data.PostTitle,
 				':1be76': currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
-				':1be77': getDataByID.Items[0].PublishedDate,
+				':1be77': data.Description,
 				':1be78': data.Published,
 				':1be79': data.MetaTitle,
 				':1be80': data.MetaDescription,
 				':1be81': data.MetaKeyword,
-				':1be82': getDataByID.Items[0].AuthorInfo,
+				':1be82': data.Tags,
 			},
 			ExpressionAttributeNames: {
-				'#1be70': 'Content',
 				'#1be71': 'PostImage',
 				'#1be72': 'Thumbnail',
 				'#1be73': 'ReadingTime',
-				'#1be74': 'PostID',
 				'#1be75': 'PostTitle',
 				'#1be76': 'UpdatedDate',
-				'#1be77': 'PublishedDate',
+				'#1be77': 'Description',
 				'#1be78': 'Published',
 				'#1be79': 'MetaTitle',
 				'#1be80': 'MetaDescription',
 				'#1be81': 'MetaKeyword',
-				'#1be82': 'AuthorInfo',
+				'#1be82': 'Tags',
 			},
 			ReturnValues: `UPDATED_NEW`,
 		};

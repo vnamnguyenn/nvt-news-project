@@ -37,6 +37,21 @@ import {
   addTagsuccess,
 } from "./tagRedux";
 
+import {
+  getCategorystart,
+  getCategoryFailure,
+  getCategorysuccess,
+  addCategorystart,
+  addCategoryFailure,
+  addCategorysuccess,
+  updateCategorystart,
+  updateCategorysuccess,
+  updateCategoryFailure,
+  deleteCategorystart,
+  deleteCategorysuccess,
+  deleteCategoryFailure,
+} from "./categoryRedux";
+
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -125,6 +140,64 @@ export const deleteTag = async (tagId, tagName, dispatch) => {
     });
   } catch (err) {
     dispatch(deleteTagFailure());
+  }
+};
+
+export const getCategories = async (dispatch) => {
+  dispatch(getCategorystart());
+  try {
+    const res = await publicRequest.get("/tag");
+    dispatch(getCategorysuccess(res.data));
+  } catch (err) {
+    dispatch(getCategoryFailure());
+  }
+};
+
+export const addCategory = async (tag, dispatch) => {
+  dispatch(addCategorystart());
+  try {
+    const res = await userRequest.post(`/category/create/`, tag);
+    dispatch(addCategorysuccess(res.data));
+  } catch (err) {
+    dispatch(addCategoryFailure());
+  }
+};
+
+export const updateCategory = async (TagId, tagName, tag, dispatch) => {
+  dispatch(updateCategorystart());
+  try {
+    await userRequest.patch(`/category/edit/${TagId}`, tag);
+    dispatch(updateCategorysuccess({ TagId, tag }));
+    toast.success(`Update '${tagName}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(updateCategoryFailure());
+  }
+};
+
+export const deleteCategory = async (tagId, tagName, dispatch) => {
+  dispatch(deleteCategorystart());
+  try {
+    await userRequest.delete(`/category/delete/${tagId}`);
+    dispatch(deleteCategorysuccess(tagId));
+    toast.success(`Delete '${tagName}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(deleteCategoryFailure());
   }
 };
 

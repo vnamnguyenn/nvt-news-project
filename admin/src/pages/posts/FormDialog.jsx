@@ -17,8 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./FormInput.scss";
 import Autocomplete from "@mui/material/Autocomplete";
-import { publicRequest } from "../../requestMethods";
-import { Checkbox } from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getTags } from "../../redux/apiCalls";
 
@@ -40,26 +39,24 @@ export default function FormDialog({
     ReadingTime,
     Tags,
     Content,
+    Published,
   } = data;
   const dispatch = useDispatch();
 
   const tags = useSelector((state) => state.tag.tags);
   const [tagValue, setTagvalue] = useState();
   const [listTag, setTistTag] = useState(tags);
+  const [publish, setPublish] = useState(Published);
   useEffect(() => {
     getTags(dispatch);
   }, []);
-  const { contentBlocks, entityMap } = convertFromHTML(Content);
-  const editorState = EditorState.createWithContent(
-    ContentState.createFromBlockArray(contentBlocks, entityMap)
-  );
-  console.log(Tags);
+  const editorState = EditorState.createEmpty();
   const [content, setContent] = useState(editorState);
   const onEditorStateChange = (editorState) => {
     setContent(editorState);
   };
 
-  data.Content = draftToHtml(convertToRaw(content.getCurrentContent()));
+  const convertToHTML = draftToHtml(convertToRaw(content.getCurrentContent()));
 
   return (
     <div>
@@ -129,32 +126,32 @@ export default function FormDialog({
               fullWidth
               InputLabelProps={{ shrink: true }}
             />
-            <div
-              style={{
-                border: "1px solid gray",
-                padding: "1px 5px",
-                borderRadius: "4px",
-              }}
-            >
-              <Editor
-                placeholder="Content"
-                editorState={content}
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="wrapperClassName"
-                editorClassName="editorClassName"
-                onEditorStateChange={onEditorStateChange}
-              />
-            </div>
+            {PostID == null && (
+              <div
+                style={{
+                  border: "1px solid gray",
+                  padding: "1px 5px",
+                  borderRadius: "4px",
+                }}
+              >
+                <Editor
+                  placeholder="Content"
+                  editorState={content}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="wrapperClassName"
+                  editorClassName="editorClassName"
+                  onEditorStateChange={onEditorStateChange}
+                />
+              </div>
+            )}
             <TextField
-              style={{ display: "block" }}
-              onChange={(e) => onChange(e)}
+              style={{ display: "none" }}
               id="Content"
-              value={Content}
+              value={(data.Content = convertToHTML)}
               placeholder="Enter Content"
               variant="outlined"
               margin="dense"
               fullWidth
-              InputLabelProps={{ shrink: true }}
             />
             <TextField
               required

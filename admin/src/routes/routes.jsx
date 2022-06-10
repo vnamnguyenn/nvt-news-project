@@ -6,6 +6,7 @@ import Post from "../pages/posts/Index";
 import Signin from "../pages/auth/Signin";
 import { useSelector } from "react-redux";
 import Tag from "../pages/tags/Index";
+import Category from "../pages/categories/Index";
 
 const ROUTES = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -19,6 +20,9 @@ const ROUTES = () => {
           </Route>
           <Route path="/tags">
             <Route index element={<Tag />} />
+          </Route>
+          <Route path="/category">
+            <Route index element={<Category />} />
           </Route>
         </>
       )}

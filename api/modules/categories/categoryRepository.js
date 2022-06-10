@@ -1,19 +1,18 @@
 const {docClient} = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
-const userRepository = require('../users/userRepository');
-const currentTime = require('../../config/currentTime');
+const {currentTime} = require('../../config/currentTime');
 class CategoryRepository {
 	constructor() {
 		this.tableName = 'Blog';
 	}
 
-	async findByID(id) {
+	async findByID(categoryId) {
 		const params = {
 			TableName: this.tableName,
 			IndexName: 'CategoryIndex',
 			KeyConditionExpression: '#38cd0 = :38cd0',
 			ExpressionAttributeValues: {
-				':38cd0': id,
+				':38cd0': categoryId,
 			},
 			ExpressionAttributeNames: {
 				'#38cd0': 'CategoryId',
@@ -32,7 +31,6 @@ class CategoryRepository {
 	}
 
 	async create(pk, data) {
-		const getUserInfo = await userRepository.findByID(pk);
 		let id = uniqid('c');
 		const params = {
 			TableName: this.tableName,
@@ -40,15 +38,13 @@ class CategoryRepository {
 				CategoryId: id,
 				PK: pk,
 				SK: 'CAT_' + id,
-				Slug: data.Slug,
 				CategoryName: data.CategoryName,
 				Thumbnail: data.Thumbnail,
-				CreatedBy: getUserInfo.Item.FullName,
-				CreatedDate: currentTime,
+				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 		};
 
-		await db
+		await docClient
 			.put(params, function (err, data) {
 				if (err) {
 					console.error('Something went wrong:', JSON.stringify(err, null, 2));
@@ -61,25 +57,23 @@ class CategoryRepository {
 		return params.Item;
 	}
 
-	async update(pk,sk, data) {
+	async update(pk, categoryId, data) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: 'ACCT_115',
-				SK: 'POST_8d0rgh66sl1dyvrufp8d0rgh66sl1dyvrue',
+				PK: pk,
+				SK: 'CAT_' + categoryId,
 			},
-			UpdateExpression: 'SET #1be70 = :1be70, #1be71 = :1be71, #1be72 = :1be72, #1be72 = :1be72',
+			UpdateExpression: 'SET #14b60 = :14b60, #14b61 = :14b61, #14b62 = :14b62',
 			ExpressionAttributeValues: {
-				':1be70': data.CategoryName,
-				':1be71': data.UpdatedBy,
-				':1be72': data.UpdatedDate,
-				':1be72': data.Thumbnail,
+				':14b60': data.CategoryName,
+				':14b61': data.Thumbnail,
+				':14b62': currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 			ExpressionAttributeNames: {
-				'#1be70': 'CategoryName',
-				'#1be71': 'UpdatedBy',
-				'#1be72': 'UpdatedDate',
-				'#1be73': 'Thumbnail',
+				'#14b60': 'CategoryName',
+				'#14b61': 'Thumbnail',
+				'#14b62': 'UpdatedDate',
 			},
 			ReturnValues: `UPDATED_NEW`,
 		};
@@ -89,12 +83,12 @@ class CategoryRepository {
 		return update.Attributes;
 	}
 
-	async deleteByID(id) {
+	async deleteByID(pk, categoryId) {
 		const params = {
 			TableName: this.tableName,
 			Key: {
-				PK: id,
-				SK: 'POST_p8d0rghcvkl1dwokrv',
+				PK: pk,
+				SK: 'CAT_' + categoryId,
 			},
 		};
 

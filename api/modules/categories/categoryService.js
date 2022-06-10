@@ -1,8 +1,8 @@
 const CategoryRepository = require(`./categoryRepository`);
 
 class CategoryService {
-	async findByID(id) {
-		const data = await CategoryRepository.findByID(id);
+	async findByID(categoryId) {
+		const data = await CategoryRepository.findByID(categoryId);
 
 		if (data) {
 			return data.Items[0];
@@ -21,27 +21,22 @@ class CategoryService {
 		return data;
 	}
 
-	async create(pk,data) {
-		return await CategoryRepository.create(pk,{
+	async create(pk, data) {
+		return await CategoryRepository.create(pk, {
 			CategoryName: data.CategoryName,
-			Slug:data.Slug,
 			Thumbnail: data.Thumbnail,
 		});
 	}
 
-	async update(data) {
-		return await CategoryRepository.update({
-			Content: data.Content,
-			PostImage: data.PostImage,
+	async update(pk, categoryId, data) {
+		return await CategoryRepository.update(pk, categoryId, {
+			CategoryName: data.CategoryName,
 			Thumbnail: data.Thumbnail,
-			ReadingTime: data.ReadingTime,
-			// Published: data.Published,
-			PostTitle: data.PostTitle,
 		});
 	}
 
-	async deleteByID(id) {
-		return await CategoryRepository.deleteByID(id);
+	async deleteByID(pk, categoryId) {
+		return await CategoryRepository.deleteByID(pk, categoryId);
 	}
 }
 

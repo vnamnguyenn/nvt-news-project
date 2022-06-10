@@ -93,6 +93,7 @@ class PostService {
 			MetaKeyword: data.MetaKeyword,
 			ReadingTime: data.ReadingTime,
 			Categories: data.Categories,
+			Published: data.Published,
 			Tags: data.Tags,
 			AuthorInfo: data.AuthorInfo,
 		});
@@ -100,16 +101,16 @@ class PostService {
 
 	async update(pk, postId, data) {
 		return await PostRepository.update(pk, postId, {
-			PostID: postId,
-			Content: data.Content,
 			PostImage: data.PostImage,
 			Thumbnail: data.Thumbnail,
 			ReadingTime: data.ReadingTime,
 			Published: data.Published,
 			PostTitle: data.PostTitle,
 			MetaTitle: data.MetaTitle,
+			Description: data.Description,
 			MetaDescription: data.MetaDescription,
 			MetaKeyword: data.MetaKeyword,
+			Tags: data.Tags,
 		});
 	}
 

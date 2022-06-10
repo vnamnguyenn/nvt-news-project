@@ -42,8 +42,10 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <CategoryIcon className="icon" />
-            <span>Categories</span>
+            <Link to={"/category"}>
+              <CategoryIcon className="icon" />
+              <span>Categories</span>
+            </Link>
           </li>
           <li>
             <Link to={"/tags"}>

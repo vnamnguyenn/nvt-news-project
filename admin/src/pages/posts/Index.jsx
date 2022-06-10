@@ -29,7 +29,7 @@ const initialValue = {
   MetaDescription: "",
   MetaTitle: "",
   MetaKeyword: "",
-  Published: "",
+  Published: "active",
   PublishedDate: "",
   UpdatedDate: "",
   AuthorInfo: "",
@@ -43,6 +43,7 @@ function Post() {
   const posts = useSelector((state) => state.post.posts);
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
+
   useEffect(() => {
     getPosts(dispatch);
   }, []);
@@ -59,7 +60,6 @@ function Post() {
     PostID,
     PostImage,
     Description,
-    Content,
     ReadingTime,
     PostTitle,
     MetaDescription,
@@ -75,15 +75,16 @@ function Post() {
       PostID: PostID,
       PostTitle: PostTitle,
       Thumbnail: PostImage,
-      PostImage: PostImage,
       Description: Description,
-      Content: Content,
       ReadingTime: ReadingTime,
       MetaDescription: MetaDescription,
       MetaTitle: MetaTitle,
       MetaKeyword: MetaKeyword,
       PublishedDate: PublishedDate,
-      UpdatedDate: PublishedDate,
+      UpdatedDate:
+        new Date().toLocaleDateString("vi-VN") +
+        " " +
+        new Date().toLocaleTimeString("vi-VN"),
       Published: Published,
       AuthorInfo: AuthorInfo,
       Tags: Tags,
@@ -114,11 +115,11 @@ function Post() {
 
   const onChange = (e, val) => {
     const { value, id } = e.target;
+    // console.log(e.target);
     let tagId;
     if (id.startsWith("Tags-option")) {
       tagId = id;
     }
-    console.log(val);
     switch (id) {
       case "PostImage":
         return setFormData({ ...formData, [id]: e.target.files[0] });
@@ -130,6 +131,8 @@ function Post() {
   };
 
   const handleFormSubmit = () => {
+    document.getElementById("Content").click();
+    console.log(formData.PostImage);
     const data = new FormData();
     const imageName =
       formData.PostImage === undefined
@@ -138,13 +141,13 @@ function Post() {
     data.append("name", imageName);
     data.append("file", formData.PostImage);
     publicRequest.post("/upload", data);
+    console.log("update iamge", imageName);
     if (formData.PostID) {
       updatePost(
         formData.PostID,
         {
           PostID: formData.PostID,
           PostTitle: formData.PostTitle,
-          Content: formData.Content,
           Thumbnail: imageName,
           PostImage: imageName,
           ReadingTime: formData.ReadingTime,
@@ -235,12 +238,12 @@ function Post() {
     {
       field: "PublishedDate",
       headerName: "Published Date",
-      width: 130,
+      width: 150,
     },
     {
       field: "UpdatedDate",
       headerName: "Updated Date",
-      width: 130,
+      width: 160,
     },
     {
       field: "ReadingTime",
@@ -276,7 +279,6 @@ function Post() {
                   params.row.PostID,
                   params.row.PostImage,
                   params.row.Description,
-                  params.row.Content,
                   params.row.ReadingTime,
                   params.row.PostTitle,
                   params.row.MetaDescription,

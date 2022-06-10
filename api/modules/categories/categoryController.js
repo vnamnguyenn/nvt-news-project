@@ -3,7 +3,7 @@ const CategoryService = require(`./categoryService`);
 class CategoryController {
 	async findByID(req, res) {
 		try {
-			const data = await CategoryService.findByID(req.params.id);
+			const data = await CategoryService.findByID(req.params.categoryId);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -23,7 +23,7 @@ class CategoryController {
 
 	async create(req, res) {
 		try {
-			const data = await CategoryService.create(req.user.pk,req.body);
+			const data = await CategoryService.create(req.user.pk, req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -33,7 +33,8 @@ class CategoryController {
 
 	async update(req, res) {
 		try {
-			const data = await CategoryService.update(req.body);
+			const data = await CategoryService.update(req.user.pk, req.params.categoryId, req.body);
+			console.log(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);
@@ -43,8 +44,10 @@ class CategoryController {
 
 	async deleteByID(req, res) {
 		try {
-			await CategoryService.deleteByID(req.params.id);
-			res.json('Delete is success');
+			const data = await CategoryService.deleteByID(req.user.pk, req.params.categoryId);
+			if (data) {
+				res.json('Delete is success');
+			}
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({err: 'Something went wrong'});

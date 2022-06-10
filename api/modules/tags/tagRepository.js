@@ -1,6 +1,5 @@
 const {docClient} = require(`../../config/dynamoDB`);
 const uniqid = require('uniqid');
-const userRepository = require('../users/userRepository');
 const {currentTime} = require('../../config/currentTime');
 class TagRepository {
 	constructor() {
@@ -67,19 +66,6 @@ class TagRepository {
 	}
 
 	async update(pk, tagId, data) {
-		const paramById = {
-			TableName: this.tableName,
-			IndexName: 'TagIndex',
-			KeyConditionExpression: '#caec0 = :caec0',
-			ExpressionAttributeValues: {
-				':caec0': tagId,
-			},
-			ExpressionAttributeNames: {
-				'#caec0': 'TagId',
-			},
-		};
-		const getDataByID = await docClient.query(paramById).promise();
-		console.log(getDataByID);
 		const params = {
 			TableName: this.tableName,
 			Key: {
