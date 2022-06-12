@@ -27,9 +27,9 @@ class DBController {
 		try {
 			const data = await DBRepository.importData();
 			res.status(200).json('Import Data in successfully');
-			console.log(data);
 		} catch (error) {
 			res.status(500).json(error);
+			console.log(error);
 		}
 	}
 

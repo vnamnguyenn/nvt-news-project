@@ -247,12 +247,12 @@ class DBRepository {
 	}
 
 	async importData() {
-		const jsonData = JSON.parse(fs.readFileSync(__dirname + '/BlogData.json', 'utf8'));
+		let jsonData = JSON.parse(fs.readFileSync(__dirname + '/BlogData.json', 'utf8'));
 		jsonData.forEach(function (data) {
 			let params = {};
 			if (data.TagId !== undefined) {
 				params = {
-					TableName: this.tableName, //1. Tag
+					TableName: 'Blog',
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
@@ -265,7 +265,7 @@ class DBRepository {
 				};
 			} else if (data.AccountId !== undefined) {
 				params = {
-					TableName: this.tableName, //2. Account
+					TableName: 'Blog',
 					Item: {
 						AccountId: data.AccountId,
 						UserEmail: data.UserEmail,
@@ -284,7 +284,7 @@ class DBRepository {
 				};
 			} else if (data.CategoryId !== undefined) {
 				params = {
-					TableName: this.tableName, //3. Category
+					TableName: 'Blog',
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
@@ -297,7 +297,7 @@ class DBRepository {
 				};
 			} else if (data.CommentId !== undefined) {
 				params = {
-					TableName: this.tableName, //4. Comment
+					TableName: 'Blog',
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
@@ -311,32 +311,32 @@ class DBRepository {
 				};
 			} else if (data.SaveID !== undefined) {
 				params = {
-					TableName: this.tableName, //5. SavePostIndex
+					TableName: 'Blog', //5. SavePostIndex
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
-						ParentPostID: data.ParentPostID,
 						Description: data.Description,
 						Thumbnail: data.Thumbnail,
 						CreatedDate: data.CreatedDate,
 						AccountId: data.AccountId,
+						ParentPostID: data.ParentPostID,
 					},
 				};
 			} else if (data.BackupID !== undefined) {
 				params = {
-					TableName: this.tableName, //5. BackupIndex
+					TableName: 'Blog', //6. BackupIndex
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
 						CreatedDate: data.CreatedDate,
-						Path: data.Path,
 						AccountId: data.AccountId,
+						Path: data.Path,
 						BackupName: data.BackupName,
 					},
 				};
 			} else {
 				params = {
-					TableName: this.tableName, //7. Post
+					TableName: 'Blog',
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
@@ -346,10 +346,7 @@ class DBRepository {
 						Thumbnail: data.Thumbnail,
 						PostImage: data.PostImage,
 						Description: data.Description,
-						LikeCount: data.LikeCount,
-						SaveCount: data.SaveCount,
-						CommentCount: data.CommentCount,
-						ViewCount: data.ViewCount,
+						MetaTitle: data.MetaTitle,
 						MetaDescription: data.MetaDescription,
 						MetaKeyword: data.MetaKeyword,
 						Published: data.Published,
@@ -371,19 +368,21 @@ class DBRepository {
 			TableName: this.tableName,
 		};
 
-		docClient.scan(params, function onScan(err, data) {
-			if (err) {
-				console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
-			} else {
-				const content = JSON.stringify(data.Items);
-				fs.writeFile(__dirname + '/BlogData.json', content, (err) => {
-					if (err) {
-						console.error(err);
-					}
-					console.log('Export Data in successfully.');
-				});
-			}
-		});
+		docClient
+			.scan(params, function onScan(err, data) {
+				if (err) {
+					console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
+				} else {
+					const content = JSON.stringify(data.Items);
+					fs.writeFile(__dirname + '/BlogData.json', content, (err) => {
+						if (err) {
+							console.error(err);
+						}
+						console.log('Export Data in successfully.');
+					});
+				}
+			})
+			.promise();
 	}
 }
 
