@@ -133,6 +133,31 @@ export const downloadBackup = async (url, name) => {
   } catch (err) {}
 };
 
+export const restoreBackup = async (Path, backupName) => {
+  try {
+    await userRequest.get(`/backup/restore/${Path}`);
+    toast.success(`Restore '${backupName}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    toast.error(`Restore '${backupName}' is Failed`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  }
+};
+
 export const deleteBackup = async (BackupID, backupName, dispatch) => {
   dispatch(deleteBackupstart());
   try {

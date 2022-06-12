@@ -51,6 +51,16 @@ class DBController {
 		}
 	}
 
+	async restoreBackup(req, res) {
+		try {
+			await DBRepository.restoreBackup(req.params.path);
+			res.status(200).json('Restore Data in successfully');
+		} catch (error) {
+			res.status(500).json(error);
+			console.log(error);
+		}
+	}
+
 	async deleteBackup(req, res) {
 		try {
 			await DBRepository.deleteBackup(req.user.pk, req.params.backupId);

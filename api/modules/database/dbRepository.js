@@ -366,6 +366,125 @@ class DBRepository {
 		});
 	}
 
+	async restoreBackup(Path) {
+		let jsonData = JSON.parse(
+			fs.readFileSync(__dirname.replace('database', '../backup/') + Path, 'utf8'),
+		);
+		jsonData.forEach(function (data) {
+			let params = {};
+			if (data.TagId !== undefined) {
+				params = {
+					TableName: 'Blog',
+					Item: {
+						PK: data.PK,
+						SK: data.SK,
+						TagId: data.TagId,
+						TagName: data.TagName,
+						Thumbnail: data.Thumbnail,
+						CreatedDate: data.CreatedDate,
+						UpdatedDate: data.UpdatedDate,
+					},
+				};
+			} else if (data.UserEmail !== undefined) {
+				params = {
+					TableName: 'Blog',
+					Item: {
+						AccountId: data.AccountId,
+						UserEmail: data.UserEmail,
+						PK: data.PK,
+						SK: data.SK,
+						FullName: data.FullName,
+						Gender: data.Gender,
+						DateOfBirth: data.DateOfBirth,
+						isAdmin: data.isAdmin,
+						PasswordHash: data.PasswordHash,
+						IsActive: data.IsActive,
+						Avatar: data.Avatar,
+						Description: data.Description,
+						CreatedDate: data.CreatedDate,
+					},
+				};
+			} else if (data.CategoryId !== undefined) {
+				params = {
+					TableName: 'Blog',
+					Item: {
+						PK: data.PK,
+						SK: data.SK,
+						CategoryId: data.CategoryId,
+						CategoryName: data.CategoryName,
+						Thumbnail: data.Thumbnail,
+						CreatedDate: data.CreatedDate,
+						UpdatedDate: data.UpdatedDate,
+					},
+				};
+			} else if (data.CommentId !== undefined) {
+				params = {
+					TableName: 'Blog',
+					Item: {
+						PK: data.PK,
+						SK: data.SK,
+						CommentId: data.CommentId,
+						ParentPostID: data.ParentPostID,
+						CommentContent: data.CommentContent,
+						ParentCommentId: data.ParentCommentId,
+						CreatedDate: data.CreatedDate,
+						AccountInfo: data.AccountInfo,
+					},
+				};
+			} else if (data.SaveID !== undefined) {
+				params = {
+					TableName: 'Blog', //5. SavePostIndex
+					Item: {
+						PK: data.PK,
+						SK: data.SK,
+						Description: data.Description,
+						Thumbnail: data.Thumbnail,
+						CreatedDate: data.CreatedDate,
+						AccountId: data.AccountId,
+						ParentPostID: data.ParentPostID,
+					},
+				};
+			} else if (data.BackupID !== undefined) {
+				params = {
+					TableName: 'Blog', //6. BackupIndex
+					Item: {
+						PK: data.PK,
+						SK: data.SK,
+						CreatedDate: data.CreatedDate,
+						AccountId: data.AccountId,
+						Path: data.Path,
+						BackupName: data.BackupName,
+					},
+				};
+			} else {
+				params = {
+					TableName: 'Blog',
+					Item: {
+						PK: data.PK,
+						SK: data.SK,
+						PostID: data.PostID,
+						PostTitle: data.PostTitle,
+						Content: data.Content,
+						Thumbnail: data.Thumbnail,
+						PostImage: data.PostImage,
+						Description: data.Description,
+						MetaTitle: data.MetaTitle,
+						MetaDescription: data.MetaDescription,
+						MetaKeyword: data.MetaKeyword,
+						Published: data.Published,
+						PublishedDate: data.PublishedDate,
+						UpdatedDate: data.UpdatedDate,
+						ReadingTime: data.ReadingTime,
+						Categories: data.Categories,
+						Tags: data.Tags,
+						AuthorInfo: data.AuthorInfo,
+					},
+				};
+			}
+			docClient.put(params).promise();
+		});
+	}
+
 	async getBackup() {
 		const params = {
 			TableName: this.tableName,
@@ -425,6 +544,21 @@ class DBRepository {
 			},
 		};
 
+		const params2 = {
+			TableName: this.tableName,
+			IndexName: 'BackupIndex',
+			KeyConditionExpression: '#38cd0 = :38cd0',
+			ExpressionAttributeValues: {
+				':38cd0': backupId,
+			},
+			ExpressionAttributeNames: {
+				'#38cd0': 'BackupID',
+			},
+		};
+
+		const data = await docClient.query(params2).promise();
+		const filePath = data.Items[0].Path;
+		fs.unlinkSync(__dirname.replace('database', '../backup/') + filePath);
 		return await docClient.delete(params).promise();
 	}
 }

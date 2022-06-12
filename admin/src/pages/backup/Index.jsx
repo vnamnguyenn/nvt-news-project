@@ -13,12 +13,9 @@ import {
   getbackup,
   deleteBackup,
   downloadBackup,
+  restoreBackup,
 } from "../../redux/apiCalls";
-import {
-  basebackupUrl,
-  baseImageUrl,
-  publicRequest,
-} from "../../requestMethods";
+
 import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 
@@ -38,6 +35,16 @@ function Backup() {
   const handleDownload = (url, name) => {
     downloadBackup(url, name);
   };
+
+  const handleRestore = (path, name) => {
+    const confirm = window.confirm(
+      `Are you sure, you want to import data from '${name}'`
+    );
+    if (confirm) {
+      restoreBackup(path, name);
+    }
+  };
+
   //Deletepost
   const handleDelete = (id, name) => {
     const confirm = window.confirm(
@@ -46,6 +53,10 @@ function Backup() {
     if (confirm) {
       deleteBackup(id, name, dispatch);
     }
+  };
+
+  const handleSubmit = (e) => {
+    console.log(e.target);
   };
 
   const handleCreate = () => {
@@ -80,11 +91,19 @@ function Backup() {
     {
       field: "BackupID",
       headerName: "Action",
-      width: 200,
+      width: 300,
       renderCell: (params) => {
         if (userId === params.row.PK) {
           return (
             <>
+              <button
+                onClick={() =>
+                  handleRestore(params.row.Path, params.row.BackupName)
+                }
+                className="productListEdit"
+              >
+                Restore
+              </button>
               <button
                 onClick={() =>
                   handleDownload(params.row.Path, params.row.BackupName)
@@ -130,9 +149,21 @@ function Backup() {
           <div className="productList" style={{ width: "auto" }}>
             <div className="datatableTitle">
               <Button className="add-new" onClick={handleCreate}>
-                Add New backup
+                Add New
               </Button>
             </div>
+            {/* <div className="datatableTitle">
+              <form>
+                <input type="file" name="" id="filename" />
+                <Button
+                  className="add-new"
+                  type="button"
+                  onClick={handleSubmit}
+                >
+                  Up load
+                </Button>
+              </form>
+            </div> */}
             <DataGrid
               autoHeight
               {...backup}
