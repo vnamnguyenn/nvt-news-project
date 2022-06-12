@@ -33,7 +33,6 @@ export default function FormDialog({
     Description,
     MetaDescription,
     MetaKeyword,
-    MetaTitle,
     ReadingTime,
     Tags,
     Categories,
@@ -210,17 +209,6 @@ export default function FormDialog({
               onChange={(e) => onChange(e)}
               placeholder="Enter MetaKeyword"
               label="MetaKeyword"
-              variant="outlined"
-              margin="dense"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-            />
-            <TextField
-              id="MetaTitle"
-              value={MetaTitle}
-              onChange={(e) => onChange(e)}
-              placeholder="Enter MetaTitle"
-              label="MetaTitle"
               variant="outlined"
               margin="dense"
               fullWidth

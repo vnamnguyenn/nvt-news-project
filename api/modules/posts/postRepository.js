@@ -113,7 +113,6 @@ class PostRepository {
 				Thumbnail: data.Thumbnail,
 				PostImage: data.PostImage,
 				Description: data.Description,
-				MetaTitle: data.MetaTitle,
 				MetaDescription: data.MetaDescription,
 				MetaKeyword: data.MetaKeyword,
 				Published: data.Published,
@@ -154,7 +153,7 @@ class PostRepository {
 			},
 			UpdateExpression:
 				'SET #1be71 = :1be71, #1be72 = :1be72, #1be73 = :1be73,	#1be75 = :1be75, #1be76 = :1be76,' +
-				'#1be77 = :1be77, #1be78 = :1be78,#1be79 = :1be79, #1be80 = :1be80, #1be81 = :1be81,#1be82 = :1be82,#1be83 = :1be83',
+				'#1be77 = :1be77, #1be78 = :1be78, #1be80 = :1be80, #1be81 = :1be81,#1be82 = :1be82,#1be83 = :1be83',
 			ExpressionAttributeValues: {
 				':1be71': data.PostImage,
 				':1be72': data.Thumbnail,
@@ -163,7 +162,6 @@ class PostRepository {
 				':1be76': currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 				':1be77': data.Description,
 				':1be78': data.Published,
-				':1be79': data.MetaTitle,
 				':1be80': data.MetaDescription,
 				':1be81': data.MetaKeyword,
 				':1be82': data.Tags,
@@ -177,7 +175,6 @@ class PostRepository {
 				'#1be76': 'UpdatedDate',
 				'#1be77': 'Description',
 				'#1be78': 'Published',
-				'#1be79': 'MetaTitle',
 				'#1be80': 'MetaDescription',
 				'#1be81': 'MetaKeyword',
 				'#1be82': 'Tags',
