@@ -53,6 +53,12 @@ const Sidebar = () => {
               <span>Tags</span>
             </Link>
           </li>
+          <li>
+            <Link to={"/backup"}>
+              {/* <LocalOfferIcon className="icon" /> */}
+              <span>Backup</span>
+            </Link>
+          </li>
           <p className="title">Users</p>
           <li onClick={handleClick}>
             <div>

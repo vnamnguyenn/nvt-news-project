@@ -7,6 +7,7 @@ import Signin from "../pages/auth/Signin";
 import { useSelector } from "react-redux";
 import Tag from "../pages/tags/Index";
 import Category from "../pages/categories/Index";
+import Backup from "../pages/backup/Index";
 
 const ROUTES = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -24,6 +25,9 @@ const ROUTES = () => {
           <Route path="/category">
             <Route index element={<Category />} />
           </Route>
+          <Route path="/backup">
+            <Route index element={<Backup />} />
+          </Route>
         </>
       )}
 
@@ -33,7 +37,7 @@ const ROUTES = () => {
           <Route path="*" element={<Navigate to="/signin" replace />} />
         </>
       )}
-      <Route path="*" element={<NotFound />} />
+      {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
   );
 };

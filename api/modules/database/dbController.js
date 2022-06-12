@@ -25,7 +25,7 @@ class DBController {
 
 	async importData(req, res) {
 		try {
-			const data = await DBRepository.importData();
+			await DBRepository.importData();
 			res.status(200).json('Import Data in successfully');
 		} catch (error) {
 			res.status(500).json(error);
@@ -33,10 +33,28 @@ class DBController {
 		}
 	}
 
-	async exportData(req, res) {
+	async getBackup(req, res) {
 		try {
-			await DBRepository.exportData();
-			res.status(200).json('Export Data in successfully');
+			const data = await DBRepository.getBackup();
+			res.status(200).json(data.Items);
+		} catch (error) {
+			res.status(500).json(error);
+		}
+	}
+
+	async createBackup(req, res) {
+		try {
+			const data = await DBRepository.createBackup(req.user.pk);
+			res.status(200).json(data);
+		} catch (error) {
+			res.status(500).json(error);
+		}
+	}
+
+	async deleteBackup(req, res) {
+		try {
+			await DBRepository.deleteBackup(req.user.pk, req.params.backupId);
+			res.status(200).json('Delete in successfully');
 		} catch (error) {
 			res.status(500).json(error);
 		}

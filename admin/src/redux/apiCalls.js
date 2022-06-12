@@ -5,7 +5,7 @@ import {
   logoutSuccess,
 } from "./userRedux";
 
-import { publicRequest, userRequest } from "../requestMethods";
+import { downloadFile, publicRequest, userRequest } from "../requestMethods";
 import { toast } from "react-toastify";
 import {
   getPostFailure,
@@ -38,6 +38,17 @@ import {
 } from "./tagRedux";
 
 import {
+  getBackupstart,
+  getBackupsuccess,
+  getBackupFailure,
+  deleteBackupstart,
+  deleteBackupsuccess,
+  deleteBackupFailure,
+  addbackupstart,
+  addbackupsuccess,
+  addbackupFailure,
+} from "./backupRedux";
+import {
   getCategorystart,
   getCategoryFailure,
   getCategorysuccess,
@@ -51,7 +62,8 @@ import {
   deleteCategorysuccess,
   deleteCategoryFailure,
 } from "./categoryRedux";
-
+import fileDownload from "js-file-download";
+//User
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -84,7 +96,62 @@ export const login = async (dispatch, user) => {
 export const logout = (dispatch) => {
   dispatch(logoutSuccess());
 };
+//Backup
+export const getbackup = async (dispatch) => {
+  dispatch(getBackupstart());
+  try {
+    const res = await publicRequest.get("/backup");
+    dispatch(getBackupsuccess(res.data));
+  } catch (err) {
+    dispatch(getBackupFailure());
+  }
+};
 
+export const addBackup = async (dispatch) => {
+  dispatch(addbackupstart());
+  try {
+    const res = await userRequest.post(`/backup/create`);
+    dispatch(addbackupsuccess(res.data));
+    toast.success("Create backup in successfully", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(addbackupFailure());
+  }
+};
+export const downloadBackup = async (url, name) => {
+  try {
+    const res = await downloadFile.get(url);
+    console.log(res.data);
+    fileDownload(res.data, name);
+  } catch (err) {}
+};
+
+export const deleteBackup = async (BackupID, backupName, dispatch) => {
+  dispatch(deleteBackupstart());
+  try {
+    await userRequest.delete(`/backup/delete/${BackupID}`);
+    dispatch(deleteBackupsuccess(BackupID));
+    toast.success(`Delete '${backupName}' in successfully`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(deleteBackupFailure());
+  }
+};
+//Tag
 export const getTags = async (dispatch) => {
   dispatch(getTagstart());
   try {
@@ -151,7 +218,7 @@ export const deleteTag = async (tagId, tagName, dispatch) => {
     dispatch(deleteTagFailure());
   }
 };
-
+//Category
 export const getCategories = async (dispatch) => {
   dispatch(getCategorystart());
   try {
@@ -233,7 +300,7 @@ export const getPosts = async (dispatch) => {
     dispatch(getPostFailure());
   }
 };
-
+//Post
 export const addPost = async (post, dispatch) => {
   dispatch(addPoststart());
   try {

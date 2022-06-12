@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./userRedux";
 import postReducer from "./postRedux";
 import tagReducer from "./tagRedux";
+import backupReducer from "./backupRedux";
 import categoryReducer from "./categoryRedux";
 
 import {
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   post: postReducer,
   tag: tagReducer,
+  backup: backupReducer,
   category: categoryReducer,
 });
 

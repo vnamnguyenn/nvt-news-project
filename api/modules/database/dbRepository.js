@@ -1,5 +1,8 @@
 const {dynamoDB, docClient} = require(`../../config/dynamoDB`);
+const {currentTime, currentTimePrefixMonth} = require('../../config/currentTime');
+const uniqid = require('uniqid');
 const fs = require('fs');
+
 class DBRepository {
 	constructor() {
 		this.tableName = 'Blog';
@@ -263,7 +266,7 @@ class DBRepository {
 						UpdatedDate: data.UpdatedDate,
 					},
 				};
-			} else if (data.AccountId !== undefined) {
+			} else if (data.UserEmail !== undefined) {
 				params = {
 					TableName: 'Blog',
 					Item: {
@@ -363,7 +366,17 @@ class DBRepository {
 		});
 	}
 
-	async exportData() {
+	async getBackup() {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'BackupIndex',
+		};
+		return await docClient.scan(params).promise();
+	}
+
+	async createBackup(pk) {
+		let id = uniqid('bk');
+		const fileName = 'backup-' + currentTime + '-' + Date.now();
 		const params = {
 			TableName: this.tableName,
 		};
@@ -374,15 +387,45 @@ class DBRepository {
 					console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
 				} else {
 					const content = JSON.stringify(data.Items);
-					fs.writeFile(__dirname + '/BlogData.json', content, (err) => {
-						if (err) {
-							console.error(err);
-						}
-						console.log('Export Data in successfully.');
-					});
+					fs.writeFile(
+						__dirname.replace('database', '../backup/') + fileName + '.json',
+						content,
+						(err) => {
+							if (err) {
+								console.error(err);
+							}
+						},
+					);
 				}
 			})
 			.promise();
+
+		const params2 = {
+			TableName: this.tableName,
+			Item: {
+				PK: pk,
+				SK: 'BAK_' + id,
+				BackupID: id,
+				BackupName: fileName,
+				Path: fileName + '.json',
+				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
+			},
+		};
+		await docClient.put(params2).promise();
+
+		return params2.Item;
+	}
+
+	async deleteBackup(pk, backupId) {
+		const params = {
+			TableName: this.tableName,
+			Key: {
+				PK: pk,
+				SK: 'BAK_' + backupId,
+			},
+		};
+
+		return await docClient.delete(params).promise();
 	}
 }
 
