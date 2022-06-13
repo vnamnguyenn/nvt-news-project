@@ -370,126 +370,125 @@ class DBRepository {
 		let jsonData = JSON.parse(contentFile);
 		//scan and delete current data
 
-		//restore database
-		jsonData.forEach(function (data) {
-			let params = {};
-			if (data.TagId !== undefined) {
-				params = {
-					TableName: 'Blog',
-					Item: {
-						PK: data.PK,
-						SK: data.SK,
-						TagId: data.TagId,
-						TagName: data.TagName,
-						Thumbnail: data.Thumbnail,
-						CreatedDate: data.CreatedDate,
-						UpdatedDate: data.UpdatedDate,
-					},
-				};
-			} else if (data.UserEmail !== undefined) {
-				params = {
-					TableName: 'Blog',
-					Item: {
-						AccountId: data.AccountId,
-						UserEmail: data.UserEmail,
-						PK: data.PK,
-						SK: data.SK,
-						FullName: data.FullName,
-						Gender: data.Gender,
-						DateOfBirth: data.DateOfBirth,
-						isAdmin: data.isAdmin,
-						PasswordHash: data.PasswordHash,
-						IsActive: data.IsActive,
-						Avatar: data.Avatar,
-						Description: data.Description,
-						CreatedDate: data.CreatedDate,
-					},
-				};
-			} else if (data.CategoryId !== undefined) {
-				params = {
-					TableName: 'Blog',
-					Item: {
-						PK: data.PK,
-						SK: data.SK,
-						CategoryId: data.CategoryId,
-						CategoryName: data.CategoryName,
-						Thumbnail: data.Thumbnail,
-						CreatedDate: data.CreatedDate,
-						UpdatedDate: data.UpdatedDate,
-					},
-				};
-			} else if (data.CommentId !== undefined) {
-				params = {
-					TableName: 'Blog',
-					Item: {
-						PK: data.PK,
-						SK: data.SK,
-						CommentId: data.CommentId,
-						ParentPostID: data.ParentPostID,
-						CommentContent: data.CommentContent,
-						ParentCommentId: data.ParentCommentId,
-						CreatedDate: data.CreatedDate,
-						AccountInfo: data.AccountInfo,
-					},
-				};
-			} else if (data.SaveID !== undefined) {
-				params = {
-					TableName: 'Blog', //5. SavePostIndex
-					Item: {
-						PK: data.PK,
-						SK: data.SK,
-						Description: data.Description,
-						Thumbnail: data.Thumbnail,
-						CreatedDate: data.CreatedDate,
-						AccountId: data.AccountId,
-						ParentPostID: data.ParentPostID,
-					},
-				};
-			} else if (data.BackupID !== undefined) {
-				params = {
-					TableName: 'Blog', //6. BackupIndex
-					Item: {
-						PK: data.PK,
-						SK: data.SK,
-						CreatedDate: data.CreatedDate,
-						AccountId: data.AccountId,
-						Path: data.Path,
-						BackupName: data.BackupName,
-					},
-				};
-			} else {
-				params = {
-					TableName: 'Blog',
-					Item: {
-						PK: data.PK,
-						SK: data.SK,
-						PostID: data.PostID,
-						PostTitle: data.PostTitle,
-						Content: data.Content,
-						Thumbnail: data.Thumbnail,
-						PostImage: data.PostImage,
-						Description: data.Description,
-						MetaTitle: data.MetaTitle,
-						MetaDescription: data.MetaDescription,
-						MetaKeyword: data.MetaKeyword,
-						Published: data.Published,
-						PublishedDate: data.PublishedDate,
-						UpdatedDate: data.UpdatedDate,
-						ReadingTime: data.ReadingTime,
-						Categories: data.Categories,
-						Tags: data.Tags,
-						AuthorInfo: data.AuthorInfo,
-					},
-				};
-			}
-			docClient.put(params).promise();
-		});
+		// //restore database
+		// jsonData.forEach(function (data) {
+		// 	let params = {};
+		// 	if (data.TagId !== undefined) {
+		// 		params = {
+		// 			TableName: 'Blog',
+		// 			Item: {
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				TagId: data.TagId,
+		// 				TagName: data.TagName,
+		// 				Thumbnail: data.Thumbnail,
+		// 				CreatedDate: data.CreatedDate,
+		// 				UpdatedDate: data.UpdatedDate,
+		// 			},
+		// 		};
+		// 	} else if (data.UserEmail !== undefined) {
+		// 		params = {
+		// 			TableName: 'Blog',
+		// 			Item: {
+		// 				AccountId: data.AccountId,
+		// 				UserEmail: data.UserEmail,
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				FullName: data.FullName,
+		// 				Gender: data.Gender,
+		// 				DateOfBirth: data.DateOfBirth,
+		// 				isAdmin: data.isAdmin,
+		// 				PasswordHash: data.PasswordHash,
+		// 				IsActive: data.IsActive,
+		// 				Avatar: data.Avatar,
+		// 				Description: data.Description,
+		// 				CreatedDate: data.CreatedDate,
+		// 			},
+		// 		};
+		// 	} else if (data.CategoryId !== undefined) {
+		// 		params = {
+		// 			TableName: 'Blog',
+		// 			Item: {
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				CategoryId: data.CategoryId,
+		// 				CategoryName: data.CategoryName,
+		// 				Thumbnail: data.Thumbnail,
+		// 				CreatedDate: data.CreatedDate,
+		// 				UpdatedDate: data.UpdatedDate,
+		// 			},
+		// 		};
+		// 	} else if (data.CommentId !== undefined) {
+		// 		params = {
+		// 			TableName: 'Blog',
+		// 			Item: {
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				CommentId: data.CommentId,
+		// 				ParentPostID: data.ParentPostID,
+		// 				CommentContent: data.CommentContent,
+		// 				ParentCommentId: data.ParentCommentId,
+		// 				CreatedDate: data.CreatedDate,
+		// 				AccountInfo: data.AccountInfo,
+		// 			},
+		// 		};
+		// 	} else if (data.SaveID !== undefined) {
+		// 		params = {
+		// 			TableName: 'Blog', //5. SavePostIndex
+		// 			Item: {
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				Description: data.Description,
+		// 				Thumbnail: data.Thumbnail,
+		// 				CreatedDate: data.CreatedDate,
+		// 				AccountId: data.AccountId,
+		// 				ParentPostID: data.ParentPostID,
+		// 			},
+		// 		};
+		// 	} else if (data.BackupID !== undefined) {
+		// 		params = {
+		// 			TableName: 'Blog', //6. BackupIndex
+		// 			Item: {
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				CreatedDate: data.CreatedDate,
+		// 				AccountId: data.AccountId,
+		// 				Path: data.Path,
+		// 				BackupName: data.BackupName,
+		// 			},
+		// 		};
+		// 	} else {
+		// 		params = {
+		// 			TableName: 'Blog',
+		// 			Item: {
+		// 				PK: data.PK,
+		// 				SK: data.SK,
+		// 				PostID: data.PostID,
+		// 				PostTitle: data.PostTitle,
+		// 				Content: data.Content,
+		// 				Thumbnail: data.Thumbnail,
+		// 				PostImage: data.PostImage,
+		// 				Description: data.Description,
+		// 				MetaTitle: data.MetaTitle,
+		// 				MetaDescription: data.MetaDescription,
+		// 				MetaKeyword: data.MetaKeyword,
+		// 				Published: data.Published,
+		// 				PublishedDate: data.PublishedDate,
+		// 				UpdatedDate: data.UpdatedDate,
+		// 				ReadingTime: data.ReadingTime,
+		// 				Categories: data.Categories,
+		// 				Tags: data.Tags,
+		// 				AuthorInfo: data.AuthorInfo,
+		// 			},
+		// 		};
+		// 	}
+		// 	docClient.put(params).promise();
+		// });
 		let id = uniqid('bk');
 		const fileName = 'backup-' + currentTime + '-' + Date.now();
-		const content = contentFile;
 		fs.writeFile(
 			__dirname.replace('database', '../backup/') + fileName + '.json',
-			content,
+			contentFile,
 			(err) => {
 				if (err) {
 					console.error(err);

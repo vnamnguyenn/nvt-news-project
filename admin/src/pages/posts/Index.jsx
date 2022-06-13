@@ -132,7 +132,8 @@ function Post() {
     }
   };
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     document.getElementById("Content").click();
     const data = new FormData();
     const data2 = new FormData();

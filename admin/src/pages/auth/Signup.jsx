@@ -4,8 +4,6 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { Link as ReactLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -13,48 +11,38 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {
-  signin,
-  createTable,
-  restoreDefaultBackup,
-} from "../../redux/apiCalls";
+import { signup } from "../../redux/apiCalls";
+import { Link as ReactLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignUp() {
   const initialValue = {
     UserEmail: "",
     Password: "",
+    BirthDay: "",
+    FullName: "",
   };
   const formRef = useRef();
 
   const [formData, setFormData] = useState(initialValue);
-  // const [emailError, setEmailError] = React.useState(false);
-  // const [passwordError, setPasswordError] = React.useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signin(dispatch, {
+    signup(dispatch, {
       UserEmail: formData.UserEmail,
       PasswordHash: formData.Password,
+      FullName: formData.FullName,
+      DateOfBirth: formData.BirthDay,
     });
   };
+
   const onChange = (e) => {
     const { value, id } = e.target;
-    // console.log("id", id);
-    // console.log("value", value);
     setFormData({ ...formData, [id]: value });
     console.log(formData);
-  };
-
-  const handleCreateTable = () => {
-    createTable();
-  };
-
-  const handleImportData = () => {
-    restoreDefaultBackup();
   };
 
   return (
@@ -72,10 +60,21 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+            Sign up
           </Typography>
-          <form onSubmit={handleSubmit} ref={formRef}>
+          <form autoComplete="off" onSubmit={handleSubmit} ref={formRef}>
+            <TextField
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              label="FullName"
+              type="text"
+              id="FullName  "
+              autoFocus
+              InputLabelProps={{ shrink: true }}
+              placeholder="Full Name"
+            />
             <TextField
               onChange={(e) => onChange(e)}
               margin="normal"
@@ -85,9 +84,21 @@ export default function SignIn() {
               type="email"
               label="Email"
               sx={{ mb: 3 }}
+              InputLabelProps={{ shrink: true }}
+              placeholder="Email"
               autoFocus
-              // error={emailError}
-              // helperText={emailError === true ? "Enter your password!" : ""}
+            />
+            <TextField
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              label="BirthDay"
+              type="date"
+              id="BirthDay"
+              placeholder="BirthDay"
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 3 }}
+              autoFocus
             />
             <TextField
               onChange={(e) => onChange(e)}
@@ -96,13 +107,35 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="Password"
+              placeholder="Password"
               autoComplete="current-password"
+              sx={{ mb: 3 }}
+              InputLabelProps={{ shrink: true }}
+              autoFocus
+              inputProps={{
+                pattern:
+                  "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
+                title:
+                  "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character!",
+              }}
+            />
+            <TextField
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              label="Password Confirm"
+              placeholder="Password Confirm"
+              type="password"
+              id="ConfirmPassword"
+              InputLabelProps={{ shrink: true }}
+              autoComplete="current-password"
+              inputProps={{
+                pattern: formData.Password,
+                title: "Password confirm doesn't match Password",
+              }}
               autoFocus
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -110,60 +143,22 @@ export default function SignIn() {
               onClick={() => formRef.current.reportValidity()}
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <ReactLink
                   className="MuiTypography-root MuiTypography-body2 MuiLink-root MuiLink-underlineAlways css-wpssva-MuiTypography-root-MuiLink-root"
                   style={{ cursor: "pointer" }}
-                  to={"/signup"}
+                  to={"/signin"}
                   variant="body2"
                 >
-                  Don't have an account? Sign Up
+                  Already an account? Sign In
                 </ReactLink>
               </Grid>
             </Grid>
           </form>
         </Box>
-        <div
-          style={{
-            marginTop: "5rem",
-            display: "flex",
-            gap: "10px",
-            justifyContent: "center",
-          }}
-        >
-          <button
-            style={{
-              backgroundColor: "gray",
-              padding: "10px",
-              color: "#fff",
-              borderRadius: "3px",
-              fontSize: "16px",
-            }}
-            onClick={handleCreateTable}
-          >
-            1. Create Table
-          </button>
-          <button
-            style={{
-              backgroundColor: "gray",
-              padding: "10px",
-              color: "#fff",
-              borderRadius: "3px",
-              fontSize: "16px",
-            }}
-            onClick={handleImportData}
-          >
-            2. Import Data
-          </button>
-        </div>
       </Container>
     </ThemeProvider>
   );

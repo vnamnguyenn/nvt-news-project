@@ -2,6 +2,7 @@ const {docClient} = require(`../../config/dynamoDB`);
 const crypto = require('crypto');
 const uniqid = require('uniqid');
 const userRepository = require('../users/userRepository');
+const {currentTime} = require('../../config/currentTime');
 class AuthRepository {
 	constructor() {
 		this.tableName = 'Blog';
@@ -51,7 +52,6 @@ class AuthRepository {
 			.update(data.PasswordHash)
 			.digest('hex');
 		const today = new Date();
-		const currentTime = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 		const params = {
 			TableName: this.tableName,
 			Item: {
@@ -67,7 +67,7 @@ class AuthRepository {
 				IsActive: true,
 				Avatar: 'https://www.w3schools.com/howto/img_avatar.png',
 				Description: data.Description,
-				CreatedDate: currentTime,
+				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 		};
 

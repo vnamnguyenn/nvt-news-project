@@ -74,7 +74,9 @@ function Tag() {
     }
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
     const data = new FormData();
     const imageName =
       formData.Thumbnail === undefined

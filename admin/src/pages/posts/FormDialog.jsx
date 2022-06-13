@@ -39,6 +39,7 @@ export default function FormDialog({
   } = data;
 
   const dispatch = useDispatch();
+  const formRef = useRef();
   const tags = useSelector((state) => state.tag.tags); //fetch tags data
   const categories = useSelector((state) => state.category.categories); //fetch categories data
   const [listTag, setListTag] = useState(tags);
@@ -65,12 +66,13 @@ export default function FormDialog({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {PostID ? "Update post" : "Create new post"}
-        </DialogTitle>
-        <DialogContent>
-          <form>
+        <form ref={formRef} onSubmit={handleFormSubmit}>
+          <DialogTitle id="alert-dialog-title">
+            {PostID ? "Update post" : "Create new post"}
+          </DialogTitle>
+          <DialogContent>
             <TextField
+              autoFocus
               required
               id="PostTitle"
               value={PostTitle}
@@ -83,7 +85,7 @@ export default function FormDialog({
               fullWidth
             />
             <Autocomplete
-              required
+              autoFocus
               style={{ marginTop: "5px" }}
               multiple
               options={listTag}
@@ -98,15 +100,18 @@ export default function FormDialog({
                   {...params}
                   placeholder="Choose Tag"
                   variant="outlined"
+                  required
                 />
               )}
             />
             <Autocomplete
               style={{ marginTop: "8px" }}
               multiple
+              autoFocus
               options={listCategory}
               id="Categories"
               fullWidth
+              required
               autoHighlight
               defaultValue={Categories}
               getOptionLabel={(option) => option.CategoryName}
@@ -121,7 +126,7 @@ export default function FormDialog({
               )}
             />
             <TextField
-              required
+              autoFocus
               id="Thumbnail"
               type="file"
               onChange={(e) => onChange(e)}
@@ -132,7 +137,6 @@ export default function FormDialog({
               fullWidth
             />
             <TextField
-              required
               id="PostImage"
               type="file"
               onChange={(e) => onChange(e)}
@@ -144,6 +148,7 @@ export default function FormDialog({
             />
             <TextField
               required
+              autoFocus
               id="Description"
               value={Description}
               onChange={(e) => onChange(e)}
@@ -183,6 +188,7 @@ export default function FormDialog({
             />
             <TextField
               required
+              autoFocus
               id="ReadingTime"
               value={ReadingTime}
               onChange={(e) => onChange(e)}
@@ -193,6 +199,7 @@ export default function FormDialog({
               InputLabelProps={{ shrink: true }}
             />
             <TextField
+              autoFocus
               id="MetaDescription"
               value={MetaDescription}
               onChange={(e) => onChange(e)}
@@ -205,6 +212,7 @@ export default function FormDialog({
             />
             <TextField
               id="MetaKeyword"
+              autoFocus
               value={MetaKeyword}
               onChange={(e) => onChange(e)}
               placeholder="Enter MetaKeyword"
@@ -214,20 +222,21 @@ export default function FormDialog({
               fullWidth
               InputLabelProps={{ shrink: true }}
             />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="outlined">
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            onClick={() => handleFormSubmit()}
-            variant="contained"
-          >
-            {PostID ? "Update" : "Submit"}
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary" variant="outlined">
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              onClick={() => formRef.current.reportValidity()}
+              color="primary"
+              variant="contained"
+            >
+              {PostID ? "Update" : "Submit"}
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

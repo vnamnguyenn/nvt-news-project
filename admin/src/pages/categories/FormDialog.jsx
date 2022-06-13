@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -17,7 +17,7 @@ export default function FormDialog({
   handleFormSubmit,
 }) {
   const { CategoryId, CategoryName } = data;
-
+  const formRef = useRef();
   return (
     <div>
       <Dialog
@@ -26,11 +26,11 @@ export default function FormDialog({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {CategoryId ? "Update category" : "Create new category"}
-        </DialogTitle>
-        <DialogContent>
-          <form>
+        <form ref={formRef} onSubmit={handleFormSubmit} autoComplete="off">
+          <DialogTitle id="alert-dialog-title">
+            {CategoryId ? "Update category" : "Create new category"}
+          </DialogTitle>
+          <DialogContent>
             <TextField
               required
               id="CategoryName"
@@ -44,7 +44,6 @@ export default function FormDialog({
               fullWidth
             />
             <TextField
-              required
               id="Thumbnail"
               type="file"
               onChange={(e) => onChange(e)}
@@ -54,20 +53,21 @@ export default function FormDialog({
               margin="dense"
               fullWidth
             />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary" variant="outlined">
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            onClick={() => handleFormSubmit()}
-            variant="contained"
-          >
-            {CategoryId ? "Update" : "Submit"}
-          </Button>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary" variant="outlined">
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              type="submit"
+              onClick={() => formRef.current.reportValidity()}
+              variant="contained"
+            >
+              {CategoryId ? "Update" : "Submit"}
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

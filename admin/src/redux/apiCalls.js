@@ -64,7 +64,35 @@ import {
 } from "./categoryRedux";
 import fileDownload from "js-file-download";
 /*--------User--------*/
-export const login = async (dispatch, user) => {
+export const signup = async (dispatch, user) => {
+  dispatch(loginStart());
+  try {
+    const res = await publicRequest.post("/signup", user);
+    toast.success("Logged in successfull", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+    dispatch(loginSuccess(res.data));
+    window.location.replace("/");
+  } catch (err) {
+    toast.error("Something went wrong", {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+    dispatch(loginFailure());
+  }
+};
+export const signin = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/signin", user);
@@ -203,7 +231,7 @@ export const restoreDefaultBackup = async () => {
       progress: undefined,
     });
   } catch (err) {
-    toast.error(`Data restore  is Failed, please check content file`, {
+    toast.error(`Data restore is Failed, please check content file`, {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,

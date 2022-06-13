@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Tag from "../pages/tags/Index";
 import Category from "../pages/categories/Index";
 import Backup from "../pages/backup/Index";
+import SignUp from "../pages/auth/Signup";
 
 const ROUTES = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -34,6 +35,7 @@ const ROUTES = () => {
       {user == null && (
         <>
           <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<Navigate to="/signin" replace />} />
         </>
       )}
