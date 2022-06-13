@@ -100,7 +100,6 @@ export default function FormDialog({
                   {...params}
                   placeholder="Choose Tag"
                   variant="outlined"
-                  required
                 />
               )}
             />

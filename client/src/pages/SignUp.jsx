@@ -1,11 +1,14 @@
 import React, {Fragment, useState, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {signup} from '../redux/apiCalls';
 const SignUp = () => {
 	const [error, setError] = useState(false);
+
+	const dispatch = useDispatch();
 	const [values, setValues] = useState({
 		FullName: '',
 		UserEmail: '',
@@ -71,14 +74,12 @@ const SignUp = () => {
 		e.preventDefault();
 		setError(false);
 		try {
-			const res = await publicRequest.post('/signup', {
+			signup(dispatch, {
 				FullName: values.FullName,
 				UserEmail: values.UserEmail,
 				DateOfBirth: values.DateOfBirth,
 				PasswordHash: values.PasswordHash,
 			});
-			res.data && window.location.replace('/signin');
-			console.log(res.data);
 		} catch (err) {
 			setError(true);
 		}

@@ -11,6 +11,7 @@ import Category from '../pages/Category';
 import {useSelector} from 'react-redux';
 import SearchPost from '../pages/SearchPost';
 import Profile from '../pages/Profile';
+import ReadingList from '../pages/ReadingList';
 
 const ROUTES = () => {
 	const user = useSelector((state) => state.user.currentUser);
@@ -21,6 +22,7 @@ const ROUTES = () => {
 			{user ? (
 				<>
 					<Route path="/profile" element={<Profile />} />
+					<Route path="/readinglist" element={<ReadingList />} />
 				</>
 			) : (
 				<>

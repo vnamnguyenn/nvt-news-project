@@ -43,7 +43,6 @@ class TagService {
 			TagName: data.TagName,
 			Thumbnail: data.Thumbnail,
 		});
-		console.log(data);
 	}
 
 	async deleteByID(pk, tagId) {

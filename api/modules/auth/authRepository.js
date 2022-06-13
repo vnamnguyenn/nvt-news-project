@@ -65,7 +65,7 @@ class AuthRepository {
 				isAdmin: true,
 				PasswordHash: hashedPassword,
 				IsActive: true,
-				Avatar: 'https://www.w3schools.com/howto/img_avatar.png',
+				Avatar: '1654862809555favicon.png',
 				Description: data.Description,
 				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},

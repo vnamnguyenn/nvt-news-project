@@ -54,6 +54,25 @@ class PostController {
 		}
 	}
 
+	async getbyTag(req, res) {
+		try {
+			const data = await PostService.getbyTag();
+			// for (let i = 0; i < data.Items.length; i++) {
+			// 	for (let j = 0; j < data.Items[i].Categories.length; j++) {
+			// 		const categoryId = data.Items[i].Categories[j].CategoryId;
+			// 	}
+			// }
+			// console.log(data.Count);
+			data.forEach(function (ct) {
+				console.log(ct.PostID);
+			});
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
 	async getByCategoryId(req, res) {
 		try {
 			let data = await PostService.getByCategoryId();

@@ -34,7 +34,6 @@ class CategoryController {
 	async update(req, res) {
 		try {
 			const data = await CategoryService.update(req.user.pk, req.params.categoryId, req.body);
-			console.log(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);

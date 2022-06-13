@@ -452,7 +452,7 @@ class DBRepository {
 		// 				PK: data.PK,
 		// 				SK: data.SK,
 		// 				CreatedDate: data.CreatedDate,
-		// 				AccountId: data.AccountId,
+		// 				AccountInfo: data.AccountInfo,
 		// 				Path: data.Path,
 		// 				BackupName: data.BackupName,
 		// 			},
@@ -585,7 +585,7 @@ class DBRepository {
 						Description: data.Description,
 						Thumbnail: data.Thumbnail,
 						CreatedDate: data.CreatedDate,
-						AccountId: data.AccountId,
+						AccountInfo: data.AccountInfo,
 						ParentPostID: data.ParentPostID,
 					},
 				};

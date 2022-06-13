@@ -2,43 +2,40 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
-import {baseImageUrl, publicRequest} from '../requestMethods';
+import {baseImageUrl} from '../requestMethods';
 import DOMPurify from 'dompurify';
 import Comments from '../components/Comments';
 import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {getPostById} from '../redux/apiCalls';
 
 const Post = () => {
+	const dispatch = useDispatch();
 	const location = useLocation();
-	const [post, setPost] = useState({});
+	const post = useSelector((state) => state.post.posts.data[0]); //fetch post data
 	const postID = location.pathname.split('/')[2];
-
-	useEffect(() => {
-		const getPost = async () => {
-			const res = await publicRequest.get('/post/' + postID);
-			document.title = res.data.PostTitle;
-			setPost(res.data);
-		};
-		getPost();
-	}, [postID]);
+	const [loading, setLoading] = useState(true);
 
 	const cleanHTML = DOMPurify.sanitize(post.Content, {
 		USE_PROFILES: {html: true},
 	});
 
 	document.querySelector('.sk-cube-grid').style.display = 'block';
-	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		getPostById(postID, dispatch);
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
 			}, 400);
 		}
-	}, [loading]);
+	}, [loading, dispatch, postID]);
+
 	if (loading) {
 		return null; // render null when app is not ready
 	}
+
 	return (
 		<>
 			<Header />
@@ -55,6 +52,56 @@ const Post = () => {
 					</div>
 					<div className="container">
 						<div className="post-content" dangerouslySetInnerHTML={{__html: cleanHTML}} />
+						<div className="crayons-reaction">
+							<button
+								id="reaction-butt-like"
+								aria-label="Like"
+								aria-pressed="false"
+								class="crayons-reaction crayons-reaction--like activated"
+								data-category="like"
+								title="Heart"
+							>
+								<span class="crayons-reaction__icon crayons-reaction__icon--inactive">
+									<i class="ri-heart-2-line crayons-reaction__icon--inactive" />
+									{/* <i class="ri-heart-2-fill crayons-reaction__icon--active" /> */}
+									<span class="crayons-reaction__count" id="reaction-number-like">
+										4
+									</span>
+								</span>
+							</button>
+							<button
+								id="reaction-butt-readinglist"
+								aria-label="Add to reading list"
+								aria-pressed="true"
+								class="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
+								data-category="readinglist"
+								title="Save"
+							>
+								<span class="crayons-reaction__icon ">
+									<i class="ri-chat-2-line crayons-reaction__icon--inactive" />
+									{/* <i class="ri-chat-2-fill crayons-reaction__icon--active" /> */}
+									<span class="crayons-reaction__count" id="reaction-number-readinglist">
+										4
+									</span>
+								</span>
+							</button>
+							<button
+								id="reaction-butt-readinglist"
+								aria-label="Add to reading list"
+								aria-pressed="true"
+								class="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
+								data-category="readinglist"
+								title="Save"
+							>
+								<span class="crayons-reaction__icon ">
+									<i class="ri-bookmark-line crayons-reaction__icon--inactive" />
+									{/* <i class="ri-bookmark-fill crayons-reaction__icon--active" /> */}
+									<span class="crayons-reaction__count" id="reaction-number-readinglist">
+										6
+									</span>
+								</span>
+							</button>
+						</div>
 						<div className="author d-grid">
 							<div className="author-image-box">
 								<img

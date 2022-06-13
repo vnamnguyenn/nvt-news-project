@@ -48,7 +48,6 @@
 }
 
 .author {
-	margin-top: 5rem;
 	gap: var(--gap);
 }
 
@@ -144,4 +143,14 @@
 }
 .post-content a:hover {
 	border-bottom-color: #00a562;
+}
+.crayons-reaction {
+	display: flex !important;
+	justify-content: center !important;
+	gap: 23px !important;
+	margin: 1rem 0;
+
+	.crayons-reaction__count {
+		font-size: 14px !important;
+	}
 }

@@ -22,8 +22,6 @@ const Header = () => {
 	const handleChange = (event) => {
 		setSearchTerm(event.target.value);
 	};
-	const {title} = useLocation();
-	// if you want to show the loader when React loads data again
 
 	const toggleMenu = () => {
 		const mobileMenu = selectElement('#menu');

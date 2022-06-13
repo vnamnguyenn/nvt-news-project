@@ -29,6 +29,7 @@ require('./routes/auth')(app);
 require('./routes/tags')(app);
 require('./routes/categories')(app);
 require('./routes/users')(app);
+require('./routes/readingList')(app);
 require('./routes/posts')(app);
 require('./routes/comments')(app);
 require('./routes/database')(app);

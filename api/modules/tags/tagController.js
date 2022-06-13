@@ -44,7 +44,6 @@ class TagController {
 	async update(req, res) {
 		try {
 			const data = await TagService.update(req.user.pk, req.params.tagId, req.body);
-			console.log(req.body);
 			res.status(200).json(data);
 		} catch (err) {
 			console.error(err);

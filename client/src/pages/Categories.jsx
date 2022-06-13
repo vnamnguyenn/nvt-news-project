@@ -3,18 +3,15 @@ import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {baseImageUrl, publicRequest} from '../requestMethods';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCategories} from '../redux/apiCalls';
 
 const Categories = () => {
-	const [cats, setCats] = useState([]);
-
+	const cats = useSelector((state) => state.category.categories); //fetch post data
+	const dispatch = useDispatch();
 	useEffect(() => {
-		const getCats = async () => {
-			const res = await publicRequest.get('/category');
-			setCats(res.data);
-		};
-		document.title = 'Categories | NVT';
-		getCats();
-	}, []);
+		getCategories(dispatch);
+	}, [dispatch]);
 
 	//loader animation
 	document.querySelector('.sk-cube-grid').style.display = 'block';

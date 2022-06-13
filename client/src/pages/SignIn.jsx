@@ -1,11 +1,11 @@
-import React, {Fragment, useState,useEffect} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {Link} from 'react-router-dom';
-import {login} from '../redux/apiCalls';
+import {signin} from '../redux/apiCalls';
 import styled from 'styled-components';
-import {useDispatch,} from 'react-redux';
+import {useDispatch} from 'react-redux';
 const Button = styled.button`
 	cursor: pointer;
 	&:disabled {
@@ -50,12 +50,13 @@ const SignIn = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		login(dispatch, {UserEmail: values.UserEmail, PasswordHash: values.PasswordHash});
+		signin(dispatch, {UserEmail: values.UserEmail, PasswordHash: values.PasswordHash});
 	};
 
 	const onChange = (e) => {
 		setValues({...values, [e.target.name]: e.target.value});
 	};
+
 	return (
 		<Fragment>
 			<Header />

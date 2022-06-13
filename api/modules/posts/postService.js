@@ -31,6 +31,16 @@ class PostService {
 		return data;
 	}
 
+	async getbyTag() {
+		const data = await PostRepository.getbyTag();
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
 	async getByCategoryId() {
 		const data = await PostRepository.getByCategoryId();
 

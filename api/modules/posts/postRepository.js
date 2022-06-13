@@ -73,6 +73,15 @@ class PostRepository {
 		return await docClient.scan(params).promise();
 	}
 
+	async getbyTag() {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'PostIndex',
+		};
+
+		return await docClient.scan(params).promise();
+	}
+
 	async getAllAdmin() {
 		const params = {
 			TableName: this.tableName,
@@ -196,8 +205,6 @@ class PostRepository {
 				SK: 'POST_' + postId,
 			},
 		};
-		console.log(params.Key.PK, params.Key.SK);
-
 		return await docClient.delete(params).promise();
 	}
 }

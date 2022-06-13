@@ -5,7 +5,6 @@ class CommentController {
 		try {
 			const data = await CommentService.create(req.user.pk, req.body);
 			res.status(200).json(data);
-			console.log(req.user.pk);
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({err: 'Something went wrong'});

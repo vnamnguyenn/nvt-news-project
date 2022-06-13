@@ -27,15 +27,7 @@ class CommentRepository {
 				},
 			},
 		};
-		await docClient
-			.put(params, function (err, data) {
-				if (err) {
-					console.log(err);
-				} else {
-					console.log('Create is success:', JSON.stringify(data, null, 2));
-				}
-			})
-			.promise();
+		await docClient.put(params).promise();
 		return params.Item;
 	}
 
