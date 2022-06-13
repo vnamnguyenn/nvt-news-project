@@ -6,7 +6,7 @@ import {
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { DeleteOutline } from "@material-ui/icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addBackup,
@@ -14,6 +14,7 @@ import {
   deleteBackup,
   downloadBackup,
   restoreBackup,
+  addBackupFromFile,
 } from "../../redux/apiCalls";
 
 import "../../assets/sass/general/list.scss";
@@ -24,6 +25,7 @@ function Backup() {
   const [pageSize, setPageSize] = useState(10);
   const backup = useSelector((state) => state.backup.backup); //fetch tags data
   const [open, setOpen] = useState(false);
+  const inputRef = useRef(null);
   const userId =
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
@@ -31,6 +33,10 @@ function Backup() {
     getbackup(dispatch);
     document.title = "Admin Dashboard - Backup";
   }, []);
+  const handleOpenChooseFile = () => {
+    //open file input box on click of other element
+    inputRef.current.click();
+  };
 
   const handleDownload = (url, name) => {
     downloadBackup(url, name);
@@ -55,8 +61,25 @@ function Backup() {
     }
   };
 
-  const handleSubmit = (e) => {
-    console.log(e.target);
+  const onChange = (e) => {
+    handleSubmit(e);
+  };
+
+  const handleSubmit = async (e) => {
+    const reader = new FileReader();
+    // alert(reader.readAsText(e));
+    reader.onload = async (e) => {
+      const text = e.target.result;
+      console.log(text);
+      addBackupFromFile(
+        {
+          Content: text,
+        },
+        dispatch
+      );
+      // alert(text);
+    };
+    reader.readAsText(e.target.files[0]);
   };
 
   const handleCreate = () => {
@@ -105,9 +128,7 @@ function Backup() {
                 Restore
               </button>
               <button
-                onClick={() =>
-                  handleDownload(params.row.Path, params.row.BackupName)
-                }
+                onClick={() => handleDownload(params.row.Path, params.row.Path)}
                 className="productListEdit"
               >
                 Download
@@ -147,23 +168,28 @@ function Backup() {
         <div className="list__container">
           <Navbar />
           <div className="productList" style={{ width: "auto" }}>
-            <div className="datatableTitle">
-              <Button className="add-new" onClick={handleCreate}>
-                Add New
-              </Button>
-            </div>
-            {/* <div className="datatableTitle">
-              <form>
-                <input type="file" name="" id="filename" />
-                <Button
-                  className="add-new"
-                  type="button"
-                  onClick={handleSubmit}
-                >
-                  Up load
+            <div style={{ display: "flex", gap: "5px" }}>
+              <div className="datatableTitle">
+                <Button className="add-new" onClick={handleCreate}>
+                  Add New
                 </Button>
-              </form>
-            </div> */}
+              </div>
+              <div className="datatableTitle">
+                <form onSubmit={handleSubmit}>
+                  <input
+                    style={{ display: "none" }}
+                    accept="application/JSON"
+                    type="file"
+                    ref={inputRef}
+                    onChange={onChange}
+                  />
+                </form>
+                <Button className="add-new" onClick={handleOpenChooseFile}>
+                  Upload file
+                </Button>
+              </div>
+            </div>
+
             <DataGrid
               autoHeight
               {...backup}

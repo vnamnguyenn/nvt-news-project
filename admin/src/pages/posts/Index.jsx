@@ -330,7 +330,7 @@ function Post() {
         <Navbar />
         <div className="productList" style={{ width: "auto" }}>
           <div className="datatableTitle">
-            <Button onClick={handleClickOpen} class="add-new">
+            <Button onClick={handleClickOpen} className="add-new">
               Add New Post
             </Button>
           </div>

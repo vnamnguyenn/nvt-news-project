@@ -63,7 +63,7 @@ import {
   deleteCategoryFailure,
 } from "./categoryRedux";
 import fileDownload from "js-file-download";
-//User
+/*--------User--------*/
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -78,7 +78,7 @@ export const login = async (dispatch, user) => {
       progress: undefined,
     });
     dispatch(loginSuccess(res.data));
-    window.location.replace("/posts");
+    window.location.replace("/");
   } catch (err) {
     toast.error("Email and/or Password wrong", {
       position: "bottom-right",
@@ -96,7 +96,7 @@ export const login = async (dispatch, user) => {
 export const logout = (dispatch) => {
   dispatch(logoutSuccess());
 };
-//Backup
+/*--------Backup--------*/
 export const getbackup = async (dispatch) => {
   dispatch(getBackupstart());
   try {
@@ -112,7 +112,7 @@ export const addBackup = async (dispatch) => {
   try {
     const res = await userRequest.post(`/backup/create`);
     dispatch(addbackupsuccess(res.data));
-    toast.success("Create backup in successfully", {
+    toast.success("Backup created in successfully", {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -125,6 +125,7 @@ export const addBackup = async (dispatch) => {
     dispatch(addbackupFailure());
   }
 };
+
 export const downloadBackup = async (url, name) => {
   try {
     const res = await downloadFile.get(url);
@@ -158,6 +159,112 @@ export const restoreBackup = async (Path, backupName) => {
   }
 };
 
+export const addBackupFromFile = async (Content, dispatch) => {
+  dispatch(addbackupstart());
+  try {
+    const res = await userRequest.post(
+      "/backup/add_backup_from_file/",
+      Content
+    );
+    dispatch(addbackupsuccess(res.data));
+    toast.success(`Data restored in successfully`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    dispatch(addbackupFailure());
+    toast.error(`Data restore is Failed, please check content file`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const restoreDefaultBackup = async () => {
+  try {
+    await publicRequest.get("/backup/import_data");
+    toast.success(`Data restored  in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    toast.error(`Data restore  is Failed, please check content file`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const createTable = async () => {
+  try {
+    await publicRequest.post("/database/create/");
+    toast.success(`Table created in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    toast.error(`Table create is Failed`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  }
+};
+
+export const deleteTable = async () => {
+  try {
+    await publicRequest.delete("/database/delete/");
+    toast.success(`Delete Table in successfully`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  } catch (err) {
+    toast.error(`Delete Table is Failed`, {
+      position: "bottom-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  }
+};
+
 export const deleteBackup = async (BackupID, backupName, dispatch) => {
   dispatch(deleteBackupstart());
   try {
@@ -176,7 +283,7 @@ export const deleteBackup = async (BackupID, backupName, dispatch) => {
     dispatch(deleteBackupFailure());
   }
 };
-//Tag
+/*--------Tag--------*/
 export const getTags = async (dispatch) => {
   dispatch(getTagstart());
   try {
@@ -192,7 +299,7 @@ export const addTag = async (tag, dispatch) => {
   try {
     const res = await userRequest.post(`/tag/create`, tag);
     dispatch(addTagsuccess(res.data));
-    toast.success("Create tag in successfully", {
+    toast.success("Tag created in successfully", {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -211,7 +318,7 @@ export const updateTag = async (TagId, tagName, tag, dispatch) => {
   try {
     await userRequest.patch(`/tag/edit/${TagId}`, tag);
     dispatch(updateTagsuccess({ TagId, tag }));
-    toast.success(`Update '${tagName}' in successfully`, {
+    toast.success(`'${tagName}' updated in successfully`, {
       position: "bottom-right",
       autoClose: 4000,
       hideProgressBar: false,
@@ -230,7 +337,7 @@ export const deleteTag = async (tagId, tagName, dispatch) => {
   try {
     await userRequest.delete(`/tag/delete/${tagId}`);
     dispatch(deleteTagsuccess(tagId));
-    toast.success(`Delete '${tagName}' in successfully`, {
+    toast.success(`'${tagName}' deleted in successfully`, {
       position: "bottom-right",
       autoClose: 4000,
       hideProgressBar: false,
@@ -243,7 +350,7 @@ export const deleteTag = async (tagId, tagName, dispatch) => {
     dispatch(deleteTagFailure());
   }
 };
-//Category
+/*--------Category--------*/
 export const getCategories = async (dispatch) => {
   dispatch(getCategorystart());
   try {
@@ -259,7 +366,7 @@ export const addCategory = async (category, dispatch) => {
   try {
     const res = await userRequest.post(`/category/create/`, category);
     dispatch(addCategorysuccess(res.data));
-    toast.success("Create category in successfully", {
+    toast.success("Category created in successfully", {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -302,7 +409,7 @@ export const deleteCategory = async (CategoryId, tagName, dispatch) => {
   try {
     await userRequest.delete(`/category/delete/${CategoryId}`);
     dispatch(deleteCategorysuccess(CategoryId));
-    toast.success(`Delete '${tagName}' in successfully`, {
+    toast.success(`'${tagName}' deleted in successfully`, {
       position: "bottom-right",
       autoClose: 4000,
       hideProgressBar: false,
@@ -325,13 +432,13 @@ export const getPosts = async (dispatch) => {
     dispatch(getPostFailure());
   }
 };
-//Post
+/*--------Post--------*/
 export const addPost = async (post, dispatch) => {
   dispatch(addPoststart());
   try {
     const res = await userRequest.post(`/post/create`, post);
     dispatch(addPostsuccess(res.data));
-    toast.success("Create post in successfully", {
+    toast.success("Post created in successfully", {
       position: "bottom-right",
       autoClose: 2500,
       hideProgressBar: false,
@@ -350,7 +457,7 @@ export const updatePost = async (postID, postTitle, post, dispatch) => {
   try {
     await userRequest.patch(`/post/edit/${postID}`, post);
     dispatch(updatePostsuccess({ postID, post }));
-    toast.success(`Update '${postTitle}' in successfully`, {
+    toast.success(`'${postTitle}' updated in successfully`, {
       position: "bottom-right",
       autoClose: 4000,
       hideProgressBar: false,
@@ -369,7 +476,7 @@ export const deletePost = async (postID, title, dispatch) => {
   try {
     await userRequest.delete(`/post/delete/${postID}`);
     dispatch(deletePostsuccess(postID));
-    toast.success(`Delete '${title}' in successfully`, {
+    toast.success(`'${title}' deleted in successfully`, {
       position: "bottom-right",
       autoClose: 4000,
       hideProgressBar: false,

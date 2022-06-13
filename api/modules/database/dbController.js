@@ -51,6 +51,16 @@ class DBController {
 		}
 	}
 
+	async addBackupFromFile(req, res) {
+		try {
+			const data = await DBRepository.addBackupFromFile(req.user.pk, req.body.Content);
+			res.status(200).json(data);
+		} catch (error) {
+			res.status(500).json(error);
+			console.log(error);
+		}
+	}
+
 	async restoreBackup(req, res) {
 		try {
 			await DBRepository.restoreBackup(req.params.path);
