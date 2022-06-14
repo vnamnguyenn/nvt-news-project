@@ -27,14 +27,15 @@ class ReadingListRepository {
 		const params = {
 			TableName: this.tableName,
 			Item: {
-				SaveID: id,
 				PK: pk,
-				SK: 'SAV_' + id,
-				ParentPostID: data.ParentPostID,
-				Description: data.Description,
+				SK: 'SAV_' + data.PostID,
+				SavePostID: data.PostID,
+				PostTitle: data.PostTitle,
 				Thumbnail: data.Thumbnail,
+				ReadingTime: data.ReadingTime,
 				AuthorInfo: data.AuthorInfo,
-				CreatedDate: data.CreatedDate,
+				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
+				PublishedDate: data.PublishedDate,
 			},
 		};
 

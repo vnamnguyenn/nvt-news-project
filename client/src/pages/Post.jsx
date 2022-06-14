@@ -2,39 +2,71 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {useLocation} from 'react-router';
-import {baseImageUrl} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
 import Comments from '../components/Comments';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {getPostById} from '../redux/apiCalls';
-
+import {addReadingPost} from '../redux/apiCalls';
+import {toast} from 'react-toastify';
 const Post = () => {
 	const dispatch = useDispatch();
 	const location = useLocation();
-	const post = useSelector((state) => state.post.posts.data[0]); //fetch post data
-	const postID = location.pathname.split('/')[2];
+	const currentUser = useSelector((state) => state.user.currentUser);
+	const [post, setPost] = useState({});
 	const [loading, setLoading] = useState(true);
-
-	const cleanHTML = DOMPurify.sanitize(post.Content, {
-		USE_PROFILES: {html: true},
-	});
-
-	document.querySelector('.sk-cube-grid').style.display = 'block';
+	const postID = location.pathname.split('/')[2];
 
 	useEffect(() => {
-		getPostById(postID, dispatch);
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
-			}, 400);
+			}, 500);
 		}
-	}, [loading, dispatch, postID]);
+		const getPost = async () => {
+			const res = await publicRequest.get('/post/' + postID);
+			document.title = res.data.PostTitle;
+			setPost(res.data);
+		};
+		getPost();
+	}, [postID, loading]);
+
+	const cleanHTML = DOMPurify.sanitize(post.Content, {
+		USE_PROFILES: {html: true},
+	});
+	document.querySelector('.sk-cube-grid').style.display = 'block';
 
 	if (loading) {
 		return null; // render null when app is not ready
 	}
+
+	const handleClickSave = () => {
+		if (!currentUser) {
+			toast.error('Login is required', {
+				position: 'bottom-right',
+				autoClose: 2500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: false,
+				progress: undefined,
+			});
+		} else {
+			addReadingPost(
+				{
+					PostID: postID,
+					PostTitle: post.PostTitle,
+					Thumbnail: post.Thumbnail,
+					ReadingTime: post.ReadingTime,
+					AuthorInfo: post.AuthorInfo,
+					CreatedDate: post.CreatedDate,
+					PublishedDate: post.PublishedDate,
+				},
+				dispatch,
+			);
+		}
+	};
 
 	return (
 		<>
@@ -57,14 +89,14 @@ const Post = () => {
 								id="reaction-butt-like"
 								aria-label="Like"
 								aria-pressed="false"
-								class="crayons-reaction crayons-reaction--like activated"
+								className="crayons-reaction crayons-reaction--like activated"
 								data-category="like"
 								title="Heart"
 							>
-								<span class="crayons-reaction__icon crayons-reaction__icon--inactive">
-									<i class="ri-heart-2-line crayons-reaction__icon--inactive" />
-									{/* <i class="ri-heart-2-fill crayons-reaction__icon--active" /> */}
-									<span class="crayons-reaction__count" id="reaction-number-like">
+								<span className="crayons-reaction__icon crayons-reaction__icon--inactive">
+									<i className="ri-heart-2-line crayons-reaction__icon--inactive" />
+									{/* <i className="ri-heart-2-fill crayons-reaction__icon--active" /> */}
+									<span className="crayons-reaction__count" id="reaction-number-like">
 										4
 									</span>
 								</span>
@@ -73,14 +105,14 @@ const Post = () => {
 								id="reaction-butt-readinglist"
 								aria-label="Add to reading list"
 								aria-pressed="true"
-								class="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
+								className="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
 								data-category="readinglist"
 								title="Save"
 							>
-								<span class="crayons-reaction__icon ">
-									<i class="ri-chat-2-line crayons-reaction__icon--inactive" />
-									{/* <i class="ri-chat-2-fill crayons-reaction__icon--active" /> */}
-									<span class="crayons-reaction__count" id="reaction-number-readinglist">
+								<span className="crayons-reaction__icon ">
+									<i className="ri-chat-2-line crayons-reaction__icon--inactive" />
+									{/* <i className="ri-chat-2-fill crayons-reaction__icon--active" /> */}
+									<span className="crayons-reaction__count" id="reaction-number-readinglist">
 										4
 									</span>
 								</span>
@@ -89,14 +121,15 @@ const Post = () => {
 								id="reaction-butt-readinglist"
 								aria-label="Add to reading list"
 								aria-pressed="true"
-								class="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
+								className="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
 								data-category="readinglist"
 								title="Save"
+								onClick={handleClickSave}
 							>
-								<span class="crayons-reaction__icon ">
-									<i class="ri-bookmark-line crayons-reaction__icon--inactive" />
-									{/* <i class="ri-bookmark-fill crayons-reaction__icon--active" /> */}
-									<span class="crayons-reaction__count" id="reaction-number-readinglist">
+								<span className="crayons-reaction__icon ">
+									<i className="ri-bookmark-line crayons-reaction__icon--inactive" />
+									{/* <i className="ri-bookmark-fill crayons-reaction__icon--active" /> */}
+									<span className="crayons-reaction__count" id="reaction-number-readinglist">
 										6
 									</span>
 								</span>

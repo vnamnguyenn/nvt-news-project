@@ -21,32 +21,9 @@ export const postSlice = createSlice({
 			state.isFetching = false;
 			state.error = true;
 		},
-		//GET BY ID
-		getPostByIDstart: (state) => {
-			state.isFetching = true;
-			state.error = false;
-		},
-		getPostByIDsuccess: (state, action) => {
-			state.isFetching = false;
-			state.posts.splice(
-				state.posts.findIndex((item) => item.PostID === action.payload),
-				1,
-			);
-		},
-		getPostByIDFailure: (state) => {
-			state.isFetching = false;
-			state.error = true;
-		},
 	},
 });
 
-export const {
-	getPostByIDstart,
-	getPostByIDsuccess,
-	getPostByIDFailure,
-	getPoststart,
-	getPostsuccess,
-	getPostFailure,
-} = postSlice.actions;
+export const {getPoststart, getPostsuccess, getPostFailure} = postSlice.actions;
 
 export default postSlice.reducer;

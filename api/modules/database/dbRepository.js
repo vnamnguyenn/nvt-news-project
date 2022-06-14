@@ -56,7 +56,7 @@ class DBRepository {
 					AttributeType: 'S',
 				},
 				{
-					AttributeName: 'SaveID',
+					AttributeName: 'SavePostID',
 					AttributeType: 'S',
 				},
 			],
@@ -217,18 +217,19 @@ class DBRepository {
 					IndexName: 'SavePostIndex', //7. SavePostIndex
 					KeySchema: [
 						{
-							AttributeName: 'SaveID',
+							AttributeName: 'SavePostID',
 							KeyType: 'HASH',
 						},
 					],
 					Projection: {
 						ProjectionType: 'INCLUDE',
 						NonKeyAttributes: [
-							'ParentPostID',
-							'Description',
+							'PostTitle',
 							'Thumbnail',
 							'CreatedDate',
-							'AccountId',
+							'AuthorInfo',
+							'ReadingTime',
+							'PublishedDate',
 						],
 					},
 					ProvisionedThroughput: {
@@ -312,17 +313,18 @@ class DBRepository {
 						AccountInfo: data.AccountInfo,
 					},
 				};
-			} else if (data.SaveID !== undefined) {
+			} else if (data.SavePostID !== undefined) {
 				params = {
 					TableName: 'Blog', //5. SavePostIndex
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
-						Description: data.Description,
+						PostTitle: data.PostTitle,
 						Thumbnail: data.Thumbnail,
 						CreatedDate: data.CreatedDate,
-						AccountId: data.AccountId,
-						ParentPostID: data.ParentPostID,
+						AccountInfo: data.AccountId,
+						ReadingTime: data.ReadingTime,
+						PublishedDate: data.PublishedDate,
 					},
 				};
 			} else if (data.BackupID !== undefined) {
@@ -432,17 +434,18 @@ class DBRepository {
 		// 				AccountInfo: data.AccountInfo,
 		// 			},
 		// 		};
-		// 	} else if (data.SaveID !== undefined) {
+		// 	} else if (data.SavePostID !== undefined) {
 		// 		params = {
 		// 			TableName: 'Blog', //5. SavePostIndex
 		// 			Item: {
 		// 				PK: data.PK,
 		// 				SK: data.SK,
-		// 				Description: data.Description,
+		// 				PostTitle: data.PostTitle,
 		// 				Thumbnail: data.Thumbnail,
 		// 				CreatedDate: data.CreatedDate,
-		// 				AccountId: data.AccountId,
-		// 				ParentPostID: data.ParentPostID,
+		// 				AuthorInfo: data.AuthorInfo,
+		// 				ReadingTime: data.ReadingTime	,
+		// PublishedDate: data.PublishedDate
 		// 			},
 		// 		};
 		// 	} else if (data.BackupID !== undefined) {
@@ -576,17 +579,18 @@ class DBRepository {
 						AccountInfo: data.AccountInfo,
 					},
 				};
-			} else if (data.SaveID !== undefined) {
+			} else if (data.SavePostID !== undefined) {
 				params = {
 					TableName: 'Blog', //5. SavePostIndex
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
-						Description: data.Description,
+						PostTitle: data.PostTitle,
 						Thumbnail: data.Thumbnail,
 						CreatedDate: data.CreatedDate,
-						AccountInfo: data.AccountInfo,
-						ParentPostID: data.ParentPostID,
+						AccountInfo: data.AccountId,
+						ReadingTime: data.ReadingTime,
+						PublishedDate: data.PublishedDate,
 					},
 				};
 			} else if (data.BackupID !== undefined) {

@@ -48,6 +48,7 @@ import {
 	getCategoryByIDsuccess,
 	getCategoryByIDFailure,
 } from './categoryRedux';
+import {useSelector} from 'react-redux';
 /*--------User--------*/
 export const signup = async (dispatch, user) => {
 	dispatch(loginStart());
@@ -168,29 +169,22 @@ export const getPosts = async (paramsString, dispatch) => {
 		dispatch(getPostFailure());
 	}
 };
-export const getPostById = async (postId, dispatch) => {
-	dispatch(getPostByIDstart());
-	try {
-		const res = await publicRequest.get('/post/' + postId);
-		dispatch(getPostByIDsuccess(res.data));
-	} catch (err) {
-		dispatch(getPostByIDFailure());
-	}
-};
+
 /*--------ReadingPost--------*/
 export const getReadingList = async (dispatch) => {
 	dispatch(getReadingPoststart());
 	try {
-		const res = await publicRequest.get('/reading_list');
+		const res = await userRequest.get('/reading_list');
 		dispatch(getReadingPostsuccess(res.data));
 	} catch (err) {
 		dispatch(getReadingPostFailure());
 	}
 };
+
 export const addReadingPost = async (post, dispatch) => {
 	dispatch(addReadingPoststart());
 	try {
-		const res = await publicRequest.post('/reading_list/create/', post);
+		const res = await userRequest.post('/reading_list/create/', post);
 		dispatch(addReadingPostsuccess(res.data));
 		toast.success('Post saved in successfully', {
 			position: 'bottom-right',
@@ -203,13 +197,22 @@ export const addReadingPost = async (post, dispatch) => {
 		});
 	} catch (err) {
 		dispatch(addReadingPostFailure());
+		toast.error('Login is required', {
+			position: 'bottom-right',
+			autoClose: 2500,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: false,
+			progress: undefined,
+		});
 	}
 };
-export const deleteReadingPost = async (SaveID, dispatch) => {
-	dispatch(addReadingPoststart());
+export const deleteReadingPost = async (SavePostID, dispatch) => {
+	dispatch(deleteReadingPoststart());
 	try {
-		const res = await publicRequest.post('/reading_list/delete/' + SaveID);
-		dispatch(addReadingPostsuccess(res.data));
+		const res = await userRequest.delete('/reading_list/delete/' + SavePostID);
+		dispatch(deleteReadingPostsuccess(res.data));
 		toast.success('Post removed in successfully', {
 			position: 'bottom-right',
 			autoClose: 2500,

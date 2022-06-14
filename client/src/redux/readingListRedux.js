@@ -15,7 +15,7 @@ export const readingListSlice = createSlice({
 		},
 		getReadingPostsuccess: (state, action) => {
 			state.isFetching = false;
-			state.posts = action.payload;
+			state.readingList = action.payload;
 		},
 		getReadingPostFailure: (state) => {
 			state.isFetching = false;
@@ -28,8 +28,8 @@ export const readingListSlice = createSlice({
 		},
 		deleteReadingPostsuccess: (state, action) => {
 			state.isFetching = false;
-			state.posts.splice(
-				state.posts.findIndex((item) => item.SaveID === action.payload),
+			state.readingList.splice(
+				state.readingList.findIndex((item) => item.SavePostID === action.payload),
 				1,
 			);
 		},
@@ -44,7 +44,7 @@ export const readingListSlice = createSlice({
 		},
 		addReadingPostsuccess: (state, action) => {
 			state.isFetching = false;
-			state.posts.push(action.payload);
+			state.readingList.push(action.payload);
 		},
 		addReadingPostFailure: (state) => {
 			state.isFetching = false;

@@ -10,13 +10,7 @@ class ReadingListService {
 	}
 
 	async create(pk, data) {
-		return await ReadingListRepository.create(pk, {
-			ParentPostID: data.ParentPostID,
-			Description: data.Description,
-			Thumbnail: data.Thumbnail,
-			AuthorInfo: data.AuthorInfo,
-			CreatedDate: data.CreatedDate,
-		});
+		return await ReadingListRepository.create(pk, data);
 	}
 
 	async deleteByID(pk, SaveID) {

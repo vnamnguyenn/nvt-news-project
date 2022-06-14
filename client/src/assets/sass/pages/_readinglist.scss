@@ -123,7 +123,7 @@ article {
 .reading-post-title {
 	font-weight: 600 !important;
 	word-wrap: break-word;
-	width: 750px;
+	width: 650px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
@@ -131,6 +131,18 @@ article {
 	line-clamp: 1;
 	-webkit-box-orient: vertical;
 }
+@media (max-width: 920px) {
+	.reading-post-title {
+		width: 400px;
+	}
+}
+
+@media (max-width: 767.99px) {
+	.reading-post-title {
+		width: 280px;
+	}
+}
+
 .author-name {
 	font-weight: 500 !important;
 }
@@ -145,4 +157,12 @@ article {
 }
 .c-btn {
 	cursor: pointer;
+}
+.delete-reading-button {
+	padding-left: 5px;
+}
+.crayons-avatar img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
 }
