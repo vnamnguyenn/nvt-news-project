@@ -6,13 +6,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {updateProfile} from '../redux/apiCalls';
 import {baseImageUrl} from '../requestMethods';
 import {getReadingList, deleteReadingPost} from '../redux/apiCalls';
+import {useNavigate} from 'react-router-dom';
 
 const ReadingList = () => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.user.currentUser);
 	const readingList = useSelector((state) => state.reading.readingList);
-
-	console.log(readingList);
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(true);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	useEffect(() => {
@@ -23,7 +23,10 @@ const ReadingList = () => {
 				document.querySelector('.sk-cube-grid').style.display = 'none';
 			}, 400);
 		}
-	}, [loading, dispatch]);
+		if (!currentUser) {
+			return navigate('/');
+		}
+	}, [loading, dispatch, currentUser, navigate]);
 
 	if (loading) {
 		return null; // render null when app is not ready

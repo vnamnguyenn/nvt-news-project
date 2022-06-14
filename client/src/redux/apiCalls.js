@@ -56,6 +56,8 @@ export const signup = async (dispatch, user, location) => {
 	dispatch(loginStart());
 	try {
 		const res = await publicRequest.post('/signup', user);
+		dispatch(loginSuccess(res.data));
+		window.location.replace(location);
 		toast.success('Logged in successfull', {
 			position: 'bottom-right',
 			autoClose: 2500,
@@ -65,8 +67,6 @@ export const signup = async (dispatch, user, location) => {
 			draggable: false,
 			progress: undefined,
 		});
-		dispatch(loginSuccess(res.data));
-		window.location.replace(location);
 	} catch (err) {
 		toast.error('Something went wrong', {
 			position: 'bottom-right',
@@ -84,15 +84,6 @@ export const signin = async (dispatch, user, location) => {
 	dispatch(loginStart());
 	try {
 		const res = await publicRequest.post('/signin', user);
-		toast.success('Logged in successfull', {
-			position: 'bottom-right',
-			autoClose: 2500,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: false,
-			progress: undefined,
-		});
 		dispatch(loginSuccess(res.data));
 		window.location.replace(location);
 	} catch (err) {
@@ -138,6 +129,15 @@ export const updateProfile = async (dispatch, user) => {
 };
 export const logout = (dispatch) => {
 	dispatch(logoutSuccess());
+	toast.success('User logout in successfully', {
+		position: 'bottom-right',
+		autoClose: 2500,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: false,
+		progress: undefined,
+	});
 };
 
 /*--------Tag--------*/

@@ -3,24 +3,29 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import {updateProfile} from '../redux/apiCalls';
 import {baseImageUrl, publicRequest} from '../requestMethods';
 const Profile = () => {
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.user.currentUser);
+	const navigate = useNavigate();
 	const [error, setError] = useState(false);
 	const [file, setFile] = useState(null);
 	const obj = {
-		FullName: currentUser.exportData.FullName,
-		UserEmail: currentUser.exportData.UserEmail,
-		Avatar: currentUser.exportData.Avatar,
+		FullName: currentUser ? currentUser.exportData.FullName : currentUser,
+		UserEmail: currentUser ? currentUser.exportData.UserEmail : currentUser,
+		Avatar: currentUser ? currentUser.exportData.Avatar : currentUser,
 	};
 
 	const [values, setValues] = useState(obj);
 
 	useEffect(() => {
 		document.title = 'Update Profile';
-	}, []);
+		if (!currentUser) {
+			return navigate('/');
+		}
+	}, [currentUser, navigate]);
 
 	const inputs = [
 		{

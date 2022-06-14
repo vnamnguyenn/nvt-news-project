@@ -3,13 +3,13 @@ import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useState, useEffect} from 'react';
 import {logout} from '../redux/apiCalls';
-import SearchPost from '../pages/SearchPost';
-import {useLocation} from 'react-router';
-import {publicRequest} from '../requestMethods';
+// import SearchPost from '../pages/SearchPost';
+import {useLocation, useNavigate} from 'react-router';
+// import {publicRequest} from '../requestMethods';
 const Header = () => {
 	const dispatch = useDispatch();
-	const [posts, setPosts] = useState([]);
-
+	// const [posts, setPosts] = useState([]);
+	const navigate = useNavigate();
 	const location = useLocation();
 	document.querySelector('.sk-cube-grid').style.display = 'none';
 	// Grab elements

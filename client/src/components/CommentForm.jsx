@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 function CommentForm({
 	handleSubmit,
@@ -9,10 +10,12 @@ function CommentForm({
 	handleCanle,
 	logged = false,
 }) {
+	const location = useLocation();
+	const previosPage = location.pathname;
 	const [text, setText] = useState(initialText);
 	const [submitButton, setSubmitButton] = useState(logged);
-
 	const currentUser = useSelector((state) => state.user.currentUser);
+	const navigate = useNavigate();
 
 	const isTextareaDisabled = text.length === 0;
 	const onSubmit = (event) => {
@@ -22,6 +25,7 @@ function CommentForm({
 	};
 
 	const showSubmitButton = () => {
+		console.log(location);
 		if (!currentUser) {
 			toast.error('Login required', {
 				position: 'bottom-right',
@@ -32,8 +36,12 @@ function CommentForm({
 				draggable: false,
 				progress: undefined,
 			});
+			const confirm = window.confirm(`Login required`);
+			if (confirm) {
+				return navigate('/signin', {state: {previosPage: previosPage}});
+			}
 		} else {
-			setSubmitButton(true);
+			return setSubmitButton(true);
 		}
 	};
 	return (
