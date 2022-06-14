@@ -54,6 +54,16 @@ class PostController {
 		}
 	}
 
+	async getPostByAuthor(req, res) {
+		try {
+			const data = await PostService.getPostByAuthor(req.params.authorId);
+			res.json(data);
+		} catch (err) {
+			console.error(err);
+			res.status(500).json({err: 'Something went wrong'});
+		}
+	}
+
 	async getbyTag(req, res) {
 		try {
 			const data = await PostService.getbyTag();

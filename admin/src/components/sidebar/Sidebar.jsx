@@ -11,12 +11,14 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     logout(dispatch);
+    navigate("/signin");
   };
 
   return (

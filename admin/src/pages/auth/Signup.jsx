@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useRef, useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,14 +10,24 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signup } from "../../redux/apiCalls";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const theme = createTheme();
 
 export default function SignUp() {
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = "Sign up";
+    if (currentUser) {
+      return navigate("/");
+    }
+  }, [currentUser, navigate]);
+
   const initialValue = {
     UserEmail: "",
     Password: "",

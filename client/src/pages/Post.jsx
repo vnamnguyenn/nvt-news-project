@@ -144,7 +144,12 @@ const Post = () => {
 								/>
 							</div>
 							<div className="author-about">
-								<h3 className="author-name">{post.AuthorInfo?.FullName}</h3>
+								<Link
+									to={`/author/${post.AuthorInfo.PK}`}
+									state={{authorName: post.AuthorInfo.FullName}}
+								>
+									<h3 className="author-name">{post.AuthorInfo?.FullName}</h3>
+								</Link>
 								<p>{post.AuthorInfo?.Description}</p>
 								<ul className="list social-media">
 									<li className="list-item">

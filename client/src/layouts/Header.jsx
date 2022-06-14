@@ -10,6 +10,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const [posts, setPosts] = useState([]);
 
+	const location = useLocation();
 	document.querySelector('.sk-cube-grid').style.display = 'none';
 	// Grab elements
 	const selectElement = (selector) => {
@@ -95,20 +96,28 @@ const Header = () => {
 										</Link>
 									</li>
 									<li className="list-item screen-lg-hidden">
-										<a onClick={logOutBtn} className="list-link">
+										<button onClick={logOutBtn} className="list-link">
 											Sign out
-										</a>
+										</button>
 									</li>
 								</ul>
 							) : (
 								<ul>
 									<li className="list-item screen-lg-hidden">
-										<Link to="/login" className="list-link">
+										<Link
+											to="/signin"
+											state={{previosPage: location.pathname}}
+											className="list-link"
+										>
 											Sign in
 										</Link>
 									</li>
 									<li className="list-item screen-lg-hidden">
-										<Link to="/register" className="list-link">
+										<Link
+											to="/signup"
+											state={{previosPage: location.pathname}}
+											className="list-link"
+										>
 											Sign up
 										</Link>
 									</li>
@@ -135,16 +144,24 @@ const Header = () => {
 								<Link to="/profile" className="list-link screen-sm-hidden">
 									{user.exportData.FullName}
 								</Link>
-								<a onClick={logOutBtn} className="btn sign-up-btn fancy-border screen-sm-hidden">
+								<div onClick={logOutBtn} className="btn sign-up-btn fancy-border screen-sm-hidden">
 									<span>Sign out</span>
-								</a>
+								</div>
 							</>
 						) : (
 							<>
-								<Link to="/signin" className="list-link screen-sm-hidden">
+								<Link
+									to="/signin"
+									className="list-link screen-sm-hidden"
+									state={{previosPage: location.pathname}}
+								>
 									Sign in
 								</Link>
-								<Link to="/signup" className="btn sign-up-btn fancy-border screen-sm-hidden">
+								<Link
+									to="/signup"
+									state={{previosPage: location.pathname}}
+									className="btn sign-up-btn fancy-border screen-sm-hidden"
+								>
 									<span>Sign up</span>
 								</Link>
 							</>

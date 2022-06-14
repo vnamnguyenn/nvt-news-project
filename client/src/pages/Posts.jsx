@@ -35,7 +35,7 @@ function Posts() {
 			setPagination(posts.pagination);
 		};
 		fetchPosts();
-	}, [dispatch, filters]);
+	}, [dispatch, filters, posts.pagination]);
 
 	function handlePageChange(newPage) {
 		//update content when click page change

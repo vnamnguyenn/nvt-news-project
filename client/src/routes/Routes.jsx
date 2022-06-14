@@ -12,24 +12,20 @@ import {useSelector} from 'react-redux';
 import SearchPost from '../pages/SearchPost';
 import Profile from '../pages/Profile';
 import ReadingList from '../pages/ReadingList';
+import PostsByAuthor from '../pages/PostsByAuthor';
 
 const ROUTES = () => {
-	const user = useSelector((state) => state.user.currentUser);
 	return (
 		<Routes>
 			<Route path="*" element={<NotFound />} />
 			<Route path="/" element={<Home />} />
-			{user ? (
-				<>
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/readinglist" element={<ReadingList />} />
-				</>
-			) : (
-				<>
-					<Route path="/signin" element={<Signin />} />
-					<Route path="/signup" element={<Signup />} />
-				</>
-			)}
+
+			<Route path="/profile" element={<Profile />} />
+			<Route path="/readinglist" element={<ReadingList />} />
+
+			<Route path="/signin" element={<Signin />} />
+			<Route path="/signup" element={<Signup />} />
+
 			<Route path="/category">
 				<Route index element={<Categories />} />
 				<Route path=":id" element={<Category />} />
@@ -39,6 +35,9 @@ const ROUTES = () => {
 				<Route index element={<Posts />} />
 				<Route path=":id" element={<Post />} />
 			</Route>
+
+			<Route path="/author/:authorId" element={<PostsByAuthor />} />
+
 			<Route path="/search">
 				<Route path=":title" element={<SearchPost />} />
 			</Route>

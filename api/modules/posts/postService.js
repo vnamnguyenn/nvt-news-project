@@ -31,6 +31,16 @@ class PostService {
 		return data;
 	}
 
+	async getPostByAuthor(pk) {
+		const data = await PostRepository.getPostByAuthor(pk);
+
+		if (data) {
+			return data.Items;
+		}
+
+		return data;
+	}
+
 	async getbyTag() {
 		const data = await PostRepository.getbyTag();
 

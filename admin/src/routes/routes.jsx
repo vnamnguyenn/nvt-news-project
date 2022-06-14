@@ -14,32 +14,22 @@ const ROUTES = () => {
   const user = useSelector((state) => state.user.currentUser);
   return (
     <Routes>
-      {user && user.exportData.isAdmin === true && (
-        <>
-          <Route path="/" element={<DashBoard />} />
-          <Route path="/posts">
-            <Route index element={<Post />} />
-          </Route>
-          <Route path="/tags">
-            <Route index element={<Tag />} />
-          </Route>
-          <Route path="/category">
-            <Route index element={<Category />} />
-          </Route>
-          <Route path="/backup">
-            <Route index element={<Backup />} />
-          </Route>
-        </>
-      )}
-
-      {user == null && (
-        <>
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="*" element={<Navigate to="/signin" replace />} />
-        </>
-      )}
-      {/* <Route path="*" element={<NotFound />} /> */}
+      <Route path="/" element={<DashBoard />} />
+      <Route path="/posts">
+        <Route index element={<Post />} />
+      </Route>
+      <Route path="/tags">
+        <Route index element={<Tag />} />
+      </Route>
+      <Route path="/category">
+        <Route index element={<Category />} />
+      </Route>
+      <Route path="/backup">
+        <Route index element={<Backup />} />
+      </Route>
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

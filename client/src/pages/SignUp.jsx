@@ -1,14 +1,16 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
-import {Link} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {signup} from '../redux/apiCalls';
 const SignUp = () => {
 	const [error, setError] = useState(false);
-
+	const currentUser = useSelector((state) => state.user.currentUser);
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const location = useLocation();
 	const [values, setValues] = useState({
 		FullName: '',
 		UserEmail: '',
@@ -19,7 +21,10 @@ const SignUp = () => {
 
 	useEffect(() => {
 		document.title = 'Sign up';
-	}, []);
+		if (currentUser) {
+			return navigate('/');
+		}
+	}, [navigate, currentUser]);
 
 	const inputs = [
 		{
@@ -65,7 +70,7 @@ const SignUp = () => {
 			placeholder: 'Confirm Password',
 			errorMessage: "Passwords don't match!",
 			label: 'Confirm Password',
-			pattern: values.password,
+			pattern: values.PasswordHash,
 			required: true,
 		},
 	];
@@ -74,12 +79,16 @@ const SignUp = () => {
 		e.preventDefault();
 		setError(false);
 		try {
-			signup(dispatch, {
-				FullName: values.FullName,
-				UserEmail: values.UserEmail,
-				DateOfBirth: values.DateOfBirth,
-				PasswordHash: values.PasswordHash,
-			});
+			signup(
+				dispatch,
+				{
+					FullName: values.FullName,
+					UserEmail: values.UserEmail,
+					DateOfBirth: values.DateOfBirth,
+					PasswordHash: values.PasswordHash,
+				},
+				location.state.previosPage,
+			);
 		} catch (err) {
 			setError(true);
 		}

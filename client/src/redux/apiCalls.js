@@ -48,9 +48,11 @@ import {
 	getCategoryByIDsuccess,
 	getCategoryByIDFailure,
 } from './categoryRedux';
+
 import {useSelector} from 'react-redux';
+import {useLocation} from 'react-router-dom';
 /*--------User--------*/
-export const signup = async (dispatch, user) => {
+export const signup = async (dispatch, user, location) => {
 	dispatch(loginStart());
 	try {
 		const res = await publicRequest.post('/signup', user);
@@ -64,7 +66,7 @@ export const signup = async (dispatch, user) => {
 			progress: undefined,
 		});
 		dispatch(loginSuccess(res.data));
-		window.location.replace('/');
+		window.location.replace(location);
 	} catch (err) {
 		toast.error('Something went wrong', {
 			position: 'bottom-right',
@@ -78,7 +80,7 @@ export const signup = async (dispatch, user) => {
 		dispatch(loginFailure());
 	}
 };
-export const signin = async (dispatch, user) => {
+export const signin = async (dispatch, user, location) => {
 	dispatch(loginStart());
 	try {
 		const res = await publicRequest.post('/signin', user);
@@ -92,7 +94,7 @@ export const signin = async (dispatch, user) => {
 			progress: undefined,
 		});
 		dispatch(loginSuccess(res.data));
-		window.location.replace('/');
+		window.location.replace(location);
 	} catch (err) {
 		toast.error('Email and/or Password wrong', {
 			position: 'bottom-right',

@@ -1,17 +1,18 @@
-import { React, useRef, useState } from "react";
+import { React, useRef, useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useNavigate } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   signin,
@@ -28,11 +29,17 @@ export default function SignIn() {
     Password: "",
   };
   const formRef = useRef();
-
   const [formData, setFormData] = useState(initialValue);
-  // const [emailError, setEmailError] = React.useState(false);
-  // const [passwordError, setPasswordError] = React.useState(false);
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Sign in";
+    if (currentUser) {
+      return navigate("/");
+    }
+  }, [currentUser, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,12 +48,10 @@ export default function SignIn() {
       PasswordHash: formData.Password,
     });
   };
+
   const onChange = (e) => {
     const { value, id } = e.target;
-    // console.log("id", id);
-    // console.log("value", value);
     setFormData({ ...formData, [id]: value });
-    console.log(formData);
   };
 
   const handleCreateTable = () => {

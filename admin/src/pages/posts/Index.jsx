@@ -50,7 +50,7 @@ function Post() {
   useEffect(() => {
     getPosts(dispatch);
     document.title = "Admin Dashboard - Posts";
-  }, []);
+  }, [dispatch]);
 
   const handleClickOpen = () => {
     setOpen(true);

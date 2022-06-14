@@ -90,6 +90,21 @@ class PostRepository {
 		return await docClient.scan(params).promise();
 	}
 
+	async getPostByAuthor(pk) {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'PostIndex',
+			FilterExpression: '#e14e0 = :e14e0',
+			ExpressionAttributeValues: {
+				':e14e0': pk,
+			},
+			ExpressionAttributeNames: {
+				'#e14e0': 'PK',
+			},
+		};
+		return await docClient.scan(params).promise();
+	}
+
 	async getByCategoryId() {
 		const params = {
 			TableName: this.tableName,

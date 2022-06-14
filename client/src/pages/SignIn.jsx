@@ -2,10 +2,10 @@ import React, {Fragment, useState, useEffect} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import FormInput from '../components/FormInput';
-import {Link} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {signin} from '../redux/apiCalls';
 import styled from 'styled-components';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 const Button = styled.button`
 	cursor: pointer;
 	&:disabled {
@@ -19,14 +19,19 @@ const Error = styled.span`
 `;
 const SignIn = () => {
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const currentUser = useSelector((state) => state.user.currentUser);
+	const navigate = useNavigate();
 	const [values, setValues] = useState({
 		UserEmail: '',
 		PasswordHash: '',
 	});
-
 	useEffect(() => {
 		document.title = 'Sign in';
-	}, []);
+		if (currentUser) {
+			return navigate('/');
+		}
+	}, [currentUser, navigate]);
 
 	const inputs = [
 		{
@@ -50,7 +55,11 @@ const SignIn = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		signin(dispatch, {UserEmail: values.UserEmail, PasswordHash: values.PasswordHash});
+		signin(
+			dispatch,
+			{UserEmail: values.UserEmail, PasswordHash: values.PasswordHash},
+			location.state.previosPage,
+		);
 	};
 
 	const onChange = (e) => {
