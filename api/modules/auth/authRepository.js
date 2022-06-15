@@ -8,18 +8,6 @@ class AuthRepository {
 		this.tableName = 'Blog';
 	}
 
-	async findByID(pk) {
-		const params = {
-			TableName: this.tableName,
-			Key: {
-				PK: pk,
-				SK: pk,
-			},
-		};
-
-		return await docClient.get(params).promise();
-	}
-
 	async updateByID(pk, data) {
 		const getUserInfo = await userRepository.findByID(pk);
 		const params = {
@@ -65,7 +53,8 @@ class AuthRepository {
 				isAdmin: true,
 				PasswordHash: hashedPassword,
 				IsActive: true,
-				Avatar: '1654862809555favicon.png',
+				Gender: data.Gender,
+				Avatar: data.Gender === 'male' ? 'man.png' : 'woman.png',
 				Description: data.Description,
 				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},

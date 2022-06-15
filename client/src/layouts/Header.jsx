@@ -26,11 +26,12 @@ const Header = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (searchTerm !== '') {
-			navigate('/search?q=' + searchTerm, {state: {searchParam: searchTerm}});
+			navigate('/search?q=' + searchTerm, {state: {searchParam: e.target[0].value}});
 			formCloseBtn();
+			setSearchTerm('');
+			setDisplay(false);
 		}
 	};
-	console.log(location);
 
 	const handleChange = (e) => {
 		setSearchTerm(e.target.value);
@@ -193,7 +194,7 @@ const Header = () => {
 				</nav>
 			</header>
 			{/* search popup */}
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={(e) => handleSubmit(e)}>
 				<div className="search-form-container container" id="search-form-container">
 					<div className="form-container-inner" style={{gap: 'unset', width: '420px'}}>
 						<input

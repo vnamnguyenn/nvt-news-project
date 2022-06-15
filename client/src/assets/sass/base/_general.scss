@@ -68,7 +68,7 @@ body.light-theme {
 }
 
 .section:not(.featured-articles) {
-	padding-block: 5rem;
+	padding-top: 5rem;
 }
 
 .d-grid {
@@ -83,10 +83,16 @@ body.light-theme {
 	min-height: 100vh;
 	position: relative;
 }
+.section-header-offset {
+	padding-bottom: 40rem;
+}
 
 #footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
 	height: 40rem;
+}
+.padding-bottom {
+	padding-bottom: 5rem;
 }

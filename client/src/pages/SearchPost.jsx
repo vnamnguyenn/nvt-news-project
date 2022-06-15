@@ -12,7 +12,6 @@ const SearchPost = () => {
 	const title = location.state.searchParam;
 	const [loading, setLoading] = useState(true);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
-	console.log('search result', title);
 	useEffect(() => {
 		document.title = 'Results for: ' + title;
 		if (loading) {
@@ -26,7 +25,7 @@ const SearchPost = () => {
 			setPosts(res.data);
 		};
 		fetchPosts();
-	}, [queryString, loading]);
+	}, [queryString, loading, title]);
 
 	if (loading) {
 		return null; // render null when app is not ready

@@ -32,7 +32,7 @@ const Categories = () => {
 		<div>
 			<Header />
 			<section className="popular-tags section section-header-offset">
-				<div className="container">
+				<div className="container padding-bottom">
 					<div className="popular-tags-container d-grid">
 						{cats.map((c) => (
 							<Link to={c.CategoryId} className="article" key={c.CategoryId}>

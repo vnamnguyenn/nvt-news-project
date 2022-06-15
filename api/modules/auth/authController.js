@@ -2,16 +2,6 @@ const AuthService = require(`./authService`);
 const jwt = require('jsonwebtoken');
 
 class AuthController {
-	async findByID(req, res) {
-		try {
-			const data = await AuthService.findByID(req.user.pk);
-			res.status(200).json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
 	async updateByID(req, res) {
 		try {
 			const data = await AuthService.updateByID(req.user.pk, req.body);

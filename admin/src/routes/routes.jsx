@@ -4,14 +4,12 @@ import DashBoard from "../pages/dashBoard/Dashboard";
 import NotFound from "../pages/NotFound";
 import Post from "../pages/posts/Index";
 import Signin from "../pages/auth/Signin";
-import { useSelector } from "react-redux";
 import Tag from "../pages/tags/Index";
 import Category from "../pages/categories/Index";
 import Backup from "../pages/backup/Index";
 import SignUp from "../pages/auth/Signup";
 
 const ROUTES = () => {
-  const user = useSelector((state) => state.user.currentUser);
   return (
     <Routes>
       <Route path="/" element={<DashBoard />} />

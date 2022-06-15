@@ -65,7 +65,7 @@ function Posts() {
 		<div>
 			<Header />
 			<section className="older-posts section section-header-offset">
-				<div className="container">
+				<div className="container padding-bottom">
 					<div className="older-posts-grid-wrapper d-grid">
 						{posts.data.map((p) => (
 							<Link to={p.PostID} key={p.PostID} className="article d-grid">

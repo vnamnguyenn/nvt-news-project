@@ -12,6 +12,7 @@ const Profile = () => {
 	const navigate = useNavigate();
 	const [error, setError] = useState(false);
 	const [file, setFile] = useState(null);
+
 	const obj = {
 		FullName: currentUser ? currentUser.exportData.FullName : currentUser,
 		UserEmail: currentUser ? currentUser.exportData.UserEmail : currentUser,

@@ -33,6 +33,7 @@ require('./routes/readingList')(app);
 require('./routes/posts')(app);
 require('./routes/comments')(app);
 require('./routes/database')(app);
+
 app.listen(port, () => {
 	console.log(`App listening at http://localhost:${port}`);
 });

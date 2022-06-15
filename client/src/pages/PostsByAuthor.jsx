@@ -39,7 +39,7 @@ function PostsByAuthor() {
 		<div>
 			<Header />
 			<section className="older-posts section section-header-offset">
-				<div className="container">
+				<div className="container padding-bottom">
 					<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '30px'}}>
 						<h2>Author: {AuthorName}</h2>
 					</div>

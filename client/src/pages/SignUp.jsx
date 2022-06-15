@@ -17,6 +17,7 @@ const SignUp = () => {
 		DateOfBirth: '',
 		PasswordHash: '',
 		ConfirmPassword: '',
+		Gender: 'male',
 	});
 
 	useEffect(() => {
@@ -86,6 +87,7 @@ const SignUp = () => {
 					UserEmail: values.UserEmail,
 					DateOfBirth: values.DateOfBirth,
 					PasswordHash: values.PasswordHash,
+					Gender: values.Gender,
 				},
 				location.state.previosPage,
 			);
@@ -95,7 +97,9 @@ const SignUp = () => {
 	};
 
 	const onChange = (e) => {
-		setValues({...values, [e.target.name]: e.target.value});
+		console.log(e.target.value);
+		const {name, value} = e.target;
+		setValues({...values, [name]: value});
 	};
 	return (
 		<Fragment>
@@ -107,6 +111,21 @@ const SignUp = () => {
 						{inputs.map((input) => (
 							<FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
 						))}
+						<div className="auth-input">
+							<label>Gender</label>
+							<select
+								className="form-input"
+								id="6"
+								name="Gender"
+								style={{fontSize: 'inherit'}}
+								onChange={onChange}
+							>
+								<option value="male" selected>
+									Male
+								</option>
+								<option value="female">FeMale</option>
+							</select>
+						</div>
 						<button className="btn btn-primary">Submit</button>
 						{error && <span style={{color: 'red', marginTop: '10px'}}>Something went wrong!</span>}
 						<div className="signin-bottom">

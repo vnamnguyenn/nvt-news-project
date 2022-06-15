@@ -13,6 +13,7 @@
 .signin-container {
 	display: flex;
 	justify-content: center;
+	padding-bottom: 40rem;
 
 	form {
 		background-color: var(--secondary-background-color);
@@ -79,7 +80,6 @@
 
 		a {
 			color: #0071b9;
-			text-decoration: underline;
 		}
 	}
 }
