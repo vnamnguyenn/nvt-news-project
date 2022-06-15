@@ -1,22 +1,23 @@
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
-import {useLocation} from 'react-router';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {baseImageUrl, publicRequest} from '../requestMethods';
 import DOMPurify from 'dompurify';
 import Comments from '../components/Comments';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {addReadingPost} from '../redux/apiCalls';
-import {toast} from 'react-toastify';
+
 const Post = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const location = useLocation();
 	const currentUser = useSelector((state) => state.user.currentUser);
 	const [post, setPost] = useState({});
 	const [loading, setLoading] = useState(true);
 	const postID = location.pathname.split('/')[2];
-
+	const previosPage = location.pathname;
 	useEffect(() => {
 		if (loading) {
 			setTimeout(() => {
@@ -43,15 +44,10 @@ const Post = () => {
 
 	const handleClickSave = () => {
 		if (!currentUser) {
-			toast.error('Login is required', {
-				position: 'bottom-right',
-				autoClose: 2500,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: false,
-				progress: undefined,
-			});
+			const confirm = window.confirm(`Login required`);
+			if (confirm) {
+				return navigate('/signin', {state: {previosPage: previosPage}});
+			}
 		} else {
 			addReadingPost(
 				{

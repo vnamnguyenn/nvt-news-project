@@ -13,7 +13,7 @@ class PostController {
 
 	async search(req, res) {
 		try {
-			const data = await PostService.search(req.params.title);
+			const data = await PostService.search(req.query.q);
 			res.json(data);
 		} catch (err) {
 			console.error(err);

@@ -39,7 +39,6 @@ class AuthController {
 				FullName: data.FullName,
 				UserEmail: data.UserEmail,
 				Avatar: data.Avatar,
-				isAdmin: data.isAdmin,
 			};
 
 			res.status(200).json({
@@ -73,7 +72,6 @@ class AuthController {
 				FullName: data.Items[0].FullName,
 				UserEmail: data.Items[0].UserEmail,
 				Avatar: data.Items[0].Avatar,
-				isAdmin: data.Items[0].isAdmin,
 			};
 
 			res.status(200).json({

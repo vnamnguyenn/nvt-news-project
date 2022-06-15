@@ -11,17 +11,34 @@ const Header = () => {
 	// const [posts, setPosts] = useState([]);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const [searchTerm, setSearchTerm] = useState('');
+	const fetchPostsData = useSelector((state) => state.post.posts.data);
+	const [display, setDisplay] = useState(false);
+	const [options, setOptions] = useState(fetchPostsData);
 	document.querySelector('.sk-cube-grid').style.display = 'none';
+
 	// Grab elements
 	const selectElement = (selector) => {
 		const element = document.querySelector(selector);
 		if (element) return element;
 		throw new Error(`Something went wrong! Make sure that ${selector} exists/is typed correctly.`);
 	};
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (searchTerm !== '') {
+			navigate('/search?q=' + searchTerm, {state: {searchParam: searchTerm}});
+			formCloseBtn();
+		}
+	};
+	console.log(location);
 
-	const [searchTerm, setSearchTerm] = useState('');
-	const handleChange = (event) => {
-		setSearchTerm(event.target.value);
+	const handleChange = (e) => {
+		setSearchTerm(e.target.value);
+		if (e.target.value !== '') {
+			setDisplay(true);
+		} else {
+			setDisplay(false);
+		}
 	};
 
 	const toggleMenu = () => {
@@ -141,9 +158,15 @@ const Header = () => {
 						</button>
 						{user ? (
 							<>
-								<Link to="/profile" className="list-link screen-sm-hidden">
-									{user.exportData.FullName}
-								</Link>
+								<div className="dropdown" style={{float: 'right'}}>
+									<Link to="/profile" className="dropbtn">
+										{user.exportData.FullName}
+									</Link>
+									<div className="dropdown-content">
+										<Link to="/profile">Profile</Link>
+										<Link to="/readinglist">Reading List</Link>
+									</div>
+								</div>
 								<div onClick={logOutBtn} className="btn sign-up-btn fancy-border screen-sm-hidden">
 									<span>Sign out</span>
 								</div>
@@ -170,29 +193,57 @@ const Header = () => {
 				</nav>
 			</header>
 			{/* search popup */}
-			<div className="search-form-container container" id="search-form-container">
-				<div className="form-container-inner">
-					<input
-						className="form-input"
-						type="text"
-						placeholder="What are you looking for?"
-						value={searchTerm}
-						onChange={handleChange}
-					/>
-					<Link
-						to={`/search/${searchTerm}`}
-						className="btn form-btn"
-						onClick={formCloseBtn}
+			<form onSubmit={handleSubmit}>
+				<div className="search-form-container container" id="search-form-container">
+					<div className="form-container-inner" style={{gap: 'unset', width: '420px'}}>
+						<input
+							className="form-input"
+							type="text"
+							placeholder="What are you looking for?"
+							value={searchTerm}
+							onChange={handleChange}
+						/>
+						{display && (
+							<div className="autoContainer">
+								{options
+									.filter(({PostTitle}) => PostTitle.indexOf(searchTerm.toLowerCase()) > -1)
+									.map((value, i) => {
+										return (
+											<Link
+												to={`/search?q=${value.PostTitle}`}
+												state={{searchParam: searchTerm}}
+												onClick={formCloseBtn}
+												className="option"
+												tabIndex="0"
+												key={i}
+											>
+												<span>{value.PostTitle}</span>
+											</Link>
+										);
+									})}
+							</div>
+						)}
+						<Link
+							to={`/search?q=${searchTerm}`}
+							state={{searchParam: searchTerm}}
+							className="btn form-btn"
+							onClick={formCloseBtn}
+							type="submit"
+							style={{marginTop: '20px'}}
+						>
+							<i className="ri-search-line"></i>
+						</Link>
+						<span className="form-note">Or press ESC to close.</span>
+					</div>
+					<button
+						className="btn form-close-btn place-items-center"
 						type="button"
+						onClick={formCloseBtn}
 					>
-						<i className="ri-search-line"></i>
-					</Link>
-					<span className="form-note">Or press ESC to close.</span>
+						<i className="ri-close-line"></i>
+					</button>
 				</div>
-				<button className="btn form-close-btn place-items-center" onClick={formCloseBtn}>
-					<i className="ri-close-line"></i>
-				</button>
-			</div>
+			</form>
 		</div>
 	);
 };

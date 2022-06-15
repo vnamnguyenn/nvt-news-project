@@ -38,9 +38,7 @@ const ROUTES = () => {
 
 			<Route path="/author/:authorId" element={<PostsByAuthor />} />
 
-			<Route path="/search">
-				<Route path=":title" element={<SearchPost />} />
-			</Route>
+			<Route path="/search" element={<SearchPost />} />
 		</Routes>
 	);
 };

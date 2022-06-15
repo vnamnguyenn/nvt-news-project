@@ -25,17 +25,7 @@ function CommentForm({
 	};
 
 	const showSubmitButton = () => {
-		console.log(location);
 		if (!currentUser) {
-			toast.error('Login required', {
-				position: 'bottom-right',
-				autoClose: 2500,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: false,
-				progress: undefined,
-			});
 			const confirm = window.confirm(`Login required`);
 			if (confirm) {
 				return navigate('/signin', {state: {previosPage: previosPage}});

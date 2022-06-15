@@ -2,45 +2,49 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {publicRequest} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import {useLocation} from 'react-router';
 
 const SearchPost = () => {
 	const [posts, setPosts] = useState([]);
 	const location = useLocation();
-	const title = location.pathname;
-	console.log(title);
-	// if you want to show the loader when React loads data again
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const res = await publicRequest.get(title);
-			setPosts(res.data);
-		};
-		fetchPosts();
-	}, []);
-	document.querySelector('.sk-cube-grid').style.display = 'block';
+	const queryString = location.search;
+	const title = location.state.searchParam;
 	const [loading, setLoading] = useState(true);
+	document.querySelector('.sk-cube-grid').style.display = 'block';
+	console.log('search result', title);
 	useEffect(() => {
+		document.title = 'Results for: ' + title;
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
 			}, 500);
 		}
-	}, [loading]);
+		const fetchPosts = async () => {
+			const res = await publicRequest.get('/search' + queryString);
+			setPosts(res.data);
+		};
+		fetchPosts();
+	}, [queryString, loading]);
+
 	if (loading) {
 		return null; // render null when app is not ready
 	}
+
 	return (
 		<div>
 			<Header />
 			<section className="older-posts section section-header-offset">
 				<div className="container">
+					<h1 className="center-content flex rd-list" style={{paddingBottom: '5rem'}}>
+						results for: {title}
+					</h1>
 					<div className="older-posts-grid-wrapper d-grid">
 						{posts.map((p) => (
 							<Link to={`/post/${p.PostID}`} key={p.PostID} className="article d-grid">
 								<div className="older-posts-article-image-wrapper">
-									<img src={p.Thumbnail} alt="" className="article-image" />
+									<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
 								</div>
 								<div className="article-data-container">
 									<div className="article-data">
