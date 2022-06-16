@@ -3,12 +3,10 @@ import {
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
-  GridToolbarExport,
   GridToolbarFilterButton,
 } from "@material-ui/data-grid";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { DeleteOutline } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTag, deleteTag, getTags, updateTag } from "../../redux/apiCalls";
@@ -218,7 +216,7 @@ function Tag() {
                 id="add-button"
                 className="add-new"
               >
-                Add New Tag
+                Add Tag
               </Button>
               <Button
                 onClick={handleDelete}
@@ -233,6 +231,12 @@ function Tag() {
               autoHeight
               {...tags}
               rows={tags}
+              sortModel={[
+                {
+                  field: "CreatedDate",
+                  sort: "desc",
+                },
+              ]}
               // isRowSelectable={(params) => params.row.PK === userId}
               columns={columns}
               getRowId={(row) => row.TagId}

@@ -487,30 +487,46 @@ export const addPost = async (post, dispatch) => {
 export const updatePost = async (postID, postTitle, post, dispatch) => {
   dispatch(updatePoststart());
   try {
-    await userRequest.patch(`/post/edit/${postID}`, post);
-    dispatch(updatePostsuccess({ postID, post }));
-    toast.success(`'${postTitle}' updated in successfully`, {
-      position: "bottom-right",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-    });
+    const res = await userRequest.patch(`/post/edit/${postID}`, post);
+    if (res.status === 200) {
+      dispatch(updatePostsuccess({ postID, post }));
+      toast.success(`'${postTitle}' updated in successfully`, {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
+    } else {
+      toast.err(res.message, {
+        position: "bottom-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
+    }
   } catch (err) {
     dispatch(updatePostFailure());
   }
 };
 
-export const deletePost = async (postID, title, dispatch) => {
+export const deletePost = async (postIDs, dispatch) => {
   dispatch(deletePoststart());
   try {
-    await userRequest.delete(`/post/delete/${postID}`);
-    dispatch(deletePostsuccess(postID));
-    toast.success(`'${title}' deleted in successfully`, {
+    let index = postIDs.length - 1;
+    while (index >= 0) {
+      await userRequest.delete(`/post/delete/${postIDs[index]}`);
+      dispatch(deletePostsuccess(postIDs[index]));
+      index -= 1;
+    }
+    toast.success(`Posts deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

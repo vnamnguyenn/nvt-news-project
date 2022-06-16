@@ -1,7 +1,9 @@
 import {
   DataGrid,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
-  GridToolbarExport,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton,
 } from "@material-ui/data-grid";
 import {
   addPost,
@@ -11,7 +13,6 @@ import {
 } from "../../redux/apiCalls";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { DeleteOutline } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
@@ -42,15 +43,23 @@ function Post() {
   const posts = useSelector((state) => state.post.posts); //fetch post data
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
-
+  const [selectionModel, setSelectionModel] = useState([]);
   const userId =
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
 
   useEffect(() => {
+    document.getElementById("delete-button").style.display =
+      selectionModel.length === 0 ? "none" : "";
+    document.getElementById("item-selected").style.display =
+      selectionModel.length === 0 ? "none" : "";
+
+    document.getElementById("add-button").style.display =
+      selectionModel.length !== 0 ? "none" : "";
+
     getPosts(dispatch);
     document.title = "Admin Dashboard - Posts";
-  }, [dispatch]);
+  }, [dispatch, selectionModel.length]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -101,12 +110,12 @@ function Post() {
   };
 
   //Delete post
-  const handleDelete = (id, title, PK) => {
+  const handleDelete = () => {
     const confirm = window.confirm(
-      `Are you sure, you want to delete '${title}'`
+      `Are you sure, you want to delete ${selectionModel.length} items selected`
     );
     if (confirm) {
-      deletePost(id, title, dispatch);
+      deletePost(selectionModel, dispatch);
     }
   };
   const onChange = (e, val) => {
@@ -292,23 +301,12 @@ function Post() {
               >
                 Edit
               </button>
-              <DeleteOutline
-                className="productListDelete"
-                onClick={() =>
-                  handleDelete(
-                    params.row.PostID,
-                    params.row.PostTitle,
-                    params.row.PK
-                  )
-                }
-              />
             </>
           );
         } else {
           return (
             <>
-              <button className="productListEditDisabled">Edit</button>
-              <DeleteOutline className="productListDeleteDisabled" />
+              <button className="productListEditDisabled">Disabled</button>
             </>
           );
         }
@@ -319,7 +317,9 @@ function Post() {
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
-        <GridToolbarExport />
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
       </GridToolbarContainer>
     );
   }
@@ -331,20 +331,41 @@ function Post() {
         <Navbar />
         <div className="productList" style={{ width: "auto" }}>
           <div className="datatableTitle">
-            <Button onClick={handleClickOpen} className="add-new">
-              Add New Post
+            <Button
+              onClick={handleClickOpen}
+              id="add-button"
+              className="add-new"
+            >
+              Add Post
             </Button>
+            <Button
+              onClick={handleDelete}
+              id="delete-button"
+              className="delete-item delete-button"
+            >
+              Delete selected
+            </Button>
+            <span id="item-selected"> {selectionModel.length} Selected</span>
           </div>
           <DataGrid
             autoHeight
             {...posts}
+            sortModel={[
+              {
+                field: "UpdatedDate",
+                sort: "desc",
+              },
+            ]}
             rows={posts}
-            disableSelectionOnClick
             columns={columns}
             getRowId={(row) => row.PostID}
             pageSize={pageSize}
+            onSelectionModelChange={(PostID) => {
+              setSelectionModel(PostID);
+            }}
+            selectionModel={selectionModel}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            rowsPerPageOptions={[5, 10, 25, 50, 100]}
+            rowsPerPageOptions={[10, 25, 50, 100]}
             pagination
             checkboxSelection
             components={{
