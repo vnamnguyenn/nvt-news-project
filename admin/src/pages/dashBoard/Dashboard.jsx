@@ -13,8 +13,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   useEffect(() => {
     document.title = "Admin Dashboard";
-
-    if (currentUser === null) {
+    if (!currentUser) {
       return navigate("/signin");
     }
   }, [currentUser, navigate]);

@@ -360,14 +360,18 @@ export const updateTag = async (TagId, tagName, tag, dispatch) => {
   }
 };
 
-export const deleteTag = async (tagId, tagName, dispatch) => {
+export const deleteTag = async (tagIds, dispatch) => {
   dispatch(deleteTagstart());
   try {
-    await userRequest.delete(`/tag/delete/${tagId}`);
-    dispatch(deleteTagsuccess(tagId));
-    toast.success(`'${tagName}' deleted in successfully`, {
+    let index = tagIds.length - 1;
+    while (index >= 0) {
+      await userRequest.delete(`/tag/delete/${tagIds[index]}`);
+      dispatch(deleteTagsuccess(tagIds[index]));
+      index -= 1;
+    }
+    toast.success(`Tag deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

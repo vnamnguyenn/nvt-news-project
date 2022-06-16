@@ -48,6 +48,13 @@ export const tagSlice = createSlice({
         state.tags.findIndex((item) => item.TagId === action.payload),
         1
       );
+
+      // for (let i = action.payload.length - 1; i >= 0; i--) {
+      //   state.tags.splice(
+      //     state.tags.findIndex((item) => item.TagId === action.payload[i]),
+      //     1
+      //   );
+      // }
     },
     deleteTagFailure: (state) => {
       state.isFetching = false;

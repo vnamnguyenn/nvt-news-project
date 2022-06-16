@@ -19,12 +19,17 @@
 	opacity: 1;
 	transform: scale(1);
 }
+
+.search-form-inner {
+	gap: unset !important;
+	width: 420px;
+}
+
 .autoContainer {
 	border-width: 0px 2px 2px 2px;
 	border-style: solid;
 	border-color: var(--secondary-background-color);
 	background-color: var(--secondary-background-color);
-	//   top: 52px;
 	width: 420px;
 }
 
@@ -39,4 +44,18 @@
 .option,
 span {
 	text-transform: capitalize;
+}
+
+@media (max-width: 500px) {
+	.search-form-inner {
+		width: 335px;
+	}
+
+	.autoContainer {
+		width: 335px;
+	}
+
+	.option {
+		width: 315px;
+	}
 }

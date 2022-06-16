@@ -50,6 +50,7 @@ class TagRepository {
 				TagName: data.TagName,
 				Thumbnail: data.Thumbnail,
 				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
+				UpdatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 		};
 

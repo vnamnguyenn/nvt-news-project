@@ -264,26 +264,50 @@
 .comment-box .comment-footer {
 	display: none;
 }
-@media only screen and (max-width: 766px) {
+@media only screen and (max-width: 768px) {
 	.comments-container {
-		width: 480px;
+		width: 700px;
+		margin: auto;
 	}
 
 	.comments-list .comment-box {
-		width: 390px;
+		width: 612px;
 	}
 
 	.reply-list .comment-box {
-		width: 320px;
+		width: 540px;
+	}
+}
+@media only screen and (max-width: 600px) {
+	.comments-container {
+		width: 520px;
+	}
+	.comments-list .comment-box {
+		width: 435px;
+	}
+
+	.reply-list .comment-box {
+		width: 360px;
 	}
 }
 
 @media only screen and (max-width: 475px) {
 	.comments-container {
 		width: 100%;
+		margin: unset;
 	}
 
 	.comments-list .comment-box {
 		width: 100%;
+	}
+	.comment-avatar {
+		margin-bottom: 5px;
+	}
+	.comments-list .comment-box:before,
+	.comments-list .comment-box:after {
+		display: none !important;
+	}
+	.reply-list {
+		padding-left: 30px;
 	}
 }

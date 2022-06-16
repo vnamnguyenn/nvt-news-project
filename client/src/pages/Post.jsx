@@ -168,7 +168,7 @@ const Post = () => {
 						</div>
 						<div className="article__tags">
 							<h2>Tags</h2>
-							<ul className="menu article__tags__menu">
+							<ul className="article__tags__menu">
 								{post.Tags.map((tag) => (
 									<li className="menu__item" key={tag.TagId}>
 										<Link to={`/tag/${tag.TagId}`} state={{tagName: tag.TagName}}>

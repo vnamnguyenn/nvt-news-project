@@ -53,10 +53,8 @@ class TagController {
 
 	async deleteByID(req, res) {
 		try {
-			const data = await TagService.deleteByID(req.user.pk, req.params.tagId);
-			if (data) {
-				res.json('Delete is success');
-			}
+			await TagService.deleteByID(req.user.pk, req.params.tagId);
+			res.status(200).json('Delete is success');
 		} catch (err) {
 			console.error(err);
 			res.status(500).json({err: 'Something went wrong'});

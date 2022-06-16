@@ -133,13 +133,19 @@ article {
 }
 @media (max-width: 920px) {
 	.reading-post-title {
-		width: 400px;
+		width: 600px;
 	}
 }
 
-@media (max-width: 767.99px) {
+@media (max-width: 768px) {
 	.reading-post-title {
-		width: 280px;
+		width: 470px;
+	}
+}
+
+@media (max-width: 450.99px) {
+	.reading-post-title {
+		width: 260px;
 	}
 }
 

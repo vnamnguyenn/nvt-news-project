@@ -14,7 +14,6 @@ const Categories = () => {
 
 	useEffect(() => {
 		document.title = 'Categories';
-
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);

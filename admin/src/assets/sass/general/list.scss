@@ -52,6 +52,21 @@
     }
   }
 }
+.delete-item {
+  color: #fff !important;
+  background-color: #dc0c47 !important;
+  margin-bottom: 5px !important;
+  padding: 8px 10px !important;
+  border-radius: 5px !important;
+}
+
+.delete-item:hover,
+.delete-item:focus {
+  color: #fff !important;
+  background-color: #cc073f !important;
+  margin-bottom: 5px !important;
+}
+
 .add-new {
   color: #fff !important;
   background-color: #414c7f !important;
@@ -67,4 +82,11 @@
 }
 .css-wgai2y-MuiFormLabel-asterisk {
   color: red;
+}
+.datatableTitle button {
+  text-transform: capitalize;
+}
+.datatableTitle span {
+  font-weight: 500;
+  padding-left: 5px;
 }

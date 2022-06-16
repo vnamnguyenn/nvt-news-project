@@ -14,6 +14,7 @@ const Header = () => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const fetchPostsData = useSelector((state) => state.post.posts.data);
 	const [display, setDisplay] = useState(false);
+	const [isActive, setIsActive] = useState(false);
 	const [options, setOptions] = useState(fetchPostsData);
 	document.querySelector('.sk-cube-grid').style.display = 'none';
 
@@ -21,7 +22,7 @@ const Header = () => {
 	const selectElement = (selector) => {
 		const element = document.querySelector(selector);
 		if (element) return element;
-		throw new Error(`Something went wrong! Make sure that ${selector} exists/is typed correctly.`);
+		// throw new Error(`Something went wrong! Make sure that ${selector} exists/is typed correctly.`);
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -43,10 +44,7 @@ const Header = () => {
 	};
 
 	const toggleMenu = () => {
-		const mobileMenu = selectElement('#menu');
-		const menuToggleIcon = selectElement('#menu-toggle-icon');
-		mobileMenu.classList.toggle('activated');
-		menuToggleIcon.classList.toggle('activated');
+		setIsActive((current) => !current);
 	};
 
 	const formOpenBtn = () => {
@@ -79,10 +77,10 @@ const Header = () => {
 						<h2 className="logo">NVTNews</h2>
 					</Link>
 
-					<div className="menu" id="menu">
+					<div className={`menu ${isActive ? 'activated' : ''}`} id="menu">
 						<ul className="list">
 							<li className="list-item">
-								<Link to="/" className="list-link current">
+								<Link to="/" className="list-link">
 									Home
 								</Link>
 							</li>
@@ -107,7 +105,7 @@ const Header = () => {
 								</a>
 							</li>
 							{user ? (
-								<ul>
+								<>
 									<li className="list-item screen-lg-hidden">
 										<Link to="/profile" className="list-link">
 											{user.exportData.FullName}
@@ -118,9 +116,9 @@ const Header = () => {
 											Sign out
 										</button>
 									</li>
-								</ul>
+								</>
 							) : (
-								<ul>
+								<>
 									<li className="list-item screen-lg-hidden">
 										<Link
 											to="/signin"
@@ -139,7 +137,7 @@ const Header = () => {
 											Sign up
 										</Link>
 									</li>
-								</ul>
+								</>
 							)}
 						</ul>
 					</div>
@@ -151,7 +149,9 @@ const Header = () => {
 						</button>
 
 						<button
-							className="btn place-items-center screen-lg-hidden menu-toggle-icon"
+							className={`btn place-items-center screen-lg-hidden menu-toggle-icon ${
+								isActive ? 'activated' : ''
+							}`}
 							onClick={toggleMenu}
 						>
 							<i className="ri-menu-3-line open-menu-icon"></i>
@@ -196,7 +196,7 @@ const Header = () => {
 			{/* search popup */}
 			<form onSubmit={(e) => handleSubmit(e)}>
 				<div className="search-form-container container" id="search-form-container">
-					<div className="form-container-inner" style={{gap: 'unset', width: '420px'}}>
+					<div className="form-container-inner search-form-inner">
 						<input
 							className="form-input"
 							type="text"

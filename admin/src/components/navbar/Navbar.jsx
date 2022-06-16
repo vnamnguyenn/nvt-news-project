@@ -44,7 +44,7 @@ const Navbar = () => {
             </div>
             <div className="item">
               <img
-                src={baseImageUrl + user.exportData.Avatar}
+                src={baseImageUrl + user?.exportData.Avatar}
                 className="avatar"
                 alt=""
               />

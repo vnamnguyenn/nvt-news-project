@@ -83,3 +83,16 @@
 		}
 	}
 }
+@media (max-width: 500px) {
+	.signin-container {
+		form {
+			padding: 15px 0;
+			.title {
+				margin-top: 15px;
+			}
+			.auth-input {
+				padding: 0 15px;
+			}
+		}
+	}
+}
