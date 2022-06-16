@@ -171,7 +171,9 @@ const Post = () => {
 							<ul className="menu article__tags__menu">
 								{post.Tags.map((tag) => (
 									<li className="menu__item" key={tag.TagId}>
-										<Link to={`/tag/${tag.TagId}`}>{tag.TagName}</Link>
+										<Link to={`/tag/${tag.TagId}`} state={{tagName: tag.TagName}}>
+											{tag.TagName}
+										</Link>
 									</li>
 								))}
 							</ul>

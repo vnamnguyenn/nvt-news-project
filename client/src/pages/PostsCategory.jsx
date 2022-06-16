@@ -1,20 +1,20 @@
-import Header from '../layouts/Header';
-import Footer from '../layouts/Footer';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import Footer from '../layouts/Footer';
+import Header from '../layouts/Header';
 import {baseImageUrl, publicRequest} from '../requestMethods';
 
-function PostsByAuthor() {
-	// const [posts, setPosts] = useState([]);
+const PostsCategory = () => {
 	const location = useLocation();
-	const AuthorID = location.pathname.split('/')[2];
-	const AuthorName = location.state.authorName;
+	const categoryName = location.state ? location.state.categoryName : 'Category';
+	const categoryID = location.pathname.split('/')[2];
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
+	let postCategory = [];
 
-	// fetch data from server
 	useEffect(() => {
+		document.title = categoryName;
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
@@ -22,15 +22,20 @@ function PostsByAuthor() {
 			}, 500);
 		}
 		const fetchPosts = async () => {
-			document.title = 'List post by ' + AuthorName;
-			const res = await publicRequest.get('/post/get_by_author/' + AuthorID);
+			const res = await publicRequest.get('/post_admin');
 			setPosts(res.data);
 		};
 		fetchPosts();
-	}, [AuthorID, loading, AuthorName]);
-	console.log(posts);
+	}, [loading, categoryName]);
 
-	// render null when app is not ready
+	for (let i = 0; i < posts.length; i++) {
+		for (let j = 0; j < posts[i].Categories.length; j++) {
+			if (posts[i].Categories[j].CategoryId === categoryID) {
+				postCategory.push(posts[i]);
+			}
+		}
+	}
+
 	if (loading) {
 		return null;
 	}
@@ -41,10 +46,10 @@ function PostsByAuthor() {
 			<section className="older-posts section section-header-offset">
 				<div className="container padding-bottom">
 					<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '30px'}}>
-						<h2>Author: {AuthorName}</h2>
+						<h2>Category: {categoryName}</h2>
 					</div>
 					<div className="older-posts-grid-wrapper d-grid">
-						{posts.map((p) => (
+						{postCategory.map((p) => (
 							<Link to={`/post/${p.PostID}`} key={p.PostID} className="article d-grid">
 								<div className="older-posts-article-image-wrapper">
 									<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
@@ -66,6 +71,6 @@ function PostsByAuthor() {
 			<Footer />
 		</div>
 	);
-}
+};
 
-export default PostsByAuthor;
+export default PostsCategory;

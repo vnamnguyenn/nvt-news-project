@@ -54,7 +54,7 @@ class AuthRepository {
 				PasswordHash: hashedPassword,
 				IsActive: true,
 				Gender: data.Gender,
-				Avatar: data.Gender === 'male' ? 'man.png' : 'woman.png',
+				Avatar: data.Gender === 'female' ? 'woman.png' : 'man.png',
 				Description: data.Description,
 				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},

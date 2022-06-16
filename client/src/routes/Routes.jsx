@@ -7,12 +7,12 @@ import Posts from '../pages/Posts';
 import Post from '../pages/Post';
 import Signup from '../pages/SignUp';
 import Categories from '../pages/Categories';
-import Category from '../pages/Category';
-import {useSelector} from 'react-redux';
+import PostsCategory from '../pages/PostsCategory';
+import PostsTag from '../pages/PostsTag';
 import SearchPost from '../pages/SearchPost';
 import Profile from '../pages/Profile';
 import ReadingList from '../pages/ReadingList';
-import PostsByAuthor from '../pages/PostsByAuthor';
+import PostsAuthor from '../pages/PostsAuthor';
 
 const ROUTES = () => {
 	return (
@@ -28,15 +28,17 @@ const ROUTES = () => {
 
 			<Route path="/category">
 				<Route index element={<Categories />} />
-				<Route path=":id" element={<Category />} />
+				<Route path=":id" element={<PostsCategory />} />
 			</Route>
+
+			<Route path="/tag/:id" element={<PostsTag />} />
 
 			<Route path="/post">
 				<Route index element={<Posts />} />
 				<Route path=":id" element={<Post />} />
 			</Route>
 
-			<Route path="/author/:authorId" element={<PostsByAuthor />} />
+			<Route path="/author/:authorId" element={<PostsAuthor />} />
 
 			<Route path="/search" element={<SearchPost />} />
 		</Routes>

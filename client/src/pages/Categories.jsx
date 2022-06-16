@@ -7,23 +7,23 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getCategories} from '../redux/apiCalls';
 
 const Categories = () => {
-	const cats = useSelector((state) => state.category.categories); //fetch post data
 	const dispatch = useDispatch();
-	useEffect(() => {
-		getCategories(dispatch);
-	}, [dispatch]);
-
-	//loader animation
-	document.querySelector('.sk-cube-grid').style.display = 'block';
+	const cats = useSelector((state) => state.category.categories); //fetch post data
 	const [loading, setLoading] = useState(true);
+	document.querySelector('.sk-cube-grid').style.display = 'block';
+
 	useEffect(() => {
+		document.title = 'Categories';
+
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
 			}, 500);
 		}
-	}, [loading]);
+		getCategories(dispatch);
+	}, [dispatch, loading]);
+
 	// render null when app is not ready
 	if (loading) {
 		return null;
@@ -35,7 +35,12 @@ const Categories = () => {
 				<div className="container padding-bottom">
 					<div className="popular-tags-container d-grid">
 						{cats.map((c) => (
-							<Link to={c.CategoryId} className="article" key={c.CategoryId}>
+							<Link
+								to={c.CategoryId}
+								className="article"
+								state={{categoryName: c.CategoryName}}
+								key={c.CategoryId}
+							>
 								<span className="tag-name">{c.CategoryName}</span>
 								<img
 									src={baseImageUrl + c.Thumbnail}

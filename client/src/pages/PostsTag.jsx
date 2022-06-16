@@ -1,19 +1,20 @@
-import Header from '../layouts/Header';
+import React, {useEffect, useState} from 'react';
+import {Link, useLocation} from 'react-router-dom';
 import Footer from '../layouts/Footer';
-import {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import Header from '../layouts/Header';
 import {baseImageUrl, publicRequest} from '../requestMethods';
-import {useLocation} from 'react-router';
 
-const SearchPost = () => {
-	const [posts, setPosts] = useState([]);
+const PostsTag = () => {
 	const location = useLocation();
-	const queryString = location.search;
-	const title = location.state ? location.state.searchParam : location.search.split('=')[1];
+	const tagId = location.pathname.split('/')[2];
+	const tagName = location.state ? location.state.tagName : 'Tag';
+	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
+	let postTag = [];
+
 	useEffect(() => {
-		document.title = 'Results for: ' + title;
+		document.title = tagName;
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
@@ -21,26 +22,34 @@ const SearchPost = () => {
 			}, 500);
 		}
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/search' + queryString);
+			const res = await publicRequest.get('/post_admin');
 			setPosts(res.data);
 		};
 		fetchPosts();
-	}, [queryString, loading, title]);
+	}, [tagName, loading]);
+
+	for (let i = 0; i < posts.length; i++) {
+		for (let j = 0; j < posts[i].Tags.length; j++) {
+			if (posts[i].Tags[j].TagId === tagId) {
+				postTag.push(posts[i]);
+			}
+		}
+	}
 
 	if (loading) {
-		return null; // render null when app is not ready
+		return null;
 	}
 
 	return (
 		<div>
 			<Header />
 			<section className="older-posts section section-header-offset">
-				<div className="container">
-					<h1 className="center-content flex rd-list" style={{paddingBottom: '5rem'}}>
-						results for: {title}
-					</h1>
+				<div className="container padding-bottom">
+					<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '30px'}}>
+						<h2>Tag: {tagName}</h2>
+					</div>
 					<div className="older-posts-grid-wrapper d-grid">
-						{posts.map((p) => (
+						{postTag.map((p) => (
 							<Link to={`/post/${p.PostID}`} key={p.PostID} className="article d-grid">
 								<div className="older-posts-article-image-wrapper">
 									<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
@@ -64,4 +73,4 @@ const SearchPost = () => {
 	);
 };
 
-export default SearchPost;
+export default PostsTag;

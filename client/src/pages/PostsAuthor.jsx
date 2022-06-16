@@ -1,19 +1,20 @@
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {baseImageUrl, publicRequest} from '../requestMethods';
-import {useLocation} from 'react-router';
 
-const SearchPost = () => {
-	const [posts, setPosts] = useState([]);
+function PostsAuthor() {
+	// const [posts, setPosts] = useState([]);
 	const location = useLocation();
-	const queryString = location.search;
-	const title = location.state ? location.state.searchParam : location.search.split('=')[1];
+	const AuthorID = location.pathname.split('/')[2];
+	const AuthorName = location.state.authorName;
+	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
+
+	// fetch data from server
 	useEffect(() => {
-		document.title = 'Results for: ' + title;
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
@@ -21,24 +22,27 @@ const SearchPost = () => {
 			}, 500);
 		}
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/search' + queryString);
+			document.title = 'List post by ' + AuthorName;
+			const res = await publicRequest.get('/post/get_by_author/' + AuthorID);
 			setPosts(res.data);
 		};
 		fetchPosts();
-	}, [queryString, loading, title]);
+	}, [AuthorID, loading, AuthorName]);
+	console.log(posts);
 
+	// render null when app is not ready
 	if (loading) {
-		return null; // render null when app is not ready
+		return null;
 	}
 
 	return (
 		<div>
 			<Header />
 			<section className="older-posts section section-header-offset">
-				<div className="container">
-					<h1 className="center-content flex rd-list" style={{paddingBottom: '5rem'}}>
-						results for: {title}
-					</h1>
+				<div className="container padding-bottom">
+					<div style={{display: 'flex', justifyContent: 'center', paddingBottom: '30px'}}>
+						<h2>Author: {AuthorName}</h2>
+					</div>
 					<div className="older-posts-grid-wrapper d-grid">
 						{posts.map((p) => (
 							<Link to={`/post/${p.PostID}`} key={p.PostID} className="article d-grid">
@@ -62,6 +66,6 @@ const SearchPost = () => {
 			<Footer />
 		</div>
 	);
-};
+}
 
-export default SearchPost;
+export default PostsAuthor;
