@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { baseImageUrl } from "../../requestMethods";
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,9 +21,16 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar" id="mySidebar">
+    <div className="sidebar" id="mySidebar" style={{ width: "250px" }}>
       <div className="sidebar__top">
         <span className="sidebar__logo">NVTNews</span>
+        <img
+          className="d-none"
+          id="logo"
+          style={{ width: "40px" }}
+          src={`${baseImageUrl}favicon.png`}
+          alt=""
+        />
       </div>
       <div className="sidebar__center">
         <ul>

@@ -4,6 +4,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
@@ -14,20 +15,30 @@ import { baseImageUrl } from "../../requestMethods";
 const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
   const [openDropdown, setOpenDropdown] = useState(false);
-  const handleSidebar = () => {
-    document.getElementById("mySidebar").style.width = "250px";
+  const [collapseDisplay, setcollapseDisplay] = useState(false);
+  const [expandDisplay, setExpandDisplay] = useState(true);
+  const handleCollapseSidebar = () => {
+    setExpandDisplay(false);
+    setcollapseDisplay(true);
+    let sidebar = document.getElementById("mySidebar");
+    sidebar.querySelector("#logo").classList.remove("d-none");
+    sidebar.querySelector(".sidebar__logo").classList.add("d-none");
+    sidebar.style.width = "70px";
+    sidebar.classList.add("hide-content");
+    document.getElementById("main").style.marginLeft = "70px";
+  };
+  const handleExpandSidebar = () => {
+    setExpandDisplay(true);
+    setcollapseDisplay(false);
+    let sidebar = document.getElementById("mySidebar");
+    sidebar.style.width = "250px";
+    sidebar.querySelector("#logo").classList.add("d-none");
+    sidebar.querySelector(".sidebar__logo").classList.remove("d-none");
+    sidebar.classList.remove("hide-content");
     document.getElementById("main").style.marginLeft = "250px";
   };
   const handleDropDown = () => {
     setOpenDropdown((current) => !current);
-  };
-
-  const selectElement = (selector) => {
-    const element = document.querySelector(selector);
-    if (element) return element;
-    // throw new Error(
-    //   `Something went wrong! Make sure that ${selector} exists/is typed correctly.`
-    // );
   };
 
   window.addEventListener("keyup", (event) => {
@@ -41,8 +52,17 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navbar__wrapper">
         <div className="navbar-left">
-          <div onClick={handleSidebar}>
+          <div
+            onClick={handleCollapseSidebar}
+            className={`${expandDisplay ? "" : "d-none"}`}
+          >
             <DehazeIcon />
+          </div>
+          <div
+            onClick={handleExpandSidebar}
+            className={`${collapseDisplay ? "" : "d-none"}`}
+          >
+            <CloseRoundedIcon />
           </div>
           <div className="search">
             <input type="text" placeholder="search" />

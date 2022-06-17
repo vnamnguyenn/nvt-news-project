@@ -2,7 +2,7 @@
 
 .sidebar {
   height: 100%;
-  width: 0;
+  // width: 250px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -110,4 +110,15 @@
 
 #main {
   transition: margin-left 0.5s;
+  margin-left: 250px;
+}
+// .sidebar-collapse{
+
+// }
+.d-none {
+  display: none !important;
+}
+.hide-content .sidebar__center p,
+.hide-content .sidebar__center span {
+  display: none !important;
 }
