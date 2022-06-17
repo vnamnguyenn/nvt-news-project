@@ -2,7 +2,7 @@
 
 .sidebar {
   height: 100%;
-  // width: 250px;
+  width: 250px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -41,16 +41,14 @@
       }
 
       li {
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
         cursor: pointer;
 
         .icon {
           font-size: 20px;
           color: #494b74;
         }
-        &:hover,
-        &:focus {
+
+        .active {
           background-color: #1a1a27;
           a,
           span,
@@ -68,6 +66,16 @@
           color: #9899ac;
           padding-left: 25px;
           padding-right: 25px;
+          padding-top: 0.75rem;
+          padding-bottom: 0.75rem;
+          &:hover,
+          &:focus {
+            background-color: #1a1a27;
+            span,
+            svg {
+              color: #fff;
+            }
+          }
         }
 
         span {
@@ -112,13 +120,18 @@
   transition: margin-left 0.5s;
   margin-left: 250px;
 }
-// .sidebar-collapse{
 
-// }
 .d-none {
   display: none !important;
+  transition: display 0.5s;
 }
 .hide-content .sidebar__center p,
 .hide-content .sidebar__center span {
   display: none !important;
+}
+.sidebar-collapse-show {
+  width: 70px !important;
+}
+.main-coolapse-show {
+  margin-left: 70px !important;
 }

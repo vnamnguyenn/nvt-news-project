@@ -162,7 +162,7 @@ function Backup() {
     <>
       <div className="list">
         <Sidebar />
-        <div className="list__container">
+        <div className="list__container" id="main">
           <Navbar />
           <div className="productList" style={{ width: "auto" }}>
             <div style={{ display: "flex", gap: "5px" }}>

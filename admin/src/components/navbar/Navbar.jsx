@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import "./navbar.scss";
+import React, { useEffect, useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
@@ -11,32 +10,61 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useSelector } from "react-redux";
 import { baseImageUrl } from "../../requestMethods";
+import { logout } from "../../redux/apiCalls";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import "./navbar.scss";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [collapseDisplay, setcollapseDisplay] = useState(false);
   const [expandDisplay, setExpandDisplay] = useState(true);
-  const handleCollapseSidebar = () => {
-    setExpandDisplay(false);
-    setcollapseDisplay(true);
-    let sidebar = document.getElementById("mySidebar");
-    sidebar.querySelector("#logo").classList.remove("d-none");
-    sidebar.querySelector(".sidebar__logo").classList.add("d-none");
-    sidebar.style.width = "70px";
-    sidebar.classList.add("hide-content");
-    document.getElementById("main").style.marginLeft = "70px";
+  const coolapsed = localStorage.getItem("coolapsed");
+  let sidebar = document.getElementById("mySidebar");
+  let main = document.getElementById("main");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    logout(dispatch);
+    navigate("/signin");
   };
-  const handleExpandSidebar = () => {
-    setExpandDisplay(true);
-    setcollapseDisplay(false);
-    let sidebar = document.getElementById("mySidebar");
-    sidebar.style.width = "250px";
-    sidebar.querySelector("#logo").classList.add("d-none");
-    sidebar.querySelector(".sidebar__logo").classList.remove("d-none");
-    sidebar.classList.remove("hide-content");
-    document.getElementById("main").style.marginLeft = "250px";
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (coolapsed) {
+        setExpandDisplay(false);
+        setcollapseDisplay(true);
+        sidebar.querySelector("#logo").classList.remove("d-none");
+        sidebar.querySelector(".sidebar__logo").classList.add("d-none");
+        sidebar.classList.add("hide-content");
+        sidebar.classList.add("sidebar-collapse-show");
+        main.classList.add("main-coolapse-show");
+      }
+    }, 100);
+    return () => {};
+  });
+
+  const switchTheme = (e) => {
+    e.preventDefault();
+    setExpandDisplay((current) => !current);
+    setcollapseDisplay((current) => !current);
+    sidebar.querySelector("#logo").classList.toggle("d-none");
+    sidebar.querySelector(".sidebar__logo").classList.toggle("d-none");
+    sidebar.classList.toggle("hide-content");
+    sidebar.classList.toggle("sidebar-collapse-show");
+    main.classList.toggle("main-coolapse-show");
+
+    // If the body has the class of light theme then add it to local Storage, if not remove it
+    if (sidebar.classList.contains("sidebar-collapse-show")) {
+      localStorage.setItem("coolapsed", "coolapsed");
+    } else {
+      localStorage.removeItem("coolapsed");
+    }
   };
+
   const handleDropDown = () => {
     setOpenDropdown((current) => !current);
   };
@@ -48,18 +76,19 @@ const Navbar = () => {
   window.addEventListener("click", (e) => {
     if (!e.target.matches(".avatar")) setOpenDropdown(false);
   });
+
   return (
     <div className="navbar">
       <div className="navbar__wrapper">
         <div className="navbar-left">
           <div
-            onClick={handleCollapseSidebar}
+            onClick={switchTheme}
             className={`${expandDisplay ? "" : "d-none"}`}
           >
             <DehazeIcon />
           </div>
           <div
-            onClick={handleExpandSidebar}
+            onClick={switchTheme}
             className={`${collapseDisplay ? "" : "d-none"}`}
           >
             <CloseRoundedIcon />
@@ -99,9 +128,9 @@ const Navbar = () => {
                 alt=""
               />
               <div className={`dropdown-content ${openDropdown ? "show" : ""}`}>
-                <a href="#home/">Home</a>
+                <a href="#home/">Profile</a>
                 <a href="#about/">About</a>
-                <a href="#contact/">Contact</a>
+                <div onClick={handleClick}>Logout</div>
               </div>
             </div>
           </div>

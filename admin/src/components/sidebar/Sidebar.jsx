@@ -4,24 +4,14 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
 import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined";
-import { Link } from "react-router-dom";
-import { logout } from "../../redux/apiCalls";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { baseImageUrl } from "../../requestMethods";
+import ReactTooltip from "react-tooltip";
+
 const Sidebar = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    logout(dispatch);
-    navigate("/signin");
-  };
-
   return (
-    <div className="sidebar" id="mySidebar" style={{ width: "250px" }}>
+    <div className="sidebar" id="mySidebar">
       <div className="sidebar__top">
         <span className="sidebar__logo">NVTNews</span>
         <img
@@ -36,43 +26,37 @@ const Sidebar = () => {
         <ul>
           <p className="title">MAIN</p>
           <li>
-            <Link to={"/"}>
-              <DashboardIcon className="icon" />
+            <NavLink to={"/"}>
+              <DashboardIcon className="icon" data-tip="Dashboard" />
               <span>Dashboard</span>
-            </Link>
+            </NavLink>
           </li>
           <p className="title">List</p>
           <li>
-            <Link to={"/posts"}>
-              <NewspaperOutlinedIcon className="icon" />
+            <NavLink to={"/posts"}>
+              <NewspaperOutlinedIcon className="icon" data-tip="Posts" />
               <span>Posts</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={"/category"}>
-              <CategoryOutlinedIcon className="icon" />
+            <NavLink to={"/categories"}>
+              <CategoryOutlinedIcon className="icon" data-tip="Categories" />
               <span>Categories</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={"/tags"}>
-              <LocalOfferOutlinedIcon className="icon" />
+            <NavLink to={"/tags"}>
+              <LocalOfferOutlinedIcon className="icon" data-tip="Tags" />
               <span>Tags</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={"/backup"}>
-              <BackupOutlinedIcon className="icon" />
+            <NavLink to={"/backup"}>
+              <BackupOutlinedIcon className="icon" data-tip="Backup" />
               <span>Backup</span>
-            </Link>
+            </NavLink>
           </li>
-          {/* <p className="title">Users</p>
-          <li onClick={handleClick}>
-            <div>
-              <ExitToAppIcon className="icon" />
-              <span>Logout</span>
-            </div>
-          </li> */}
+          <ReactTooltip />
         </ul>
       </div>
     </div>

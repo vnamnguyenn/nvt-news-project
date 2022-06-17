@@ -207,7 +207,7 @@ function Tag() {
     <>
       <div className="list">
         <Sidebar />
-        <div className="list__container">
+        <div className="list__container" id="main">
           <Navbar />
           <div className="productList" style={{ width: "auto" }}>
             <div className="datatableTitle">

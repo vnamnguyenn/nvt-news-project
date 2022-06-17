@@ -19,7 +19,7 @@ const ROUTES = () => {
       <Route path="/tags">
         <Route index element={<Tag />} />
       </Route>
-      <Route path="/category">
+      <Route path="/categories">
         <Route index element={<Category />} />
       </Route>
       <Route path="/backup">
