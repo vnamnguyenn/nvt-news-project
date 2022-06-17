@@ -5,9 +5,8 @@ import {
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
 } from "@material-ui/data-grid";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import { DeleteOutline } from "@material-ui/icons";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,7 +18,6 @@ import {
   addBackupFromFile,
 } from "../../redux/apiCalls";
 
-import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 
 function Backup() {

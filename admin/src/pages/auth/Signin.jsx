@@ -22,7 +22,6 @@ import {
 import { useDispatch } from "react-redux";
 
 const theme = createTheme();
-
 export default function SignIn() {
   const initialValue = {
     UserEmail: "",
@@ -36,6 +35,7 @@ export default function SignIn() {
 
   useEffect(() => {
     document.title = "Sign in";
+    document.body.classList.add("light-theme");
     if (currentUser) {
       return navigate("/");
     }
@@ -91,8 +91,6 @@ export default function SignIn() {
               label="Email"
               sx={{ mb: 3 }}
               autoFocus
-              // error={emailError}
-              // helperText={emailError === true ? "Enter your password!" : ""}
             />
             <TextField
               onChange={(e) => onChange(e)}

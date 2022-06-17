@@ -5,6 +5,21 @@
     flex: 6;
     .productList {
       padding: 20px;
+      .MuiDataGrid-root {
+        border: none;
+        border-radius: 0.4rem;
+        background-clip: border-box;
+        box-shadow: var(--box-shadow);
+        color: var(--light-color);
+        background-color: var(--secondary-background-color);
+        .MuiIconButton-colorPrimary,
+        .MuiTablePagination-root {
+          color: var(--checkbox-color);
+        }
+        .MuiCheckbox-colorPrimary.Mui-checked {
+          color: #088fde;
+        }
+      }
     }
 
     .productListItem {
@@ -97,6 +112,7 @@
 }
 .datatableTitle button {
   text-transform: capitalize;
+  color: #fff !important;
 }
 .datatableTitle span {
   font-weight: 500;
@@ -105,4 +121,48 @@
 
 .productList {
   padding: 16px;
+}
+.MuiPaper-root {
+  background-color: var(--secondary-background-color) !important;
+  color: var(--light-color) !important;
+}
+.MuiInputBase-input,
+.MuiFormLabel-root,
+.MuiChip-filled {
+  color: var(--light-color) !important;
+}
+.rdw-editor-toolbar,
+.rdw-dropdownoption-active {
+  background: var(--secondary-background-color);
+}
+
+.rdw-dropdown-optionwrapper,
+.rdw-dropdown-optionwrapper:hover,
+.rdw-dropdown-optionwrapper:hover {
+  background: var(--primary-background-color);
+}
+.rdw-dropdownoption-default:hover,
+.rdw-dropdownoption-default:focus {
+  background: var(--secondary-background-color);
+}
+.MuiDataGrid-root .MuiDataGrid-cell,
+.MuiDataGrid-root .MuiDataGrid-columnsContainer {
+  border-bottom-color: var(--border-row-datable-color) !important;
+}
+.MuiOutlinedInput-root {
+  background-color: var(--input-background-color);
+}
+.sun-icon {
+  display: block !important;
+}
+.light-theme .sun-icon {
+  display: none !important;
+}
+
+.moon-icon {
+  display: none !important;
+}
+
+.light-theme .moon-icon {
+  display: block !important;
 }

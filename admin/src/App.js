@@ -1,7 +1,7 @@
 import ROUTES from "./routes/routes";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "../src/assets/sass/FormInput.scss";
+import "../src/assets/sass/__main.scss";
 
 const App = () => {
   return (

@@ -22,6 +22,7 @@ export default function SignUp() {
   const currentUser = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   useEffect(() => {
+    document.body.classList.add("light-theme");
     document.title = "Sign up";
     if (currentUser) {
       return navigate("/");

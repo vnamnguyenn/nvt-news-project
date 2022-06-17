@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import DashBoard from "../pages/dashBoard/Dashboard";
 import NotFound from "../pages/NotFound";
 import Post from "../pages/posts/Index";

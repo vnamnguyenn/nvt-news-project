@@ -1,13 +1,12 @@
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
-import Widget from "../../components/widget/Widget";
-import Featured from "../../components/featured/Featured";
+import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/Navbar";
+import Widget from "../../components/Widget";
+import Featured from "../../components/Featured";
 import { React, useEffect } from "react";
-import Chart from "../../components/chart/Chart";
+import Chart from "../../components/Chart";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Table from "../../components/table/Table";
-import "./dashboard.scss";
+import Table from "../../components/Table";
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();

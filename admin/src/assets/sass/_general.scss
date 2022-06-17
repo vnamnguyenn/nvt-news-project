@@ -1,0 +1,56 @@
+@import "list.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--light-color-alt);
+  background-color: var(--primary-background-color);
+  letter-spacing: 1px;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+:root {
+  --light-color: #fff;
+  --swiper-navigation-color: #e49a38;
+  --light-color-alt: #afb6cd;
+  --checkbox-color: #f1f1f1;
+  --primary-background-color: #151521;
+  --secondary-background-color: #1e1e2d;
+  --box-shadow: none;
+  --border-row-datable-color: #2b2b40;
+  --border-datatable: 1px solid #2b2b40;
+  --hover-light-color: var(--light-color);
+  --hover-dark-color: var(--primary-background-color);
+  --transparent-light-color: rgba(255, 255, 255, 0.05);
+  --transparent-dark-color: rgba(0, 0, 0, 0.75);
+  --input-background-color: #1b1b29;
+}
+
+/* Theme color change */
+body.light-theme {
+  --light-color: #3d3d3d;
+  --checkbox-color: #0000008a;
+  --light-color-alt: rgba(0, 0, 0, 0.6);
+  --primary-background-color: #eff2f5;
+  --secondary-background-color: #ffffff;
+  --hover-light-color: #fff;
+  --border-row-datable-color: #eff2f5;
+  --input-background-color: #f5f8fa;
+  --box-shadow: 0px 0px 20px 0px rgb(76 87 125 / 2%);
+  --border-datatable: 0;
+  --transparent-dark-color: var(--secondary-background-color);
+  --transparent-light-color: rgba(0, 0, 0, 0.1);
+}
+button {
+  color: #ffffff !important;
+}

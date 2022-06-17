@@ -11,12 +11,11 @@ import {
   getPosts,
   updatePost,
 } from "../../redux/apiCalls";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
-import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
 
@@ -360,6 +359,7 @@ function Post() {
             columns={columns}
             getRowId={(row) => row.PostID}
             pageSize={pageSize}
+            disableSelectionOnClick
             onSelectionModelChange={(PostID) => {
               setSelectionModel(PostID);
             }}

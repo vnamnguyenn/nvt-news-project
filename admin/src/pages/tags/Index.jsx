@@ -5,13 +5,12 @@ import {
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
 } from "@material-ui/data-grid";
-import Navbar from "../../components/navbar/Navbar";
-import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/Navbar";
+import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTag, deleteTag, getTags, updateTag } from "../../redux/apiCalls";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
-import "../../assets/sass/general/list.scss";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
 
@@ -241,6 +240,7 @@ function Tag() {
               columns={columns}
               getRowId={(row) => row.TagId}
               pageSize={pageSize}
+              disableSelectionOnClick
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
               onSelectionModelChange={(TagId) => {
                 setSelectionModel(TagId);

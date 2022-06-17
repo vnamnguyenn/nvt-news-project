@@ -3,17 +3,17 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { useSelector } from "react-redux";
-import { baseImageUrl } from "../../requestMethods";
-import { logout } from "../../redux/apiCalls";
+import { baseImageUrl } from "../requestMethods";
+import { logout } from "../redux/apiCalls";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "./navbar.scss";
 
 const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -26,12 +26,10 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const body = document.body;
+  const currentTheme = localStorage.getItem("currentTheme");
 
-  const handleClick = () => {
-    logout(dispatch);
-    navigate("/signin");
-  };
-
+  // Check to see if there is a theme preference in local Storage, if so add the ligt theme to the body
   useEffect(() => {
     setTimeout(() => {
       if (coolapsed) {
@@ -43,11 +41,31 @@ const Navbar = () => {
         sidebar.classList.add("sidebar-collapse-show");
         main.classList.add("main-coolapse-show");
       }
-    }, 100);
+    }, 200);
     return () => {};
   });
 
+  if (currentTheme) {
+    body.classList.add("light-theme");
+  }
+
   const switchTheme = (e) => {
+    e.preventDefault();
+    body.classList.toggle("light-theme");
+
+    // If the body has the class of light theme then add it to local Storage, if not remove it
+    if (body.classList.contains("light-theme")) {
+      localStorage.setItem("currentTheme", "themeActive");
+    } else {
+      localStorage.removeItem("currentTheme");
+    }
+  };
+  const handleClick = () => {
+    logout(dispatch);
+    navigate("/signin");
+  };
+
+  const switchCoolapse = (e) => {
     e.preventDefault();
     setExpandDisplay((current) => !current);
     setcollapseDisplay((current) => !current);
@@ -82,13 +100,13 @@ const Navbar = () => {
       <div className="navbar__wrapper">
         <div className="navbar-left">
           <div
-            onClick={switchTheme}
+            onClick={switchCoolapse}
             className={`${expandDisplay ? "" : "d-none"}`}
           >
             <DehazeIcon />
           </div>
           <div
-            onClick={switchTheme}
+            onClick={switchCoolapse}
             className={`${collapseDisplay ? "" : "d-none"}`}
           >
             <CloseRoundedIcon />
@@ -103,8 +121,9 @@ const Navbar = () => {
             <LanguageOutlinedIcon className="icon" />
             English
           </div>
-          <div className="item">
-            <DarkModeOutlinedIcon className="icon" />
+          <div className="item" onClick={switchTheme}>
+            <DarkModeOutlinedIcon className="moon-icon icon" />
+            <LightModeIcon className="sun-icon icon" />
           </div>
           <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />

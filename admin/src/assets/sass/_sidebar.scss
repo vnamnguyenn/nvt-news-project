@@ -10,7 +10,8 @@
   overflow-x: hidden;
   transition: 0.5s;
   background-color: #1e1e2d;
-  border-right: 0.5px solid rgb(230, 227, 227);
+  box-shadow: 0 0 28px 0 rgb(82 63 105 / 5%);
+
   &__top {
     height: 60px;
     display: flex;
@@ -68,6 +69,7 @@
           padding-right: 25px;
           padding-top: 0.75rem;
           padding-bottom: 0.75rem;
+          margin: 2px 0;
           &:hover,
           &:focus {
             background-color: #1a1a27;
@@ -120,10 +122,27 @@
   transition: margin-left 0.5s;
   margin-left: 250px;
 }
+@media only screen and (max-width: 992px) {
+  #main {
+    margin-left: 70px !important;
+  }
+  .sidebar {
+    width: 70px !important;
+  }
+  .sidebar__logo {
+    display: none;
+  }
+  #logo {
+    display: block !important;
+  }
+  .sidebar__center p,
+  .sidebar__center span {
+    display: none !important;
+  }
+}
 
 .d-none {
   display: none !important;
-  transition: display 0.5s;
 }
 .hide-content .sidebar__center p,
 .hide-content .sidebar__center span {
