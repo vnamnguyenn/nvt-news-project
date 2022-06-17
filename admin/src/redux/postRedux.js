@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const postSlice = createSlice({
-  name: 'post',
+  name: "post",
   initialState: {
     posts: [],
     isFetching: false,
@@ -60,7 +60,9 @@ export const postSlice = createSlice({
     },
     updatePostsuccess: (state, action) => {
       state.isFetching = false;
-      state.posts[state.posts.findIndex((item) => item.PostID === action.payload.postID)] = action.payload.post;
+      state.posts[
+        state.posts.findIndex((item) => item.PostID === action.payload.postID)
+      ] = action.payload.post;
     },
     updatePostFailure: (state) => {
       state.isFetching = false;

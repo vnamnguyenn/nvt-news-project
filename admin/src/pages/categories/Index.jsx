@@ -37,6 +37,11 @@ function Category() {
     useSelector((state) => state.user.currentUser.exportData.AccountId);
 
   useEffect(() => {
+    getCategories(dispatch);
+    document.title = "Admin Dashboard - Categories";
+  }, [dispatch]);
+
+  useEffect(() => {
     document.getElementById("delete-button").style.display =
       selectionModel.length === 0 ? "none" : "";
     document.getElementById("item-selected").style.display =
@@ -44,10 +49,7 @@ function Category() {
 
     document.getElementById("add-button").style.display =
       selectionModel.length !== 0 ? "none" : "";
-
-    getCategories(dispatch);
-    document.title = "Admin Dashboard - Categories";
-  }, [dispatch, selectionModel.length]);
+  }, [selectionModel.length]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -253,8 +255,8 @@ function Category() {
                   sort: "desc",
                 },
               ]}
-              onSelectionModelChange={(TagId) => {
-                setSelectionModel(TagId);
+              onSelectionModelChange={(CategoryId) => {
+                setSelectionModel(CategoryId);
               }}
               selectionModel={selectionModel}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

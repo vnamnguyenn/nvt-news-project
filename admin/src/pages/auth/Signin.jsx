@@ -35,7 +35,7 @@ export default function SignIn() {
 
   useEffect(() => {
     document.title = "Sign in";
-    document.body.classList.add("light-theme");
+    document.body.classList.remove("dark-theme");
     if (currentUser) {
       return navigate("/");
     }

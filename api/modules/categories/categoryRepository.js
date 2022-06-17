@@ -41,6 +41,7 @@ class CategoryRepository {
 				CategoryName: data.CategoryName,
 				Thumbnail: data.Thumbnail,
 				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
+				UpdatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 		};
 

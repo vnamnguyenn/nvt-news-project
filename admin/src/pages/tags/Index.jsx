@@ -31,6 +31,11 @@ function Tag() {
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
   useEffect(() => {
+    getTags(dispatch);
+    document.title = "Admin Dashboard - Tags";
+  }, [dispatch]);
+
+  useEffect(() => {
     document.getElementById("delete-button").style.display =
       selectionModel.length === 0 ? "none" : "";
     document.getElementById("item-selected").style.display =
@@ -38,9 +43,7 @@ function Tag() {
 
     document.getElementById("add-button").style.display =
       selectionModel.length !== 0 ? "none" : "";
-    getTags(dispatch);
-    document.title = "Admin Dashboard - Tags";
-  }, [dispatch, selectionModel.length]);
+  }, [selectionModel.length]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -145,17 +148,11 @@ function Tag() {
       field: "CreatedDate",
       headerName: "Created Date",
       width: 200,
-      renderCell: (params) => {
-        return <div className="productListItem">{params.row.CreatedDate}</div>;
-      },
     },
     {
       field: "UpdatedDate",
       headerName: "Updated Date",
       width: 200,
-      renderCell: (params) => {
-        return <div className="productListItem">{params.row.UpdatedDate}</div>;
-      },
     },
     {
       field: "TagId",

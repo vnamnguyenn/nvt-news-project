@@ -46,15 +46,15 @@ const Navbar = () => {
   });
 
   if (currentTheme) {
-    body.classList.add("light-theme");
+    body.classList.add("dark-theme");
   }
 
   const switchTheme = (e) => {
     e.preventDefault();
-    body.classList.toggle("light-theme");
+    body.classList.toggle("dark-theme");
 
     // If the body has the class of light theme then add it to local Storage, if not remove it
-    if (body.classList.contains("light-theme")) {
+    if (body.classList.contains("dark-theme")) {
       localStorage.setItem("currentTheme", "themeActive");
     } else {
       localStorage.removeItem("currentTheme");

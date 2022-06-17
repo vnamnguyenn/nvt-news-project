@@ -153,16 +153,22 @@
   background-color: var(--input-background-color);
 }
 .sun-icon {
-  display: block !important;
-}
-.light-theme .sun-icon {
   display: none !important;
+}
+.dark-theme .sun-icon {
+  display: block !important;
 }
 
 .moon-icon {
-  display: none !important;
+  display: block !important;
 }
 
-.light-theme .moon-icon {
-  display: block !important;
+.dark-theme .moon-icon {
+  display: none !important;
+}
+.MuiButton-textPrimary {
+  color: var(--light-color) !important;
+}
+.MuiButton-outlinedSecondary {
+  color: #f50057 !important;
 }

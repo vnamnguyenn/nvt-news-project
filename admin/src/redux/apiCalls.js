@@ -462,7 +462,7 @@ export const deleteCategory = async (CategoryIds, dispatch) => {
     dispatch(deleteCategoryFailure());
   }
 };
-
+/*--------Post--------*/
 export const getPosts = async (dispatch) => {
   dispatch(getPoststart());
   try {
@@ -472,7 +472,7 @@ export const getPosts = async (dispatch) => {
     dispatch(getPostFailure());
   }
 };
-/*--------Post--------*/
+
 export const addPost = async (post, dispatch) => {
   dispatch(addPoststart());
   try {
@@ -495,29 +495,17 @@ export const addPost = async (post, dispatch) => {
 export const updatePost = async (postID, postTitle, post, dispatch) => {
   dispatch(updatePoststart());
   try {
-    const res = await userRequest.patch(`/post/edit/${postID}`, post);
-    if (res.status === 200) {
-      dispatch(updatePostsuccess({ postID, post }));
-      toast.success(`'${postTitle}' updated in successfully`, {
-        position: "bottom-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
-    } else {
-      toast.err(res.message, {
-        position: "bottom-right",
-        autoClose: 2500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-      });
-    }
+    await userRequest.patch(`/post/edit/${postID}`, post);
+    dispatch(updatePostsuccess({ postID, post }));
+    toast.success(`'${postTitle}' updated in successfully`, {
+      position: "bottom-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
   } catch (err) {
     dispatch(updatePostFailure());
   }

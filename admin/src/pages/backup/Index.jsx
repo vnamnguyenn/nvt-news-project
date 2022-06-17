@@ -26,9 +26,12 @@ function Backup() {
   const backup = useSelector((state) => state.backup.backup); //fetch tags data
   const [selectionModel, setSelectionModel] = useState([]);
   const inputRef = useRef(null);
-  const userId =
-    "ACCT_" +
-    useSelector((state) => state.user.currentUser.exportData.AccountId);
+
+  useEffect(() => {
+    getbackup(dispatch);
+    document.title = "Admin Dashboard - Backup";
+  }, [dispatch]);
+
   useEffect(() => {
     document.getElementById("delete-button").style.display =
       selectionModel.length === 0 ? "none" : "";
@@ -38,9 +41,8 @@ function Backup() {
       selectionModel.length !== 0 ? "none" : "";
     document.getElementById("add-button").style.display =
       selectionModel.length !== 0 ? "none" : "";
-    getbackup(dispatch);
-    document.title = "Admin Dashboard - Backup";
-  }, [dispatch, selectionModel.length]);
+  }, [selectionModel.length]);
+
   const handleOpenChooseFile = () => {
     //open file input box on click of other element
     inputRef.current.click();
@@ -96,33 +98,24 @@ function Backup() {
   //set column show in page
   const columns = [
     {
-      field: "BackupID2",
+      field: "BackupID",
       headerName: "ID",
       width: 200,
-      renderCell: (params) => {
-        return <div className="productListItem">{params.row.BackupID}</div>;
-      },
     },
     {
       field: "BackupName",
       headerName: "Name",
-      width: 250,
-      renderCell: (params) => {
-        return <div className="productListItem">{params.row.BackupName}</div>;
-      },
+      width: 300,
     },
     {
       field: "CreatedDate",
       headerName: "Created Date",
       width: 200,
-      renderCell: (params) => {
-        return <div className="productListItem">{params.row.CreatedDate}</div>;
-      },
     },
     {
-      field: "BackupID",
+      field: "Action",
       headerName: "Action",
-      width: 300,
+      width: 250,
       renderCell: (params) => {
         return (
           <>
@@ -179,10 +172,7 @@ function Backup() {
                 >
                   Delete selected
                 </Button>
-                <span id="item-selected">
-                  {" "}
-                  {selectionModel.length} Selected
-                </span>
+                <span id="item-selected">{selectionModel.length} Selected</span>
               </div>
               <div className="datatableTitle">
                 <form onSubmit={handleSubmit}>
@@ -212,8 +202,8 @@ function Backup() {
               columns={columns}
               getRowId={(row) => row.BackupID}
               pageSize={pageSize}
-              onSelectionModelChange={(TagId) => {
-                setSelectionModel(TagId);
+              onSelectionModelChange={(BackupId) => {
+                setSelectionModel(BackupId);
               }}
               selectionModel={selectionModel}
               sortModel={[

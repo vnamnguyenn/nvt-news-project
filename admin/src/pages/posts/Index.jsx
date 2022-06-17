@@ -48,6 +48,11 @@ function Post() {
     useSelector((state) => state.user.currentUser.exportData.AccountId);
 
   useEffect(() => {
+    getPosts(dispatch);
+    document.title = "Admin Dashboard - Posts";
+  }, [dispatch]);
+
+  useEffect(() => {
     document.getElementById("delete-button").style.display =
       selectionModel.length === 0 ? "none" : "";
     document.getElementById("item-selected").style.display =
@@ -55,10 +60,7 @@ function Post() {
 
     document.getElementById("add-button").style.display =
       selectionModel.length !== 0 ? "none" : "";
-
-    getPosts(dispatch);
-    document.title = "Admin Dashboard - Posts";
-  }, [dispatch, selectionModel.length]);
+  }, [selectionModel.length]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -185,7 +187,6 @@ function Post() {
         },
         dispatch
       );
-      //close modal
       handleClose();
     } else {
       addPost(
@@ -213,7 +214,7 @@ function Post() {
     {
       field: "PostTitle",
       headerName: "Title",
-      minWidth: 300,
+      width: 360,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -230,7 +231,7 @@ function Post() {
     {
       field: "AuthorInfo",
       headerName: "Author",
-      minWidth: 130,
+      width: 130,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -240,19 +241,19 @@ function Post() {
       },
     },
     {
-      field: "PublishedDate",
-      headerName: "Published Date",
-      width: 150,
+      field: "CreatedDate",
+      headerName: "Created Date",
+      width: 180,
     },
     {
       field: "UpdatedDate",
       headerName: "Updated Date",
-      width: 160,
+      width: 180,
     },
     {
       field: "ReadingTime",
       headerName: "Reading Time",
-      width: 130,
+      width: 165,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -264,7 +265,7 @@ function Post() {
     {
       field: "Published",
       headerName: "Status",
-      width: 160,
+      width: 120,
       renderCell: (params) => {
         return <div className="productListItem">{params.row.Published}</div>;
       },
@@ -272,7 +273,7 @@ function Post() {
     {
       field: "PostID",
       headerName: "Action",
-      width: 150,
+      width: 120,
       renderCell: (params) => {
         if (userId === params.row.PK) {
           return (
@@ -328,7 +329,7 @@ function Post() {
       <Sidebar />
       <div className="list__container" id="main">
         <Navbar />
-        <div className="productList" style={{ width: "auto" }}>
+        <div className="productList" style={{ width: "100%" }}>
           <div className="datatableTitle">
             <Button
               onClick={handleClickOpen}
@@ -351,7 +352,7 @@ function Post() {
             {...posts}
             sortModel={[
               {
-                field: "UpdatedDate",
+                field: "CreatedDate",
                 sort: "desc",
               },
             ]}
