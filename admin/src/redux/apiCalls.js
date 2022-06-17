@@ -293,14 +293,18 @@ export const deleteTable = async () => {
   }
 };
 
-export const deleteBackup = async (BackupID, backupName, dispatch) => {
+export const deleteBackup = async (BackupIDs, dispatch) => {
   dispatch(deleteBackupstart());
   try {
-    await userRequest.delete(`/backup/delete/${BackupID}`);
-    dispatch(deleteBackupsuccess(BackupID));
-    toast.success(`Delete '${backupName}' in successfully`, {
+    let index = BackupIDs.length - 1;
+    while (index >= 0) {
+      await userRequest.delete(`/backup/delete/${BackupIDs[index]}`);
+      dispatch(deleteBackupsuccess(BackupIDs[index]));
+      index -= 1;
+    }
+    toast.success(`Rows deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -436,14 +440,18 @@ export const updateCategory = async (
   }
 };
 
-export const deleteCategory = async (CategoryId, tagName, dispatch) => {
+export const deleteCategory = async (CategoryIds, dispatch) => {
   dispatch(deleteCategorystart());
   try {
-    await userRequest.delete(`/category/delete/${CategoryId}`);
-    dispatch(deleteCategorysuccess(CategoryId));
-    toast.success(`'${tagName}' deleted in successfully`, {
+    let index = CategoryIds.length - 1;
+    while (index >= 0) {
+      await userRequest.delete(`/category/delete/${CategoryIds[index]}`);
+      dispatch(deleteCategorysuccess(CategoryIds[index]));
+      index -= 1;
+    }
+    toast.success(`Rows deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

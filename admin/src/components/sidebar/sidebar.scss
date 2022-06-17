@@ -1,74 +1,81 @@
-@import '../../assets/sass/variables.scss';
-.sidebar {
-  flex: 1;
-  border-right: 0.5px solid rgb(230, 227, 227);
-  min-height: 100vh;
-  background-color: white;
+@import "../../assets/sass/variables.scss";
 
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  background-color: #1e1e2d;
+  border-right: 0.5px solid rgb(230, 227, 227);
   &__top {
-    height: 50px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #1a1a27;
   }
 
   &__logo {
     font-size: 20px;
     font-weight: $fontWeightMedium;
-    color: #6439ff;
-  }
-
-  hr {
-    height: 0;
-    border: 0.5px solid rgb(230, 227, 227);
+    color: #fff;
   }
 
   &__center {
-    padding-left: 10px;
-
     ul {
       list-style: none;
       margin: 0;
       padding: 0;
 
       .title {
-        font-size: 12px;
-        font-weight: $fontWeightRegular;
+        font-weight: $fontWeightBold;
         color: #999;
-        margin-top: 15px;
-        margin-bottom: 5px;
+        margin-top: 25px;
+        padding-left: 25px;
+        padding-right: 25px;
+        font-size: 12px;
       }
 
       li {
-        display: flex;
-        align-items: center;
-        padding: 5px;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
         cursor: pointer;
 
-        &:hover,
-        .active {
-          background-color: #ece8ff;
-        }
-
         .icon {
-          font-size: 18px;
-          color: #7451f8;
+          font-size: 20px;
+          color: #494b74;
+        }
+        &:hover,
+        &:focus {
+          background-color: #1a1a27;
+          a,
+          span,
+          svg {
+            color: #fff;
+          }
         }
 
-        span
-         {
+        a {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
           font-size: $primaryFontFamily;
           font-weight: $fontWeightRegular;
-          color: #888;
+          color: #9899ac;
+          padding-left: 25px;
+          padding-right: 25px;
+        }
+
+        span {
+          font-size: $primaryFontFamily;
+          font-weight: $fontWeightRegular;
+          color: #9899ac;
           margin-left: 10px;
         }
-        a
-        {
-          text-decoration: none;
-         font-size: $primaryFontFamily;
-         font-weight: $fontWeightRegular;
-         color: #888;
-       }
       }
     }
   }
@@ -77,26 +84,30 @@
     display: flex;
     align-items: center;
     margin: 10px;
-
-    &-colorOption {
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
-      border: 1px solid #7451f8;
-      cursor: pointer;
-      margin: 5px;
-
-      &:nth-child(1) {
-        background-color: whitesmoke;
-      }
-
-      &:nth-child(2) {
-        background-color: #333;
-      }
-
-      &:nth-child(3) {
-        background-color: darkblue;
-      }
-    }
   }
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left 0.5s;
 }

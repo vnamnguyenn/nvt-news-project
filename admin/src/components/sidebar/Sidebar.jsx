@@ -1,13 +1,11 @@
 import React from "react";
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import FeedIcon from "@mui/icons-material/Feed";
-import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import CategoryIcon from "@mui/icons-material/Category";
+import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
@@ -22,11 +20,10 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className="sidebar" id="mySidebar">
       <div className="sidebar__top">
         <span className="sidebar__logo">NVTNews</span>
       </div>
-      <hr />
       <div className="sidebar__center">
         <ul>
           <p className="title">MAIN</p>
@@ -39,41 +36,36 @@ const Sidebar = () => {
           <p className="title">List</p>
           <li>
             <Link to={"/posts"}>
-              <FeedIcon className="icon" />
+              <NewspaperOutlinedIcon className="icon" />
               <span>Posts</span>
             </Link>
           </li>
           <li>
             <Link to={"/category"}>
-              <CategoryIcon className="icon" />
+              <CategoryOutlinedIcon className="icon" />
               <span>Categories</span>
             </Link>
           </li>
           <li>
             <Link to={"/tags"}>
-              <LocalOfferIcon className="icon" />
+              <LocalOfferOutlinedIcon className="icon" />
               <span>Tags</span>
             </Link>
           </li>
           <li>
             <Link to={"/backup"}>
-              {/* <LocalOfferIcon className="icon" /> */}
+              <BackupOutlinedIcon className="icon" />
               <span>Backup</span>
             </Link>
           </li>
-          <p className="title">Users</p>
+          {/* <p className="title">Users</p>
           <li onClick={handleClick}>
             <div>
               <ExitToAppIcon className="icon" />
               <span>Logout</span>
             </div>
-          </li>
+          </li> */}
         </ul>
-      </div>
-      <div className="sidebar__bottom">
-        <div className="sidebar__bottom-colorOption"></div>
-        <div className="sidebar__bottom-colorOption"></div>
-        <div className="sidebar__bottom-colorOption"></div>
       </div>
     </div>
   );

@@ -124,27 +124,58 @@ export default function FormDialog({
                 />
               )}
             />
-            <TextField
-              autoFocus
-              id="Thumbnail"
-              type="file"
-              onChange={(e) => onChange(e)}
-              label="Thumbnail"
-              InputLabelProps={{ shrink: true }}
-              variant="outlined"
-              margin="dense"
-              fullWidth
-            />
-            <TextField
-              id="PostImage"
-              type="file"
-              onChange={(e) => onChange(e)}
-              label="Image"
-              InputLabelProps={{ shrink: true }}
-              variant="outlined"
-              margin="dense"
-              fullWidth
-            />
+            {PostID ? (
+              <>
+                <TextField
+                  autoFocus
+                  id="Thumbnail"
+                  type="file"
+                  onChange={(e) => onChange(e)}
+                  label="Thumbnail"
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  margin="dense"
+                  fullWidth
+                />
+                <TextField
+                  id="PostImage"
+                  type="file"
+                  onChange={(e) => onChange(e)}
+                  label="Image"
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  margin="dense"
+                  fullWidth
+                />
+              </>
+            ) : (
+              <>
+                <TextField
+                  required
+                  autoFocus
+                  id="Thumbnail"
+                  type="file"
+                  onChange={(e) => onChange(e)}
+                  label="Thumbnail"
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  margin="dense"
+                  fullWidth
+                />
+                <TextField
+                  required
+                  id="PostImage"
+                  type="file"
+                  onChange={(e) => onChange(e)}
+                  label="Image"
+                  InputLabelProps={{ shrink: true }}
+                  variant="outlined"
+                  margin="dense"
+                  fullWidth
+                />
+              </>
+            )}
+
             <TextField
               required
               autoFocus

@@ -1,7 +1,9 @@
 import {
   DataGrid,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
-  GridToolbarExport,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton,
 } from "@material-ui/data-grid";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -24,15 +26,23 @@ function Backup() {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState(10);
   const backup = useSelector((state) => state.backup.backup); //fetch tags data
-  const [open, setOpen] = useState(false);
+  const [selectionModel, setSelectionModel] = useState([]);
   const inputRef = useRef(null);
   const userId =
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
   useEffect(() => {
+    document.getElementById("delete-button").style.display =
+      selectionModel.length === 0 ? "none" : "";
+    document.getElementById("item-selected").style.display =
+      selectionModel.length === 0 ? "none" : "";
+    document.getElementById("upload-button").style.display =
+      selectionModel.length !== 0 ? "none" : "";
+    document.getElementById("add-button").style.display =
+      selectionModel.length !== 0 ? "none" : "";
     getbackup(dispatch);
     document.title = "Admin Dashboard - Backup";
-  }, []);
+  }, [dispatch, selectionModel.length]);
   const handleOpenChooseFile = () => {
     //open file input box on click of other element
     inputRef.current.click();
@@ -54,10 +64,10 @@ function Backup() {
   //Deletepost
   const handleDelete = (id, name) => {
     const confirm = window.confirm(
-      `Are you sure, you want to delete '${name}'`
+      `Are you sure, you want to delete ${selectionModel.length} rows selected`
     );
     if (confirm) {
-      deleteBackup(id, name, dispatch);
+      deleteBackup(selectionModel, dispatch);
     }
   };
 
@@ -116,39 +126,24 @@ function Backup() {
       headerName: "Action",
       width: 300,
       renderCell: (params) => {
-        if (userId === params.row.PK) {
-          return (
-            <>
-              <button
-                onClick={() =>
-                  handleRestore(params.row.Path, params.row.BackupName)
-                }
-                className="productListEdit"
-              >
-                Restore
-              </button>
-              <button
-                onClick={() => handleDownload(params.row.Path, params.row.Path)}
-                className="productListEdit"
-              >
-                Download
-              </button>
-              <DeleteOutline
-                className="productListDelete"
-                onClick={() =>
-                  handleDelete(params.row.BackupID, params.row.BackupName)
-                }
-              />
-            </>
-          );
-        } else {
-          return (
-            <>
-              <button className="productListEditDisabled">Download</button>
-              <DeleteOutline className="productListDeleteDisabled" />
-            </>
-          );
-        }
+        return (
+          <>
+            <button
+              onClick={() =>
+                handleRestore(params.row.Path, params.row.BackupName)
+              }
+              className="productListEdit"
+            >
+              Restore
+            </button>
+            <button
+              onClick={() => handleDownload(params.row.Path, params.row.Path)}
+              className="productListDownload"
+            >
+              Download
+            </button>
+          </>
+        );
       },
     },
   ];
@@ -156,7 +151,9 @@ function Backup() {
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
-        <GridToolbarExport />
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
       </GridToolbarContainer>
     );
   }
@@ -170,9 +167,24 @@ function Backup() {
           <div className="productList" style={{ width: "auto" }}>
             <div style={{ display: "flex", gap: "5px" }}>
               <div className="datatableTitle">
-                <Button className="add-new" onClick={handleCreate}>
-                  Add New
+                <Button
+                  onClick={handleCreate}
+                  id="add-button"
+                  className="add-new"
+                >
+                  Add Backup
                 </Button>
+                <Button
+                  onClick={handleDelete}
+                  id="delete-button"
+                  className="delete-item delete-button"
+                >
+                  Delete selected
+                </Button>
+                <span id="item-selected">
+                  {" "}
+                  {selectionModel.length} Selected
+                </span>
               </div>
               <div className="datatableTitle">
                 <form onSubmit={handleSubmit}>
@@ -184,7 +196,11 @@ function Backup() {
                     onChange={onChange}
                   />
                 </form>
-                <Button className="add-new" onClick={handleOpenChooseFile}>
+                <Button
+                  className="add-new"
+                  onClick={handleOpenChooseFile}
+                  id="upload-button"
+                >
                   Upload file
                 </Button>
               </div>
@@ -198,6 +214,16 @@ function Backup() {
               columns={columns}
               getRowId={(row) => row.BackupID}
               pageSize={pageSize}
+              onSelectionModelChange={(TagId) => {
+                setSelectionModel(TagId);
+              }}
+              selectionModel={selectionModel}
+              sortModel={[
+                {
+                  field: "CreatedDate",
+                  sort: "desc",
+                },
+              ]}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
               rowsPerPageOptions={[10, 25, 50, 100]}
               pagination

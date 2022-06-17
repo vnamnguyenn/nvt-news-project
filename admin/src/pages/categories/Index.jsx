@@ -6,12 +6,13 @@ import {
 } from "../../redux/apiCalls";
 import {
   DataGrid,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
-  GridToolbarExport,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton,
 } from "@material-ui/data-grid";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import { DeleteOutline } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
@@ -31,15 +32,23 @@ function Category() {
   const categories = useSelector((state) => state.category.categories); //fetch category data
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
-
+  const [selectionModel, setSelectionModel] = useState([]);
   const userId =
     "ACCT_" +
     useSelector((state) => state.user.currentUser.exportData.AccountId);
 
   useEffect(() => {
+    document.getElementById("delete-button").style.display =
+      selectionModel.length === 0 ? "none" : "";
+    document.getElementById("item-selected").style.display =
+      selectionModel.length === 0 ? "none" : "";
+
+    document.getElementById("add-button").style.display =
+      selectionModel.length !== 0 ? "none" : "";
+
     getCategories(dispatch);
     document.title = "Admin Dashboard - Categories";
-  }, []);
+  }, [dispatch, selectionModel.length]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -68,12 +77,12 @@ function Category() {
   };
 
   //Deletepost
-  const handleDelete = (id, name) => {
+  const handleDelete = () => {
     const confirm = window.confirm(
-      `Are you sure, you want to delete '${name}'`
+      `Are you sure, you want to delete ${selectionModel.length} items selected`
     );
     if (confirm) {
-      deleteCategory(id, name, dispatch);
+      deleteCategory(selectionModel, dispatch);
     }
   };
 
@@ -184,19 +193,12 @@ function Category() {
               >
                 Edit
               </button>
-              <DeleteOutline
-                className="productListDelete"
-                onClick={() =>
-                  handleDelete(params.row.CategoryId, params.row.CategoryName)
-                }
-              />
             </>
           );
         } else {
           return (
             <>
-              <button className="productListEditDisabled">Edit</button>
-              <DeleteOutline className="productListDeleteDisabled" />
+              <button className="productListEditDisabled">Disabled</button>
             </>
           );
         }
@@ -207,7 +209,9 @@ function Category() {
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
-        <GridToolbarExport />
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
       </GridToolbarContainer>
     );
   }
@@ -220,9 +224,21 @@ function Category() {
           <Navbar />
           <div className="productList" style={{ width: "auto" }}>
             <div className="datatableTitle">
-              <Button onClick={handleClickOpen} className="add-new">
-                Add New Category
+              <Button
+                onClick={handleClickOpen}
+                id="add-button"
+                className="add-new"
+              >
+                Add Category
               </Button>
+              <Button
+                onClick={handleDelete}
+                id="delete-button"
+                className="delete-item delete-button"
+              >
+                Delete selected
+              </Button>
+              <span id="item-selected"> {selectionModel.length} Selected</span>
             </div>
             <DataGrid
               autoHeight
@@ -232,6 +248,16 @@ function Category() {
               columns={columns}
               getRowId={(row) => row.CategoryId}
               pageSize={pageSize}
+              sortModel={[
+                {
+                  field: "CreatedDate",
+                  sort: "desc",
+                },
+              ]}
+              onSelectionModelChange={(TagId) => {
+                setSelectionModel(TagId);
+              }}
+              selectionModel={selectionModel}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
               rowsPerPageOptions={[10, 25, 50, 100]}
               pagination

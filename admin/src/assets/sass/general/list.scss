@@ -29,6 +29,15 @@
       cursor: pointer;
       margin-right: 20px;
     }
+    .productListDownload {
+      border: none;
+      border-radius: 10px;
+      padding: 5px 10px;
+      background-color: #0000008a;
+      color: white;
+      cursor: pointer;
+      margin-right: 20px;
+    }
     .productListDelete {
       color: red;
       cursor: pointer;
@@ -83,10 +92,17 @@
 .css-wgai2y-MuiFormLabel-asterisk {
   color: red;
 }
+.MuiFormLabel-asterisk {
+  color: red;
+}
 .datatableTitle button {
   text-transform: capitalize;
 }
 .datatableTitle span {
   font-weight: 500;
   padding-left: 5px;
+}
+
+.productList {
+  padding: 16px;
 }
