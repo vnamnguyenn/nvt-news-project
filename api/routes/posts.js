@@ -5,15 +5,8 @@ const {
 	verifyTokenAndAdmin,
 } = require('../middleware/verifyToken');
 module.exports = async (app) => {
-	app.get('/api/post/quick_read', PostController.quickRead);
-	app.get('/api/post/featured_article', PostController.featuredArticles);
-	app.get('/api/post/older_post', PostController.olderPost);
-	app.get('/api/post/trending_news', PostController.trendingNews);
 	app.get('/api/post/', PostController.getAll);
-	app.get('/api/post_admin/', PostController.getAllAdmin);
 	app.get('/api/post/get_by_author/:authorId', PostController.getPostByAuthor);
-	app.get('/api/post/get_by_tag', PostController.getbyTag);
-	app.get('/api/post_by_category/', PostController.getByCategoryId);
 	app.get('/api/search/', PostController.search);
 	app.get('/api/post/:id', PostController.findByID);
 	app.post('/api/post/create/', verifyTokenAndAdmin, PostController.create);

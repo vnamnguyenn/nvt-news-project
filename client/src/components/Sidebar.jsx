@@ -6,8 +6,14 @@ const Sidebar = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post/trending_news');
-			setPosts(res.data);
+			await publicRequest.get('/post/').then((res) => {
+				setPosts(
+					res.data
+						.sort((a, b) => new Date(b.PublishedDate) - new Date(a.PublishedDate))
+						.slice(0, 4)
+						.reverse(),
+				);
+			});
 		};
 		fetchPosts();
 	}, []);

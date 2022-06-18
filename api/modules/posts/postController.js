@@ -24,29 +24,6 @@ class PostController {
 	async getAll(req, res) {
 		try {
 			const data = await PostService.getAll();
-			const page = parseInt(req.query.page);
-			const limit = parseInt(req.query.limit);
-			const startIndex = (page - 1) * limit;
-			const endIndex = page * limit;
-			const postData = {};
-
-			postData.pagination = {
-				currentPage: page,
-				limit: limit,
-				totalPage: Math.ceil(data.length / limit),
-			};
-
-			postData.data = data.slice(startIndex, endIndex);
-			res.json(postData);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
-	async getAllAdmin(req, res) {
-		try {
-			const data = await PostService.getAllAdmin();
 			res.json(data);
 		} catch (err) {
 			console.error(err);
@@ -57,75 +34,6 @@ class PostController {
 	async getPostByAuthor(req, res) {
 		try {
 			const data = await PostService.getPostByAuthor(req.params.authorId);
-			res.json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
-	async getbyTag(req, res) {
-		try {
-			const data = await PostService.getbyTag();
-			// for (let i = 0; i < data.Items.length; i++) {
-			// 	for (let j = 0; j < data.Items[i].Categories.length; j++) {
-			// 		const categoryId = data.Items[i].Categories[j].CategoryId;
-			// 	}
-			// }
-			// console.log(data.Count);
-			data.forEach(function (ct) {
-				console.log(ct.PostID);
-			});
-			res.json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
-	async getByCategoryId(req, res) {
-		try {
-			let data = await PostService.getByCategoryId();
-			res.json(data);
-			// }
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
-	async featuredArticles(req, res) {
-		try {
-			const data = await PostService.featuredArticles();
-			res.json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
-	async trendingNews(req, res) {
-		try {
-			const data = await PostService.trendingNews();
-			res.json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-	async olderPost(req, res) {
-		try {
-			const data = await PostService.olderPost();
-			res.json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
-	async quickRead(req, res) {
-		try {
-			const data = await PostService.quickRead();
 			res.json(data);
 		} catch (err) {
 			console.error(err);

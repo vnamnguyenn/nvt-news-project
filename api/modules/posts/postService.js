@@ -21,16 +21,6 @@ class PostService {
 		return data;
 	}
 
-	async getAllAdmin() {
-		const data = await PostRepository.getAllAdmin();
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
 	async getPostByAuthor(pk) {
 		const data = await PostRepository.getPostByAuthor(pk);
 
@@ -41,75 +31,8 @@ class PostService {
 		return data;
 	}
 
-	async getbyTag() {
-		const data = await PostRepository.getbyTag();
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
-	async getByCategoryId() {
-		const data = await PostRepository.getByCategoryId();
-
-		// for (let i = 0; i < data.Items.length; i++) {
-		// 	for (let j = 0; j < data.Items[i].Categories.length; j++) {
-		// 		const categoryId = data.Items[i].Categories[j].CategoryId;
-		// 	}
-		// }
-		// console.log(data.Count);
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
 	async search(title) {
 		const data = await PostRepository.search(title);
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
-	async featuredArticles() {
-		const data = await PostRepository.featuredArticles();
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
-	async trendingNews() {
-		const data = await PostRepository.trendingNews();
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
-	async olderPost() {
-		const data = await PostRepository.olderPost();
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
-	async quickRead() {
-		const data = await PostRepository.quickRead();
 
 		if (data) {
 			return data.Items;

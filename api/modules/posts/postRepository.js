@@ -73,15 +73,6 @@ class PostRepository {
 		return await docClient.scan(params).promise();
 	}
 
-	async getbyTag() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-		};
-
-		return await docClient.scan(params).promise();
-	}
-
 	async getAllAdmin() {
 		const params = {
 			TableName: this.tableName,
@@ -101,14 +92,6 @@ class PostRepository {
 			ExpressionAttributeNames: {
 				'#e14e0': 'PK',
 			},
-		};
-		return await docClient.scan(params).promise();
-	}
-
-	async getByCategoryId() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
 		};
 		return await docClient.scan(params).promise();
 	}

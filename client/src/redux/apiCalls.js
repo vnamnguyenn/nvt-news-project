@@ -165,7 +165,7 @@ export const getCategories = async (dispatch) => {
 export const getPosts = async (paramsString, dispatch) => {
 	dispatch(getPoststart());
 	try {
-		const res = await publicRequest.get('/post?' + paramsString);
+		const res = await publicRequest.get('/post');
 		dispatch(getPostsuccess(res.data));
 	} catch (err) {
 		dispatch(getPostFailure());

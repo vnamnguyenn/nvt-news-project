@@ -81,7 +81,7 @@ function Post() {
     MetaKeyword,
     Tags,
     Categories,
-    PublishedDate,
+    CreatedDate,
     Published,
     AuthorInfo,
     Thumbnail,
@@ -94,7 +94,7 @@ function Post() {
       ReadingTime: ReadingTime,
       MetaDescription: MetaDescription,
       MetaKeyword: MetaKeyword,
-      PublishedDate: PublishedDate,
+      CreatedDate: CreatedDate,
       UpdatedDate:
         new Date().toLocaleDateString("vi-VN") +
         " " +
@@ -119,6 +119,7 @@ function Post() {
       deletePost(selectionModel, dispatch);
     }
   };
+
   const onChange = (e, val) => {
     const { value, id } = e.target;
     let tagId, categoryId;
@@ -179,7 +180,7 @@ function Post() {
           MetaDescription: formData.MetaDescription,
           MetaKeyword: formData.MetaKeyword,
           UpdatedDate: formData.UpdatedDate,
-          PublishedDate: formData.PublishedDate,
+          CreatedDate: formData.CreatedDate,
           AuthorInfo: formData.AuthorInfo,
           Tags: formData.Tags,
           Categories: formData.Categories,
@@ -220,7 +221,7 @@ function Post() {
           <div className="productListItem">
             <img
               className="productListImg"
-              src={baseImageUrl + params.row.PostImage}
+              src={baseImageUrl + params.row.Thumbnail}
               alt=""
             />
             {params.row.PostTitle}
@@ -291,7 +292,7 @@ function Post() {
                     params.row.MetaKeyword,
                     params.row.Tags,
                     params.row.Categories,
-                    params.row.PublishedDate,
+                    params.row.CreatedDate,
                     params.row.Published,
                     params.row.AuthorInfo,
                     params.row.Thumbnail,

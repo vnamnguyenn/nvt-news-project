@@ -11,8 +11,9 @@ const Quickread = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post/featured_article');
-			setPosts(res.data);
+			const res = await publicRequest.get('/post');
+			console.log(res.data.length - 1);
+			setPosts(res.data.slice(0, 6).reverse());
 		};
 		fetchPosts();
 	}, []);

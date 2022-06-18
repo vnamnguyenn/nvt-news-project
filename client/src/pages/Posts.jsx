@@ -2,60 +2,40 @@ import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {baseImageUrl} from '../requestMethods';
+import {baseImageUrl, publicRequest} from '../requestMethods';
 import ReactPaginate from 'react-paginate';
-import QueryString from 'query-string';
-import {useDispatch, useSelector} from 'react-redux';
-import {getPosts} from '../redux/apiCalls';
 
 function Posts() {
-	// const [posts, setPosts] = useState([]);
-	const posts = useSelector((state) => state.post.posts); //fetch post data
-	const dispatch = useDispatch();
-	const pageSize = 10;
-	const startIndex = 1;
-	//set pagition
-	const [pagination, setPagination] = useState({
-		currentPage: startIndex,
-		limit: pageSize,
-		totalPage: 1,
-	});
-	//get new content when page change
-	const [filters, setFilters] = useState({
-		page: startIndex,
-		limit: pageSize,
-	});
-
-	// fetch data from server
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const paramsString = QueryString.stringify(filters);
-			document.title = 'News | NVT';
-			getPosts(paramsString, dispatch);
-			setPagination(posts.pagination);
-		};
-		fetchPosts();
-	}, [dispatch, filters, posts.pagination]);
-
-	function handlePageChange(newPage) {
-		//update content when click page change
-		setFilters({
-			...filters,
-			page: newPage.selected + 1, // index page started = 0
-		});
-	}
-
-	//loader animation
+	const [posts, setPosts] = useState([]);
+	const [totalPage, setTotalPage] = useState(0);
+	const [currentPage, setCurrentPage] = useState(1);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	const [loading, setLoading] = useState(true);
+	// fetch data from server
 	useEffect(() => {
+		document.title = 'News | NVT';
 		if (loading) {
 			setTimeout(() => {
 				setLoading(false);
 				document.querySelector('.sk-cube-grid').style.display = 'none';
 			}, 500);
 		}
-	}, [loading]);
+		const fetchPosts = async () => {
+			await publicRequest.get('/post').then((res) => {
+				const limit = 10;
+				const startIndex = (currentPage - 1) * limit;
+				const endIndex = currentPage * limit;
+				setTotalPage(Math.ceil(res.data.length / limit));
+				setPosts(res.data.slice(startIndex, endIndex));
+			});
+		};
+		fetchPosts();
+	}, [currentPage, loading]);
+
+	function handlePageChange(newPage) {
+		setCurrentPage(newPage.selected + 1);
+	}
+
 	// render null when app is not ready
 	if (loading) {
 		return null;
@@ -67,7 +47,7 @@ function Posts() {
 			<section className="older-posts section section-header-offset">
 				<div className="container padding-bottom">
 					<div className="older-posts-grid-wrapper d-grid">
-						{posts.data.map((p) => (
+						{posts.map((p) => (
 							<Link to={p.PostID} key={p.PostID} className="article d-grid">
 								<div className="older-posts-article-image-wrapper">
 									<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
@@ -88,7 +68,7 @@ function Posts() {
 						previousLabel={'<'}
 						nextLabel={'>'}
 						breakLabel={'...'}
-						pageCount={pagination.totalPage}
+						pageCount={totalPage}
 						marginPagesDisplayed={2}
 						pageRangeDisplayed={5}
 						onPageChange={handlePageChange}

@@ -21,16 +21,6 @@ class TagController {
 		}
 	}
 
-	async popularTag(req, res) {
-		try {
-			const data = await TagService.popularTag();
-			res.json(data);
-		} catch (err) {
-			console.error(err);
-			res.status(500).json({err: 'Something went wrong'});
-		}
-	}
-
 	async create(req, res) {
 		try {
 			const data = await TagService.create(req.user.pk, req.body);

@@ -466,7 +466,7 @@ export const deleteCategory = async (CategoryIds, dispatch) => {
 export const getPosts = async (dispatch) => {
   dispatch(getPoststart());
   try {
-    const res = await publicRequest.get("/post_admin");
+    const res = await publicRequest.get("/post");
     dispatch(getPostsuccess(res.data));
   } catch (err) {
     dispatch(getPostFailure());

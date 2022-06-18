@@ -5,8 +5,13 @@ const Featured = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post/featured_article');
-			setPosts(res.data);
+			await publicRequest.get('/post').then((res) => {
+				setPosts(
+					res.data
+						.sort((a, b) => new Date(b.PublishedDate) - new Date(a.PublishedDate))
+						.slice(0, 3),
+				);
+			});
 		};
 		fetchPosts();
 	}, []);
@@ -25,7 +30,7 @@ const Featured = () => {
 					className={`article featured-article featured-article-${id + 1}`}
 				>
 					<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
-					{/* <span className="article-category">Category</span> */}
+					<span className="article-category">{p.Categories[0].CategoryName}</span>
 					<div className="article-data-container">
 						<div className="article-data">
 							<span>{p.PublishedDate}</span>

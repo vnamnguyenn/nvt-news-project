@@ -21,16 +21,6 @@ class TagService {
 		return data;
 	}
 
-	async popularTag() {
-		const data = await TagRepository.popularTag();
-
-		if (data) {
-			return data.Items;
-		}
-
-		return data;
-	}
-
 	async create(pk, data) {
 		return await TagRepository.create(pk, {
 			TagName: data.TagName,

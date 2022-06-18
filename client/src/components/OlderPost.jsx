@@ -6,8 +6,10 @@ const OlderPost = () => {
 	const [posts, setPosts] = useState([]);
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post/older_post');
-			setPosts(res.data);
+			const res = await publicRequest.get('/post');
+			setPosts(
+				res.data.sort((a, b) => new Date(a.PublishedDate) - new Date(b.PublishedDate)).slice(0, 4),
+			);
 		};
 		fetchPosts();
 	}, []);

@@ -5,8 +5,11 @@ const PopularTags = () => {
 	const [tags, setTags] = useState([]);
 	useEffect(() => {
 		const fetchTags = async () => {
-			const res = await publicRequest.get('/popular_tag');
-			setTags(res.data);
+			await publicRequest.get('/tag').then((res) => {
+				setTags(
+					res.data.slice(0, 6).sort((a, b) => new Date(b.CreatedDate) - new Date(a.CreatedDate)),
+				);
+			});
 		};
 		fetchTags();
 	}, []);

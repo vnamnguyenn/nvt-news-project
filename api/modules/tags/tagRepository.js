@@ -30,15 +30,6 @@ class TagRepository {
 		return await docClient.scan(params).promise();
 	}
 
-	async popularTag() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'TagIndex',
-			Limit: '6',
-		};
-		return await docClient.scan(params).promise();
-	}
-
 	async create(pk, data) {
 		let id = uniqid('t');
 		const params = {

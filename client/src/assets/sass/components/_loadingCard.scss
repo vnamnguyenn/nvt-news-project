@@ -1,0 +1,64 @@
+.loading {
+	.img {
+		border: 1px solid white;
+		width: 100%;
+		height: 100%;
+		background-color: #babbbc;
+	}
+
+	.img,
+	.stripe {
+		animation: hintloading 2s ease-in-out 0s infinite reverse;
+		-webkit-animation: hintloading 2s ease-in-out 0s infinite reverse;
+	}
+
+	.content {
+		border: 1px solid white;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 20px;
+		justify-content: space-between;
+	}
+
+	.stripe {
+		border: 1px solid white;
+		height: 20%;
+		background-color: #babbbc;
+	}
+
+	.small-stripe {
+		width: 40%;
+	}
+
+	.medium-stripe {
+		width: 70%;
+	}
+
+	.long-stripe {
+		width: 100%;
+	}
+	@keyframes hintloading {
+		0% {
+			opacity: 0.5;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.5;
+		}
+	}
+
+	@-webkit-keyframes hintloading {
+		0% {
+			opacity: 0.5;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0.5;
+		}
+	}
+}
