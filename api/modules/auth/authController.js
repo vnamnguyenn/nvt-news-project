@@ -1,5 +1,6 @@
 const AuthService = require(`./authService`);
 const jwt = require('jsonwebtoken');
+const userRepository = require('../users/userRepository');
 
 class AuthController {
 	async updateByID(req, res) {
@@ -13,6 +14,10 @@ class AuthController {
 
 	async signup(req, res) {
 		try {
+			const getEmail = await userRepository.findByEmail(req.body.UserEmail);
+			if (getEmail.Count > 0) {
+				return res.status(400).json({message: 'Email already exist'});
+			}
 			const data = await AuthService.signup(req.body);
 			const accessToken = jwt.sign(
 				{

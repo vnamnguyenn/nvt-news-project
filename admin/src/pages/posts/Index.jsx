@@ -18,6 +18,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 
 const initialValue = {
   PostTitle: "",
@@ -41,6 +48,7 @@ function Post() {
   const [pageSize, setPageSize] = useState(10);
   const posts = useSelector((state) => state.post.posts); //fetch post data
   const [open, setOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
   const [selectionModel, setSelectionModel] = useState([]);
   const userId =
@@ -68,6 +76,7 @@ function Post() {
 
   const handleClose = () => {
     setOpen(false);
+    setDeleteDialogOpen(false);
     setFormData(initialValue);
   };
 
@@ -110,14 +119,13 @@ function Post() {
     handleClickOpen();
   };
 
-  //Delete post
-  const handleDelete = () => {
-    const confirm = window.confirm(
-      `Are you sure, you want to delete ${selectionModel.length} items selected`
-    );
-    if (confirm) {
-      deletePost(selectionModel, dispatch);
-    }
+  const handleOpenDialog = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleSubmitDelete = () => {
+    deletePost(selectionModel, dispatch);
+    setDeleteDialogOpen(false);
   };
 
   const onChange = (e, val) => {
@@ -340,7 +348,7 @@ function Post() {
               Add Post
             </Button>
             <Button
-              onClick={handleDelete}
+              onClick={handleOpenDialog}
               id="delete-button"
               className="delete-item delete-button"
             >
@@ -375,6 +383,28 @@ function Post() {
             }}
           />
         </div>
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={handleClose}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
+            Delete Confirm
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure, you want to delete {selectionModel.length} items
+              selected
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button autoFocus onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button onClick={handleSubmitDelete}>Delete</Button>
+          </DialogActions>
+        </Dialog>
+
         <FormDialog
           open={open}
           handleClose={handleClose}

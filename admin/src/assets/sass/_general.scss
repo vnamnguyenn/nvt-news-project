@@ -21,6 +21,7 @@ body {
 
 :root {
   --light-color: #3d3d3d;
+  --light-color2: #656464;
   --checkbox-color: #0000008a;
   --light-color-alt: rgba(0, 0, 0, 0.6);
   --primary-background-color: #eff2f5;
@@ -37,6 +38,7 @@ body {
 /* Theme color change */
 body.dark-theme {
   --light-color: #fff;
+  --light-color2: #fff;
   --swiper-navigation-color: #e49a38;
   --light-color-alt: #afb6cd;
   --checkbox-color: #f1f1f1;

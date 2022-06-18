@@ -10,23 +10,8 @@ import {
 
 import {publicRequest, userRequest} from '../requestMethods';
 import {toast} from 'react-toastify';
-import {
-	getPostFailure,
-	getPoststart,
-	getPostsuccess,
-	getPostByIDstart,
-	getPostByIDsuccess,
-	getPostByIDFailure,
-} from './postRedux';
-
-import {
-	getTagFailure,
-	getTagstart,
-	getTagsuccess,
-	getTagByIDstart,
-	getTagByIDsuccess,
-	getTagByIDFailure,
-} from './tagRedux';
+import {getPostFailure, getPoststart, getPostsuccess} from './postRedux';
+import {getTagFailure, getTagstart, getTagsuccess} from './tagRedux';
 
 import {
 	addReadingPostFailure,
@@ -40,17 +25,8 @@ import {
 	getReadingPostsuccess,
 } from './readingListRedux';
 
-import {
-	getCategorystart,
-	getCategoryFailure,
-	getCategorysuccess,
-	getCategoryByIDstart,
-	getCategoryByIDsuccess,
-	getCategoryByIDFailure,
-} from './categoryRedux';
+import {getCategorystart, getCategoryFailure, getCategorysuccess} from './categoryRedux';
 
-import {useSelector} from 'react-redux';
-import {useLocation} from 'react-router-dom';
 /*--------User--------*/
 export const signup = async (dispatch, user, location) => {
 	dispatch(loginStart());
@@ -68,7 +44,7 @@ export const signup = async (dispatch, user, location) => {
 			progress: undefined,
 		});
 	} catch (err) {
-		toast.error('Something went wrong', {
+		toast.error('Email already exists', {
 			position: 'bottom-right',
 			autoClose: 2500,
 			hideProgressBar: false,
@@ -115,7 +91,7 @@ export const updateProfile = async (dispatch, user) => {
 			progress: undefined,
 		});
 	} catch {
-		toast.error('user profile update  is failed', {
+		toast.error('user profile update is failed', {
 			position: 'bottom-right',
 			autoClose: 2500,
 			hideProgressBar: false,
@@ -124,7 +100,7 @@ export const updateProfile = async (dispatch, user) => {
 			draggable: false,
 			progress: undefined,
 		});
-		dispatch(loginFailure());
+		dispatch(updateProfileFailure());
 	}
 };
 export const logout = (dispatch) => {
@@ -225,6 +201,6 @@ export const deleteReadingPost = async (SavePostID, dispatch) => {
 			progress: undefined,
 		});
 	} catch (err) {
-		dispatch(addReadingPostFailure());
+		dispatch(deleteReadingPostFailure());
 	}
 };

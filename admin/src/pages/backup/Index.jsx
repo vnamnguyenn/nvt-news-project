@@ -19,10 +19,18 @@ import {
 } from "../../redux/apiCalls";
 
 import { Button } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 
 function Backup() {
   const dispatch = useDispatch();
   const [pageSize, setPageSize] = useState(10);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const backup = useSelector((state) => state.backup.backup); //fetch tags data
   const [selectionModel, setSelectionModel] = useState([]);
   const inputRef = useRef(null);
@@ -61,14 +69,17 @@ function Backup() {
     }
   };
 
-  //Deletepost
-  const handleDelete = (id, name) => {
-    const confirm = window.confirm(
-      `Are you sure, you want to delete ${selectionModel.length} rows selected`
-    );
-    if (confirm) {
-      deleteBackup(selectionModel, dispatch);
-    }
+  const handleClose = () => {
+    setDeleteDialogOpen(false);
+  };
+
+  const handleOpenDialog = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleSubmitDelete = () => {
+    deleteBackup(selectionModel, dispatch);
+    setDeleteDialogOpen(false);
   };
 
   const onChange = (e) => {
@@ -166,7 +177,7 @@ function Backup() {
                   Add Backup
                 </Button>
                 <Button
-                  onClick={handleDelete}
+                  onClick={handleOpenDialog}
                   id="delete-button"
                   className="delete-item delete-button"
                 >
@@ -220,6 +231,30 @@ function Backup() {
                 Toolbar: CustomToolbar,
               }}
             />
+            <Dialog
+              open={deleteDialogOpen}
+              onClose={handleClose}
+              aria-labelledby="draggable-dialog-title"
+            >
+              <DialogTitle
+                style={{ cursor: "move" }}
+                id="draggable-dialog-title"
+              >
+                Delete Confirm
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure, you want to delete {selectionModel.length} items
+                  selected
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button onClick={handleSubmitDelete}>Delete</Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       </div>

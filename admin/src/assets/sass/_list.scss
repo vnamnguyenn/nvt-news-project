@@ -128,7 +128,8 @@
 }
 .MuiInputBase-input,
 .MuiFormLabel-root,
-.MuiChip-filled {
+.MuiChip-filled,
+.MuiTypography-colorTextSecondary {
   color: var(--light-color) !important;
 }
 .rdw-editor-toolbar,
@@ -171,4 +172,7 @@
 }
 .MuiButton-outlinedSecondary {
   color: #f50057 !important;
+}
+.MuiTablePagination-actions button {
+  color: var(--light-color2) !important;
 }

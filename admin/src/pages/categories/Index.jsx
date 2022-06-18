@@ -18,6 +18,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { baseImageUrl, publicRequest } from "../../requestMethods";
 import { Button } from "@mui/material";
 import FormDialog from "./FormDialog";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 
 const initialValue = {
   CategoryName: "",
@@ -30,6 +37,7 @@ function Category() {
   const [pageSize, setPageSize] = useState(10);
   const categories = useSelector((state) => state.category.categories); //fetch category data
   const [open, setOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [formData, setFormData] = useState(initialValue);
   const [selectionModel, setSelectionModel] = useState([]);
   const userId =
@@ -57,6 +65,7 @@ function Category() {
 
   const handleClose = () => {
     setOpen(false);
+    setDeleteDialogOpen(false);
     setFormData(initialValue);
   };
 
@@ -77,14 +86,13 @@ function Category() {
     handleClickOpen();
   };
 
-  //Deletepost
-  const handleDelete = () => {
-    const confirm = window.confirm(
-      `Are you sure, you want to delete ${selectionModel.length} items selected`
-    );
-    if (confirm) {
-      deleteCategory(selectionModel, dispatch);
-    }
+  const handleOpenDialog = () => {
+    setDeleteDialogOpen(true);
+  };
+
+  const handleSubmitDelete = () => {
+    deleteCategory(selectionModel, dispatch);
+    setDeleteDialogOpen(false);
   };
 
   const onChange = (e, val) => {
@@ -148,7 +156,10 @@ function Category() {
           <div className="productListItem">
             <img
               className="productListImg"
-              src={baseImageUrl + params.row.Thumbnail}
+              src={
+                baseImageUrl +
+                (params.row.Thumbnail ? params.row.Thumbnail : "favicon.png")
+              }
               alt=""
             />
             {params.row.CategoryName}
@@ -233,7 +244,7 @@ function Category() {
                 Add Category
               </Button>
               <Button
-                onClick={handleDelete}
+                onClick={handleOpenDialog}
                 id="delete-button"
                 className="delete-item delete-button"
               >
@@ -268,6 +279,27 @@ function Category() {
               }}
             />
           </div>
+          <Dialog
+            open={deleteDialogOpen}
+            onClose={handleClose}
+            aria-labelledby="draggable-dialog-title"
+          >
+            <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
+              Delete Confirm
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Are you sure, you want to delete {selectionModel.length} items
+                selected
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button onClick={handleSubmitDelete}>Delete</Button>
+            </DialogActions>
+          </Dialog>
           <FormDialog
             open={open}
             handleClose={handleClose}

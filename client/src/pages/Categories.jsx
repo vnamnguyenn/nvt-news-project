@@ -3,26 +3,25 @@ import Footer from '../layouts/Footer';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {baseImageUrl, publicRequest} from '../requestMethods';
-import {getCategories} from '../redux/apiCalls';
 
 const Categories = (pageNumber) => {
 	const [loadingAnimation, setLoadingAnimation] = useState(true);
 	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
 	const [hasMore, setHasMore] = useState(false);
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	useEffect(() => {
-		setLoading(true);
 		document.title = 'Categories';
+		setLoading(true);
 		const getCategories = async () => {
 			await publicRequest.get('/category').then((res) => {
-				const limit = 6;
-				setPage(1);
+				const limit = 9;
 				const startIndex = (page - 1) * limit;
 				const endIndex = page * limit;
-				setData(res.data.slice(startIndex, endIndex));
+				setData((prevData) => {
+					return [...new Set([...prevData, ...res.data.slice(startIndex, endIndex)])];
+				});
 				setHasMore(res.data.length > 0);
 				setLoading(false);
 			});
@@ -38,12 +37,10 @@ const Categories = (pageNumber) => {
 			}, 500);
 		}
 	}, [loadingAnimation]);
-	console.log(data);
 
 	const observer = useRef();
 	const lastCategoryElementRef = useCallback(
 		(node) => {
-			if (loading) return;
 			if (observer.current) observer.current.disconnect();
 			observer.current = new IntersectionObserver((entries) => {
 				if (entries[0].isIntersecting && hasMore) {
@@ -52,10 +49,9 @@ const Categories = (pageNumber) => {
 			});
 			if (node) observer.current.observe(node);
 		},
-		[loading, hasMore],
+		[hasMore],
 	);
 
-	// render null when app is not ready
 	if (loadingAnimation) {
 		return null;
 	}
@@ -103,7 +99,7 @@ const Categories = (pageNumber) => {
 							}
 						})}
 					</div>
-					<div>{loading && 'Loading...'}</div>
+					<div style={{textAlign: 'center', marginTop: '50px'}}>{loading && 'Loading...'}</div>
 				</div>
 			</section>
 			<Footer />

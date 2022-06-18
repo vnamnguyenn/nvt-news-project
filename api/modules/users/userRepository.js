@@ -5,6 +5,22 @@ class UserRepository {
 		this.tableName = 'Blog';
 	}
 
+	async findByEmail(email) {
+		const params = {
+			TableName: this.tableName,
+			IndexName: 'AccountIndex',
+			KeyConditionExpression: '#85e30 = :85e30',
+			ExpressionAttributeValues: {
+				':85e30': email,
+			},
+			ExpressionAttributeNames: {
+				'#85e30': 'UserEmail',
+			},
+		};
+
+		return await docClient.query(params).promise();
+	}
+
 	async findByID(PK) {
 		const params = {
 			TableName: this.tableName,

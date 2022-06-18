@@ -1,11 +1,9 @@
 import DarkMode from '../components/DarkMode';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {logout} from '../redux/apiCalls';
-// import SearchPost from '../pages/SearchPost';
 import {useLocation, useNavigate} from 'react-router';
-// import {publicRequest} from '../requestMethods';
 const Header = () => {
 	const dispatch = useDispatch();
 	// const [posts, setPosts] = useState([]);

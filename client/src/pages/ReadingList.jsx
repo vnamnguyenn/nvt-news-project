@@ -1,9 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import Header from '../layouts/Header';
 import Footer from '../layouts/Footer';
-import FormInput from '../components/FormInput';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateProfile} from '../redux/apiCalls';
 import {baseImageUrl} from '../requestMethods';
 import {getReadingList, deleteReadingPost} from '../redux/apiCalls';
 import {Link, useNavigate} from 'react-router-dom';
@@ -96,12 +94,6 @@ const ReadingList = () => {
 							</div>
 						</article>
 					))}
-
-					<div className="flex center-content load-more">
-						<button type="submit" className="c-btn w-max">
-							Load more
-						</button>
-					</div>
 				</div>
 			</section>
 			<Footer />

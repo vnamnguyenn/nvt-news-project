@@ -68,21 +68,21 @@ export const signup = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/signup", user);
+    dispatch(loginSuccess(res.data));
+    window.location.replace("/");
     toast.success("Logged in successfull", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: false,
       progress: undefined,
     });
-    dispatch(loginSuccess(res.data));
-    window.location.replace("/");
   } catch (err) {
-    toast.error("Something went wrong", {
+    toast.error("Email already exists", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -98,7 +98,7 @@ export const signin = async (dispatch, user) => {
     const res = await publicRequest.post("/signin", user);
     toast.success("Logged in successfull", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -110,7 +110,7 @@ export const signin = async (dispatch, user) => {
   } catch (err) {
     toast.error("Email and/or Password wrong", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -142,7 +142,7 @@ export const addBackup = async (dispatch) => {
     dispatch(addbackupsuccess(res.data));
     toast.success("Backup created in successfully", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -167,7 +167,7 @@ export const restoreBackup = async (Path, backupName) => {
     await userRequest.get(`/backup/restore/${Path}`);
     toast.success(`Restore '${backupName}' in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -177,7 +177,7 @@ export const restoreBackup = async (Path, backupName) => {
   } catch (err) {
     toast.error(`Restore '${backupName}' is Failed`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -197,7 +197,7 @@ export const addBackupFromFile = async (Content, dispatch) => {
     dispatch(addbackupsuccess(res.data));
     toast.success(`Data restored in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -208,7 +208,7 @@ export const addBackupFromFile = async (Content, dispatch) => {
     dispatch(addbackupFailure());
     toast.error(`Data restore is Failed, please check content file`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -221,9 +221,9 @@ export const addBackupFromFile = async (Content, dispatch) => {
 export const restoreDefaultBackup = async () => {
   try {
     await publicRequest.get("/backup/import_data");
-    toast.success(`Data restored  in successfully`, {
+    toast.success(`Data restored in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -233,7 +233,7 @@ export const restoreDefaultBackup = async () => {
   } catch (err) {
     toast.error(`Data restore is Failed, please check content file`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -248,7 +248,7 @@ export const createTable = async () => {
     await publicRequest.post("/database/create/");
     toast.success(`Table created in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -258,7 +258,7 @@ export const createTable = async () => {
   } catch (err) {
     toast.error(`Table create is Failed`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -273,7 +273,7 @@ export const deleteTable = async () => {
     await publicRequest.delete("/database/delete/");
     toast.success(`Delete Table in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -283,7 +283,7 @@ export const deleteTable = async () => {
   } catch (err) {
     toast.error(`Delete Table is Failed`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -304,7 +304,7 @@ export const deleteBackup = async (BackupIDs, dispatch) => {
     }
     toast.success(`Rows deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -333,7 +333,7 @@ export const addTag = async (tag, dispatch) => {
     dispatch(addTagsuccess(res.data));
     toast.success("Tag created in successfully", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -352,7 +352,7 @@ export const updateTag = async (TagId, tagName, tag, dispatch) => {
     dispatch(updateTagsuccess({ TagId, tag }));
     toast.success(`'${tagName}' updated in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -373,9 +373,9 @@ export const deleteTag = async (tagIds, dispatch) => {
       dispatch(deleteTagsuccess(tagIds[index]));
       index -= 1;
     }
-    toast.success(`Tag deleted in successfully`, {
+    toast.success(`Rows deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -404,7 +404,7 @@ export const addCategory = async (category, dispatch) => {
     dispatch(addCategorysuccess(res.data));
     toast.success("Category created in successfully", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -428,7 +428,7 @@ export const updateCategory = async (
     dispatch(updateCategorysuccess({ CategoryId, category }));
     toast.success(`Update '${CategoryName}' in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -451,7 +451,7 @@ export const deleteCategory = async (CategoryIds, dispatch) => {
     }
     toast.success(`Rows deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -480,7 +480,7 @@ export const addPost = async (post, dispatch) => {
     dispatch(addPostsuccess(res.data));
     toast.success("Post created in successfully", {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -499,7 +499,7 @@ export const updatePost = async (postID, postTitle, post, dispatch) => {
     dispatch(updatePostsuccess({ postID, post }));
     toast.success(`'${postTitle}' updated in successfully`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -522,7 +522,7 @@ export const deletePost = async (postIDs, dispatch) => {
     }
     toast.success(`Posts deleted in successfully`, {
       position: "bottom-right",
-      autoClose: 2500,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -533,7 +533,7 @@ export const deletePost = async (postIDs, dispatch) => {
     dispatch(deletePostFailure());
     toast.error(`Delete is Failed ${err}`, {
       position: "bottom-right",
-      autoClose: 4000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
