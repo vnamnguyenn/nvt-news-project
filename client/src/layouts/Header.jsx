@@ -1,19 +1,19 @@
 import DarkMode from '../components/DarkMode';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {logout} from '../redux/apiCalls';
 import {useLocation, useNavigate} from 'react-router';
+import {publicRequest} from '../requestMethods';
 const Header = () => {
 	const dispatch = useDispatch();
 	// const [posts, setPosts] = useState([]);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [searchTerm, setSearchTerm] = useState('');
-	const fetchPostsData = useSelector((state) => state.post.posts.data);
 	const [display, setDisplay] = useState(false);
 	const [isActive, setIsActive] = useState(false);
-	const [options, setOptions] = useState(fetchPostsData);
+	const [options, setOptions] = useState();
 	document.querySelector('.sk-cube-grid').style.display = 'none';
 
 	// Grab elements
@@ -22,6 +22,16 @@ const Header = () => {
 		if (element) return element;
 		// throw new Error(`Something went wrong! Make sure that ${selector} exists/is typed correctly.`);
 	};
+
+	useEffect(() => {
+		const fetchPosts = async () => {
+			await publicRequest.get('/post').then((res) => {
+				setOptions(res.data);
+			});
+		};
+		fetchPosts();
+	}, []);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (searchTerm !== '') {
@@ -205,12 +215,14 @@ const Header = () => {
 						{display && (
 							<div className="autoContainer">
 								{options
-									.filter(({PostTitle}) => PostTitle.indexOf(searchTerm.toLowerCase()) > -1)
+									.filter(
+										({PostTitle}) => PostTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
+									)
 									.map((value, i) => {
 										return (
 											<Link
 												to={`/search?q=${value.PostTitle}`}
-												state={{searchParam: searchTerm}}
+												state={{searchParam: value.PostTitle}}
 												onClick={formCloseBtn}
 												className="option"
 												tabIndex="0"

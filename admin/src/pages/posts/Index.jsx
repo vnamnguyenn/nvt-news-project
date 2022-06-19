@@ -32,7 +32,7 @@ const initialValue = {
   PostImage: undefined,
   Description: "",
   Content: "",
-  ReadingTime: "5",
+  ReadingTime: "",
   MetaDescription: "",
   MetaKeyword: "",
   Published: "active",
@@ -226,7 +226,7 @@ function Post() {
     {
       field: "PostTitle",
       headerName: "Title",
-      width: 360,
+      width: 450,
       renderCell: (params) => {
         return (
           <div className="productListItem">

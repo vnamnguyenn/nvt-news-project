@@ -141,6 +141,8 @@ export default function FormDialog({
                   {...params}
                   placeholder="Choose Tag"
                   variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  label="Tag"
                 />
               )}
             />
@@ -151,7 +153,6 @@ export default function FormDialog({
               options={listCategory}
               id="Categories"
               fullWidth
-              required
               autoHighlight
               defaultValue={Categories}
               getOptionLabel={(option) => option.CategoryName}
@@ -162,6 +163,8 @@ export default function FormDialog({
                   {...params}
                   placeholder="Choose Category"
                   variant="outlined"
+                  InputLabelProps={{ shrink: true }}
+                  label="Category"
                 />
               )}
             />
@@ -224,20 +227,14 @@ export default function FormDialog({
               value={Description}
               onChange={(e) => onChange(e)}
               placeholder="Enter description"
-              label="Description"
+              label="Short Description"
               variant="outlined"
               margin="dense"
               fullWidth
               InputLabelProps={{ shrink: true }}
             />
 
-            <div
-              style={{
-                border: "1px solid gray",
-                padding: "1px 5px",
-                borderRadius: "4px",
-              }}
-            >
+            <div className="editor">
               <Editor
                 placeholder="Content"
                 editorState={content}
@@ -259,10 +256,12 @@ export default function FormDialog({
             <TextField
               required
               autoFocus
+              type="number"
               id="ReadingTime"
               value={ReadingTime}
               onChange={(e) => onChange(e)}
               placeholder="Enter ReadingTime"
+              label="Reading Time"
               variant="outlined"
               margin="dense"
               fullWidth
