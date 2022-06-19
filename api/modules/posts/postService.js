@@ -70,6 +70,7 @@ class PostService {
 			MetaKeyword: data.MetaKeyword,
 			Tags: data.Tags,
 			Categories: data.Categories,
+			Content: data.Content,
 		});
 	}
 

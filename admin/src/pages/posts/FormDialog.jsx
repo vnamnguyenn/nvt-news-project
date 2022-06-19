@@ -92,7 +92,7 @@ export default function FormDialog({
       setContent(EditorState.createEmpty());
     }
   }, [dispatch, open]);
-  console.log(open);
+
   const onEditorStateChange = (editorState) => {
     setContent(editorState);
   };
@@ -248,7 +248,7 @@ export default function FormDialog({
               />
             </div>
             <TextField
-              style={{ display: "block" }}
+              style={{ display: "none" }}
               id="Content"
               value={(data.Content = convertToHTML)}
               placeholder="Enter Content"
