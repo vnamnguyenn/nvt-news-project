@@ -22,7 +22,7 @@ const PostsCategory = () => {
 			}, 500);
 		}
 		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post_admin');
+			const res = await publicRequest.get('/post');
 			setPosts(res.data);
 		};
 		fetchPosts();

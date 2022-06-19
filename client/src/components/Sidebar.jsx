@@ -1,22 +1,11 @@
-import {baseImageUrl, publicRequest} from '../requestMethods';
-import {useEffect, useState} from 'react';
+import {baseImageUrl} from '../requestMethods';
+
 import {Link} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-const Sidebar = () => {
-	const [posts, setPosts] = useState([]);
-	useEffect(() => {
-		const fetchPosts = async () => {
-			await publicRequest.get('/post/').then((res) => {
-				setPosts(
-					res.data
-						.sort((a, b) => new Date(b.PublishedDate) - new Date(a.PublishedDate))
-						.slice(0, 4)
-						.reverse(),
-				);
-			});
-		};
-		fetchPosts();
-	}, []);
+
+const Sidebar = ({data}) => {
+	const posts = [...data.slice(data.length - 10, data.length - 6)];
+	posts.sort((a, b) => new Date(b.PublishedDate) - new Date(a.PublishedDate)).reverse();
+
 	return (
 		<div className="sidebar d-grid">
 			<h3 className="title featured-content-title">Trending news</h3>

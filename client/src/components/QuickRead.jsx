@@ -7,16 +7,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const Quickread = () => {
-	const [posts, setPosts] = useState([]);
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post');
-			console.log(res.data.length - 1);
-			setPosts(res.data.slice(0, 6).reverse());
-		};
-		fetchPosts();
-	}, []);
+const Quickread = ({data}) => {
+	const posts = data.slice(data.length - 7, data.length - 1).reverse();
+
 	return (
 		<section className="quick-read section">
 			<div className="container">
@@ -26,7 +19,7 @@ const Quickread = () => {
 				{/* Slider main container */}
 				<Swiper
 					slidesPerView={3}
-					spaceBetween={30}
+					spaceBetween={10}
 					slidesPerGroup={1}
 					loop={true}
 					loopFillGroupWithBlank={true}
@@ -36,6 +29,23 @@ const Quickread = () => {
 					navigation={true}
 					modules={[Pagination, Navigation]}
 					className="swiper"
+					breakpoints={{
+						// when window width is >= 320px
+						320: {
+							slidesPerView: 1,
+							spaceBetween: 10,
+						},
+						// when window width is >= 480px
+						480: {
+							slidesPerView: 3,
+							spaceBetween: 30,
+						},
+						// when window width is >= 640px
+						640: {
+							slidesPerView: 4,
+							spaceBetween: 40,
+						},
+					}}
 				>
 					{/* Additional required wrapper */}
 					<div className="swiper-wrapper">

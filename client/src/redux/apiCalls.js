@@ -138,7 +138,7 @@ export const getCategories = async (dispatch) => {
 	}
 };
 /*--------Post--------*/
-export const getPosts = async (paramsString, dispatch) => {
+export const getPosts = async (dispatch) => {
 	dispatch(getPoststart());
 	try {
 		const res = await publicRequest.get('/post');

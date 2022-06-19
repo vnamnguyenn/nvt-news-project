@@ -5,30 +5,31 @@ import {Link} from 'react-router-dom';
 import {baseImageUrl, publicRequest} from '../requestMethods';
 import ReactPaginate from 'react-paginate';
 
-function Posts() {
+const Tags = () => {
 	const [loadingAnimation, setLoadingAnimation] = useState(true);
-	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [hasMore, setHasMore] = useState(false);
 	const [page, setPage] = useState(1);
+	const observer = useRef();
+	const [data, setData] = useState([]);
+
 	document.querySelector('.sk-cube-grid').style.display = 'block';
-	// fetch data from server
 	useEffect(() => {
-		document.title = 'News | NVT';
+		document.title = 'Categories';
 		setLoading(true);
-		const fetchPosts = async () => {
-			await publicRequest.get('/post').then((res) => {
+		const getCategories = async () => {
+			await publicRequest.get('/tag').then((res) => {
 				const limit = 6;
 				const startIndex = (page - 1) * limit;
 				const endIndex = page * limit;
-				setPosts((prevData) => {
+				setData((prevData) => {
 					return [...new Set([...prevData, ...res.data.slice(startIndex, endIndex)])];
 				});
 				setHasMore(res.data.length > 0);
 				setLoading(false);
 			});
 		};
-		fetchPosts();
+		getCategories();
 	}, [page]);
 
 	useEffect(() => {
@@ -40,7 +41,6 @@ function Posts() {
 		}
 	}, [loadingAnimation]);
 
-	const observer = useRef();
 	const lastCategoryElementRef = useCallback(
 		(node) => {
 			if (observer.current) observer.current.disconnect();
@@ -61,47 +61,41 @@ function Posts() {
 	return (
 		<div>
 			<Header />
-			<section className="older-posts section section-header-offset">
+			<section className="popular-tags section section-header-offset">
 				<div className="container padding-bottom">
-					<div className="older-posts-grid-wrapper d-grid">
-						{posts.map((p, index) => {
-							if (posts.length === index + 1) {
+					<div className="popular-tags-container d-grid">
+						{data.map((tag, index) => {
+							if (data.length === index + 1) {
 								return (
 									<Link
-										to={p.PostID}
-										key={p.PostID}
+										to={tag.TagId}
+										className="article"
+										state={{tagName: tag.TagName}}
+										key={tag.TagId}
 										ref={lastCategoryElementRef}
-										className="article d-grid"
 									>
-										<div className="older-posts-article-image-wrapper">
-											<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
-										</div>
-										<div className="article-data-container">
-											<div className="article-data">
-												<span>{p.PublishedDate}</span>
-												<span className="article-data-spacer"></span>
-												<span>{p.ReadingTime} Min read</span>
-											</div>
-											<h3 className="title article-title">{p.PostTitle}</h3>
-											<p className="article-description">{p.Description}</p>
-										</div>
+										<span className="tag-name">{tag.TagName}</span>
+										<img
+											src={baseImageUrl + tag.Thumbnail}
+											alt={tag.TagName}
+											className="article-image"
+										/>
 									</Link>
 								);
 							} else {
 								return (
-									<Link to={p.PostID} key={p.PostID} className="article d-grid">
-										<div className="older-posts-article-image-wrapper">
-											<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
-										</div>
-										<div className="article-data-container">
-											<div className="article-data">
-												<span>{p.PublishedDate}</span>
-												<span className="article-data-spacer"></span>
-												<span>{p.ReadingTime} Min read</span>
-											</div>
-											<h3 className="title article-title">{p.PostTitle}</h3>
-											<p className="article-description">{p.Description}</p>
-										</div>
+									<Link
+										to={tag.TagId}
+										className="article"
+										state={{tagName: tag.TagName}}
+										key={tag.TagId}
+									>
+										<span className="tag-name">{tag.TagName}</span>
+										<img
+											src={baseImageUrl + tag.Thumbnail}
+											alt={tag.TagName}
+											className="article-image"
+										/>
 									</Link>
 								);
 							}
@@ -113,6 +107,6 @@ function Posts() {
 			<Footer />
 		</div>
 	);
-}
+};
 
-export default Posts;
+export default Tags;

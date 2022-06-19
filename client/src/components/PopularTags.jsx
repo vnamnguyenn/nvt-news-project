@@ -1,18 +1,10 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {baseImageUrl, publicRequest} from '../requestMethods';
-const PopularTags = () => {
-	const [tags, setTags] = useState([]);
-	useEffect(() => {
-		const fetchTags = async () => {
-			await publicRequest.get('/tag').then((res) => {
-				setTags(
-					res.data.slice(0, 6).sort((a, b) => new Date(b.CreatedDate) - new Date(a.CreatedDate)),
-				);
-			});
-		};
-		fetchTags();
-	}, []);
+const PopularTags = ({data}) => {
+	const tags = [...data.slice(0, 6)];
+	tags.sort((a, b) => new Date(b.CreatedDate) - new Date(a.CreatedDate));
+
 	return (
 		<section className="popular-tags section">
 			<div className="container">

@@ -13,6 +13,7 @@ import SearchPost from '../pages/SearchPost';
 import Profile from '../pages/Profile';
 import ReadingList from '../pages/ReadingList';
 import PostsAuthor from '../pages/PostsAuthor';
+import Tags from '../pages/Tags';
 
 const ROUTES = () => {
 	return (
@@ -31,6 +32,10 @@ const ROUTES = () => {
 				<Route path=":id" element={<PostsCategory />} />
 			</Route>
 
+			<Route path="/tag">
+				<Route index element={<Tags />} />
+				<Route path=":id" element={<PostsTag />} />
+			</Route>
 			<Route path="/tag/:id" element={<PostsTag />} />
 
 			<Route path="/post">

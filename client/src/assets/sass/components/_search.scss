@@ -24,13 +24,25 @@
 	gap: unset !important;
 	width: 420px;
 }
-
-.autoContainer {
-	border-width: 0px 2px 2px 2px;
-	border-style: solid;
-	border-color: var(--secondary-background-color);
+.postContainer {
 	background-color: var(--secondary-background-color);
+}
+.autoContainer {
 	width: 420px;
+	overflow-y: scroll;
+
+	mask-image: linear-gradient(to top, transparent, black),
+		linear-gradient(to left, transparent 17px, black 17px);
+	mask-size: 100% 20000px;
+	mask-position: left bottom;
+	-webkit-mask-image: linear-gradient(to top, transparent, black),
+		linear-gradient(to left, transparent 17px, black 17px);
+	-webkit-mask-size: 100% 20000px;
+	-webkit-mask-position: left bottom;
+	transition: mask-position 0.3s, -webkit-mask-position 0.3s;
+}
+.autoContainer:hover {
+	-webkit-mask-position: left top;
 }
 
 .option {

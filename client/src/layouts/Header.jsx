@@ -98,19 +98,20 @@ const Header = () => {
 								</Link>
 							</li>
 							<li className="list-item">
+								<Link to="/tag" className="list-link">
+									Tags
+								</Link>
+							</li>
+							<li className="list-item">
 								<Link to="/post" className="list-link">
 									News
 								</Link>
 							</li>
 							<li className="list-item">
-								<a href="/#" className="list-link">
-									Videos
-								</a>
+								<div className="list-link">Videos</div>
 							</li>
 							<li className="list-item">
-								<a href="/#" className="list-link">
-									Contact
-								</a>
+								<div className="list-link">Contact</div>
 							</li>
 							{user ? (
 								<>
@@ -213,25 +214,39 @@ const Header = () => {
 							onChange={handleChange}
 						/>
 						{display && (
-							<div className="autoContainer">
-								{options
-									.filter(
-										({PostTitle}) => PostTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
-									)
-									.map((value, i) => {
-										return (
-											<Link
-												to={`/search?q=${value.PostTitle}`}
-												state={{searchParam: value.PostTitle}}
-												onClick={formCloseBtn}
-												className="option"
-												tabIndex="0"
-												key={i}
-											>
-												<span>{value.PostTitle}</span>
-											</Link>
-										);
-									})}
+							<div className="postContainer">
+								<div
+									className="autoContainer"
+									style={{
+										height:
+											options.filter(
+												({PostTitle}) =>
+													PostTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
+											).length > 0
+												? '300px'
+												: 'unset',
+									}}
+								>
+									{options
+										.filter(
+											({PostTitle}) =>
+												PostTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
+										)
+										.map((value, i) => {
+											return (
+												<Link
+													to={`/search?q=${value.PostTitle}`}
+													state={{searchParam: value.PostTitle}}
+													onClick={formCloseBtn}
+													className="option"
+													tabIndex="0"
+													key={i}
+												>
+													<span>{value.PostTitle}</span>
+												</Link>
+											);
+										})}
+								</div>
 							</div>
 						)}
 						<Link

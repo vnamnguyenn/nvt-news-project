@@ -351,10 +351,10 @@ class DBRepository {
 						Thumbnail: data.Thumbnail,
 						PostImage: data.PostImage,
 						Description: data.Description,
-						MetaTitle: data.MetaTitle,
 						MetaDescription: data.MetaDescription,
 						MetaKeyword: data.MetaKeyword,
 						Published: data.Published,
+						CreatedDate: data.CreatedDate,
 						PublishedDate: data.PublishedDate,
 						UpdatedDate: data.UpdatedDate,
 						ReadingTime: data.ReadingTime,
@@ -369,124 +369,6 @@ class DBRepository {
 	}
 
 	async addBackupFromFile(pk, contentFile) {
-		let jsonData = JSON.parse(contentFile);
-		//scan and delete current data
-
-		// //restore database
-		// jsonData.forEach(function (data) {
-		// 	let params = {};
-		// 	if (data.TagId !== undefined) {
-		// 		params = {
-		// 			TableName: 'Blog',
-		// 			Item: {
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				TagId: data.TagId,
-		// 				TagName: data.TagName,
-		// 				Thumbnail: data.Thumbnail,
-		// 				CreatedDate: data.CreatedDate,
-		// 				UpdatedDate: data.UpdatedDate,
-		// 			},
-		// 		};
-		// 	} else if (data.UserEmail !== undefined) {
-		// 		params = {
-		// 			TableName: 'Blog',
-		// 			Item: {
-		// 				AccountId: data.AccountId,
-		// 				UserEmail: data.UserEmail,
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				FullName: data.FullName,
-		// 				Gender: data.Gender,
-		// 				DateOfBirth: data.DateOfBirth,
-		// 				isAdmin: data.isAdmin,
-		// 				PasswordHash: data.PasswordHash,
-		// 				IsActive: data.IsActive,
-		// 				Avatar: data.Avatar,
-		// 				Description: data.Description,
-		// 				CreatedDate: data.CreatedDate,
-		// 			},
-		// 		};
-		// 	} else if (data.CategoryId !== undefined) {
-		// 		params = {
-		// 			TableName: 'Blog',
-		// 			Item: {
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				CategoryId: data.CategoryId,
-		// 				CategoryName: data.CategoryName,
-		// 				Thumbnail: data.Thumbnail,
-		// 				CreatedDate: data.CreatedDate,
-		// 				UpdatedDate: data.UpdatedDate,
-		// 			},
-		// 		};
-		// 	} else if (data.CommentId !== undefined) {
-		// 		params = {
-		// 			TableName: 'Blog',
-		// 			Item: {
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				CommentId: data.CommentId,
-		// 				ParentPostID: data.ParentPostID,
-		// 				CommentContent: data.CommentContent,
-		// 				ParentCommentId: data.ParentCommentId,
-		// 				CreatedDate: data.CreatedDate,
-		// 				AccountInfo: data.AccountInfo,
-		// 			},
-		// 		};
-		// 	} else if (data.SavePostID !== undefined) {
-		// 		params = {
-		// 			TableName: 'Blog', //5. SavePostIndex
-		// 			Item: {
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				PostTitle: data.PostTitle,
-		// 				Thumbnail: data.Thumbnail,
-		// 				CreatedDate: data.CreatedDate,
-		// 				AuthorInfo: data.AuthorInfo,
-		// 				ReadingTime: data.ReadingTime	,
-		// PublishedDate: data.PublishedDate
-		// 			},
-		// 		};
-		// 	} else if (data.BackupID !== undefined) {
-		// 		params = {
-		// 			TableName: 'Blog', //6. BackupIndex
-		// 			Item: {
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				CreatedDate: data.CreatedDate,
-		// 				AccountInfo: data.AccountInfo,
-		// 				Path: data.Path,
-		// 				BackupName: data.BackupName,
-		// 			},
-		// 		};
-		// 	} else {
-		// 		params = {
-		// 			TableName: 'Blog',
-		// 			Item: {
-		// 				PK: data.PK,
-		// 				SK: data.SK,
-		// 				PostID: data.PostID,
-		// 				PostTitle: data.PostTitle,
-		// 				Content: data.Content,
-		// 				Thumbnail: data.Thumbnail,
-		// 				PostImage: data.PostImage,
-		// 				Description: data.Description,
-		// 				MetaTitle: data.MetaTitle,
-		// 				MetaDescription: data.MetaDescription,
-		// 				MetaKeyword: data.MetaKeyword,
-		// 				Published: data.Published,
-		// 				PublishedDate: data.PublishedDate,
-		// 				UpdatedDate: data.UpdatedDate,
-		// 				ReadingTime: data.ReadingTime,
-		// 				Categories: data.Categories,
-		// 				Tags: data.Tags,
-		// 				AuthorInfo: data.AuthorInfo,
-		// 			},
-		// 		};
-		// 	}
-		// 	docClient.put(params).promise();
-		// });
 		let id = uniqid('bk');
 		const fileName = 'backup-' + currentTime + '-' + Date.now();
 		fs.writeFile(
@@ -498,7 +380,7 @@ class DBRepository {
 				}
 			},
 		);
-		//record backup file to database
+
 		const backupParams = {
 			TableName: this.tableName,
 			Item: {
@@ -607,7 +489,7 @@ class DBRepository {
 				};
 			} else {
 				params = {
-					TableName: 'Blog',
+					TableName: 'Blog', //7. PostIndex
 					Item: {
 						PK: data.PK,
 						SK: data.SK,
@@ -617,11 +499,11 @@ class DBRepository {
 						Thumbnail: data.Thumbnail,
 						PostImage: data.PostImage,
 						Description: data.Description,
-						MetaTitle: data.MetaTitle,
 						MetaDescription: data.MetaDescription,
 						MetaKeyword: data.MetaKeyword,
 						Published: data.Published,
 						PublishedDate: data.PublishedDate,
+						CreatedDate: data.CreatedDate,
 						UpdatedDate: data.UpdatedDate,
 						ReadingTime: data.ReadingTime,
 						Categories: data.Categories,
@@ -649,26 +531,18 @@ class DBRepository {
 			TableName: this.tableName,
 		};
 
-		docClient
-			.scan(params, function onScan(err, data) {
+		const data = await docClient.scan(params).promise();
+		const content = JSON.stringify(data.Items);
+		fs.writeFile(
+			__dirname.replace('database', '../backup/') + fileName + '.json',
+			content,
+			(err) => {
 				if (err) {
-					console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
-				} else {
-					const content = JSON.stringify(data.Items);
-					fs.writeFile(
-						__dirname.replace('database', '../backup/') + fileName + '.json',
-						content,
-						(err) => {
-							if (err) {
-								console.error(err);
-							}
-						},
-					);
+					console.error(err);
 				}
-			})
-			.promise();
-
-		const params2 = {
+			},
+		);
+		const backupParams = {
 			TableName: this.tableName,
 			Item: {
 				PK: pk,
@@ -679,9 +553,8 @@ class DBRepository {
 				CreatedDate: currentTime + ' ' + new Date().toLocaleTimeString('vi-VN'),
 			},
 		};
-		await docClient.put(params2).promise();
-
-		return params2.Item;
+		await docClient.put(backupParams).promise();
+		return backupParams.Item;
 	}
 
 	async deleteBackup(pk, backupId) {

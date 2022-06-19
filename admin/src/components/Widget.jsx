@@ -1,22 +1,22 @@
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import NewspaperOutlinedIcon from "@mui/icons-material/NewspaperOutlined";
+import LocalOfferOutlinedIcon from "@mui/icons-material/LocalOfferOutlined";
+import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
+import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined";
+import { Link } from "react-router-dom";
 
-const Widget = ({ type }) => {
+const Widget = ({ type, couter }) => {
   let data;
-  //temporary
-  const amount = 100;
-  const diff = 20;
+  const diff = 0;
   switch (type) {
-    case "user":
+    case "posts":
       data = {
-        title: "USERS",
-        isMoney: false,
-        link: "See all users",
+        title: "POSTS",
+        linkTitle: "See all post",
+        linkTagert: "/posts",
+        couter: couter,
         icon: (
-          <PersonOutlinedIcon
+          <NewspaperOutlinedIcon
             className="icon"
             style={{
               color: "crimson",
@@ -26,13 +26,14 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "order":
+    case "tags":
       data = {
-        title: "ORDERS",
-        isMoney: false,
-        link: "View all orders",
+        title: "TAGS",
+        linkTitle: "See all tag",
+        linkTagert: "/tags",
+        couter: couter,
         icon: (
-          <ShoppingCartOutlinedIcon
+          <LocalOfferOutlinedIcon
             className="icon"
             style={{
               backgroundColor: "rgba(218, 165, 32, 0.2)",
@@ -42,26 +43,28 @@ const Widget = ({ type }) => {
         ),
       };
       break;
-    case "earning":
+    case "categories":
       data = {
-        title: "EARNINGS",
-        isMoney: true,
-        link: "View net earnings",
+        title: "CATEGORIES",
+        linkTitle: "See all category",
+        linkTagert: "/categories",
+        couter: couter,
         icon: (
-          <MonetizationOnOutlinedIcon
+          <CategoryOutlinedIcon
             className="icon"
             style={{ backgroundColor: "rgba(0, 128, 0, 0.2)", color: "green" }}
           />
         ),
       };
       break;
-    case "balance":
+    case "backup":
       data = {
-        title: "BALANCE",
-        isMoney: true,
-        link: "See details",
+        title: "BACKUP",
+        linkTitle: "See all backup",
+        linkTagert: "/backup",
+        couter: couter,
         icon: (
-          <AccountBalanceWalletOutlinedIcon
+          <BackupOutlinedIcon
             className="icon"
             style={{
               backgroundColor: "rgba(128, 0, 128, 0.2)",
@@ -78,10 +81,10 @@ const Widget = ({ type }) => {
     <div className="widget">
       <div className="widget__left">
         <span className="title">{data.title}</span>
-        <span className="counter">
-          {data.isMoney && "$"} {amount}
-        </span>
-        <span className="link">{data.link}</span>
+        <span className="counter">{data.couter}</span>
+        <Link to={data.linkTagert} className="link">
+          {data.linkTitle}
+        </Link>
       </div>
       <div className="widget__right">
         <div className="percentage positive">

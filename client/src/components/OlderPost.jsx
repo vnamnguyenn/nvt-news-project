@@ -1,18 +1,11 @@
-import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
-import {baseImageUrl, publicRequest} from '../requestMethods';
+import {baseImageUrl} from '../requestMethods';
 
-const OlderPost = () => {
-	const [posts, setPosts] = useState([]);
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const res = await publicRequest.get('/post');
-			setPosts(
-				res.data.sort((a, b) => new Date(a.PublishedDate) - new Date(b.PublishedDate)).slice(0, 4),
-			);
-		};
-		fetchPosts();
-	}, []);
+const OlderPost = ({data}) => {
+	const posts = data
+		// .sort((a, b) => new Date(a.PublishedDate) - new Date(b.PublishedDate))
+		.slice(0, 4);
+
 	return (
 		<section className="older-posts section">
 			<div className="container">
