@@ -8,7 +8,7 @@ import Comments from '../components/Comments';
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {addReadingPost} from '../redux/apiCalls';
-
+import ReactTooltip from 'react-tooltip';
 const Post = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -90,26 +90,13 @@ const Post = () => {
 								title="Heart"
 							>
 								<span className="crayons-reaction__icon crayons-reaction__icon--inactive">
-									<i className="ri-heart-2-line crayons-reaction__icon--inactive" />
+									<i
+										className="ri-heart-2-line crayons-reaction__icon--inactive"
+										data-tip="like post"
+									/>
 									{/* <i className="ri-heart-2-fill crayons-reaction__icon--active" /> */}
 									<span className="crayons-reaction__count" id="reaction-number-like">
-										4
-									</span>
-								</span>
-							</button>
-							<button
-								id="reaction-butt-readinglist"
-								aria-label="Add to reading list"
-								aria-pressed="true"
-								className="crayons-reaction crayons-reaction--readinglist activated user-activated not-user-animated"
-								data-category="readinglist"
-								title="Save"
-							>
-								<span className="crayons-reaction__icon ">
-									<i className="ri-chat-2-line crayons-reaction__icon--inactive" />
-									{/* <i className="ri-chat-2-fill crayons-reaction__icon--active" /> */}
-									<span className="crayons-reaction__count" id="reaction-number-readinglist">
-										4
+										0
 									</span>
 								</span>
 							</button>
@@ -123,13 +110,17 @@ const Post = () => {
 								onClick={handleClickSave}
 							>
 								<span className="crayons-reaction__icon ">
-									<i className="ri-bookmark-line crayons-reaction__icon--inactive" />
+									<i
+										className="ri-bookmark-line crayons-reaction__icon--inactive"
+										data-tip="save post"
+									/>
 									{/* <i className="ri-bookmark-fill crayons-reaction__icon--active" /> */}
 									<span className="crayons-reaction__count" id="reaction-number-readinglist">
-										6
+										0
 									</span>
 								</span>
 							</button>
+							<ReactTooltip />
 						</div>
 						<div className="author d-grid">
 							<div className="author-image-box">

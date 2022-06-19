@@ -23,33 +23,6 @@ class PostRepository {
 		return await docClient.query(params).promise();
 	}
 
-	async featuredArticles() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-			Limit: '4',
-		};
-		return await docClient.scan(params).promise();
-	}
-
-	async trendingNews() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-			Limit: '4',
-		};
-		return await docClient.scan(params).promise();
-	}
-
-	async olderPost() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-			Limit: '4',
-		};
-		return await docClient.scan(params).promise();
-	}
-
 	async search(title) {
 		const params = {
 			TableName: this.tableName,
@@ -73,14 +46,6 @@ class PostRepository {
 		return await docClient.scan(params).promise();
 	}
 
-	async getAllAdmin() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-		};
-		return await docClient.scan(params).promise();
-	}
-
 	async getPostByAuthor(pk) {
 		const params = {
 			TableName: this.tableName,
@@ -92,16 +57,6 @@ class PostRepository {
 			ExpressionAttributeNames: {
 				'#e14e0': 'PK',
 			},
-		};
-		return await docClient.scan(params).promise();
-	}
-
-	//Get post Readingtime lessthan 6 minutes
-	async quickRead() {
-		const params = {
-			TableName: this.tableName,
-			IndexName: 'PostIndex',
-			Limit: '6',
 		};
 		return await docClient.scan(params).promise();
 	}

@@ -5,15 +5,19 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { TextField } from "@material-ui/core";
-import { EditorState, convertToRaw } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-toastify/dist/ReactToastify.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "@mui/material/Autocomplete";
-
 import { useDispatch, useSelector } from "react-redux";
-import { getTags } from "../../redux/apiCalls";
+import { getCategories, getTags } from "../../redux/apiCalls";
 
 export default function FormDialog({
   open,
@@ -31,6 +35,7 @@ export default function FormDialog({
     ReadingTime,
     Tags,
     Categories,
+    Content,
   } = data;
 
   const dispatch = useDispatch();
@@ -42,11 +47,52 @@ export default function FormDialog({
   const editorState = EditorState.createEmpty();
   const [content, setContent] = useState(editorState);
   const convertToHTML = draftToHtml(convertToRaw(content.getCurrentContent()));
+  //convert content state before passing to createWithContent
+  const customContentStateConverter = (contentState) => {
+    // changes block type of images to 'atomic'
+    const newBlockMap = contentState.getBlockMap().map((block) => {
+      const entityKey = block.getEntityAt(0);
+      if (entityKey !== null) {
+        const entityBlock = contentState.getEntity(entityKey);
+        const entityType = entityBlock.getType();
+        switch (entityType) {
+          case "IMAGE": {
+            const newBlock = block.merge({
+              type: "atomic",
+              text: "img",
+            });
+            return newBlock;
+          }
+          default:
+            return block;
+        }
+      }
+      return block;
+    });
+    const newContentState = contentState.set("blockMap", newBlockMap);
+    return newContentState;
+  };
 
   useEffect(() => {
+    getCategories(dispatch);
     getTags(dispatch);
-  }, []);
-
+    if (open && Content) {
+      const blocksFromHTML = convertFromHTML(Content);
+      setContent(
+        EditorState.createWithContent(
+          customContentStateConverter(
+            ContentState.createFromBlockArray(
+              blocksFromHTML.contentBlocks,
+              blocksFromHTML.entityMap
+            )
+          )
+        )
+      );
+    } else {
+      setContent(EditorState.createEmpty());
+    }
+  }, [dispatch, open]);
+  console.log(open);
   const onEditorStateChange = (editorState) => {
     setContent(editorState);
   };
@@ -184,26 +230,25 @@ export default function FormDialog({
               fullWidth
               InputLabelProps={{ shrink: true }}
             />
-            {PostID == null && (
-              <div
-                style={{
-                  border: "1px solid gray",
-                  padding: "1px 5px",
-                  borderRadius: "4px",
-                }}
-              >
-                <Editor
-                  placeholder="Content"
-                  editorState={content}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onEditorStateChange={onEditorStateChange}
-                />
-              </div>
-            )}
+
+            <div
+              style={{
+                border: "1px solid gray",
+                padding: "1px 5px",
+                borderRadius: "4px",
+              }}
+            >
+              <Editor
+                placeholder="Content"
+                editorState={content}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onEditorStateChange={onEditorStateChange}
+              />
+            </div>
             <TextField
-              style={{ display: "none" }}
+              style={{ display: "block" }}
               id="Content"
               value={(data.Content = convertToHTML)}
               placeholder="Enter Content"

@@ -30,7 +30,7 @@ const Featured = () => {
 					className={`article featured-article featured-article-${id + 1}`}
 				>
 					<img src={baseImageUrl + p.Thumbnail} alt="" className="article-image" />
-					<span className="article-category">{p.Categories[0].CategoryName}</span>
+					<span className="article-category">{p.Categories[0]?.CategoryName}</span>
 					<div className="article-data-container">
 						<div className="article-data">
 							<span>{p.PublishedDate}</span>

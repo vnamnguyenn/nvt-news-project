@@ -13,7 +13,7 @@ class TagService {
 
 	async getAll() {
 		const data = await TagRepository.getAll();
-
+		
 		if (data) {
 			return data.Items;
 		}

@@ -94,7 +94,8 @@ function Post() {
     Published,
     AuthorInfo,
     Thumbnail,
-    PK
+    PK,
+    Content
   ) => {
     setFormData({
       PostID: PostID,
@@ -115,6 +116,7 @@ function Post() {
       EmptyImage: PostImage,
       EmptyThumbnail: Thumbnail,
       PK: PK,
+      Content: Content,
     });
     handleClickOpen();
   };
@@ -193,6 +195,7 @@ function Post() {
           Tags: formData.Tags,
           Categories: formData.Categories,
           PK: formData.PK,
+          Content: formData.Content,
         },
         dispatch
       );
@@ -304,7 +307,8 @@ function Post() {
                     params.row.Published,
                     params.row.AuthorInfo,
                     params.row.Thumbnail,
-                    params.row.PK
+                    params.row.PK,
+                    params.row.Content
                   )
                 }
               >
@@ -404,7 +408,6 @@ function Post() {
             <Button onClick={handleSubmitDelete}>Delete</Button>
           </DialogActions>
         </Dialog>
-
         <FormDialog
           open={open}
           handleClose={handleClose}

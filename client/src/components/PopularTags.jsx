@@ -20,10 +20,15 @@ const PopularTags = () => {
 					Popular tags
 				</h2>
 				<div className="popular-tags-container d-grid">
-					{tags.map((t, id) => (
-						<Link to="" key={t.TagId} className="article">
-							<span className="tag-name">#{t.TagName}</span>
-							<img src={baseImageUrl + t.Thumbnail} alt="" className="article-image" />
+					{tags.map((tag, id) => (
+						<Link
+							to={`/tag/${tag.TagId}`}
+							state={{tagName: tag.TagName}}
+							key={tag.TagId}
+							className="article"
+						>
+							<span className="tag-name">{tag.TagName}</span>
+							<img src={baseImageUrl + tag.Thumbnail} alt="" className="article-image" />
 						</Link>
 					))}
 				</div>
