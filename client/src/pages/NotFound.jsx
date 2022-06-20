@@ -7,14 +7,12 @@ const NotFound = () => {
 	return (
 		<div>
 			<header className="top-header"></header>
-
 			<div>
 				<div className="starsec"></div>
 				<div className="starthird"></div>
 				<div className="starfourth"></div>
 				<div className="starfifth"></div>
 			</div>
-
 			<div className="lamp__wrap">
 				<div className="lamp">
 					<div className="cable"></div>

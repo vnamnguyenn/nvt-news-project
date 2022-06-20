@@ -69,7 +69,6 @@ export const signup = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/signup", user);
     dispatch(loginSuccess(res.data));
-    window.location.replace("/");
     toast.success("Logged in successfull", {
       position: "bottom-right",
       autoClose: 2000,
@@ -106,7 +105,6 @@ export const signin = async (dispatch, user) => {
       progress: undefined,
     });
     dispatch(loginSuccess(res.data));
-    window.location.replace("/");
   } catch (err) {
     toast.error("Email and/or Password wrong", {
       position: "bottom-right",
@@ -520,7 +518,7 @@ export const deletePost = async (postIDs, dispatch) => {
       dispatch(deletePostsuccess(postIDs[index]));
       index -= 1;
     }
-    toast.success(`Posts deleted in successfully`, {
+    toast.success(`Rows deleted in successfully`, {
       position: "bottom-right",
       autoClose: 2000,
       hideProgressBar: false,

@@ -11,6 +11,7 @@ function Posts() {
 	const [loading, setLoading] = useState(true);
 	const [hasMore, setHasMore] = useState(false);
 	const [page, setPage] = useState(1);
+	const observer = useRef();
 	document.querySelector('.sk-cube-grid').style.display = 'block';
 	// fetch data from server
 	useEffect(() => {
@@ -40,7 +41,6 @@ function Posts() {
 		}
 	}, [loadingAnimation]);
 
-	const observer = useRef();
 	const lastCategoryElementRef = useCallback(
 		(node) => {
 			if (observer.current) observer.current.disconnect();

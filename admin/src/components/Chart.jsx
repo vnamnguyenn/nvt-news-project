@@ -8,8 +8,6 @@ import {
 } from "recharts";
 
 const chart = ({ aspect, title, posts }) => {
-  console.log(new Date(posts[0].PublishedDate).getMonth());
-
   const data = [
     { name: "January", Total: 1200 },
     { name: "February", Total: 2100 },
