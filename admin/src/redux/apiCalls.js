@@ -69,6 +69,9 @@ export const signup = async (dispatch, user) => {
   try {
     const res = await publicRequest.post("/signup", user);
     dispatch(loginSuccess(res.data));
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 500);
     toast.success("Logged in successfull", {
       position: "bottom-right",
       autoClose: 2000,
@@ -95,6 +98,9 @@ export const signin = async (dispatch, user) => {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("/signin", user);
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 500);
     toast.success("Logged in successfull", {
       position: "bottom-right",
       autoClose: 2000,

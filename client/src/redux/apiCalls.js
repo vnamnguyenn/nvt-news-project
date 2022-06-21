@@ -39,7 +39,7 @@ export const signup = async (dispatch, user, location) => {
     dispatch(loginSuccess(res.data));
     setTimeout(() => {
       window.location.replace(location);
-    }, 200);
+    }, 500);
     toast.success("Logged in successfull", {
       position: "bottom-right",
       autoClose: 2500,
