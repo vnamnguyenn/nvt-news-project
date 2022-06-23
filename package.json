@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vnamnguyenn/nvt-news-project/tree/server"
+    "url": "https://github.com/vnamnguyenn/nvt-news-project"
   },
   "keywords": [
     "node",
