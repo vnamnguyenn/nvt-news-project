@@ -34,6 +34,6 @@ require('./routes/posts')(app);
 require('./routes/comments')(app);
 require('./routes/database')(app);
 
-app.listen(port, () => {
+app.listen(process.env.EXPRESS_PORT || 5000, () => {
 	console.log(`App listening at http://localhost:${port}`);
 });
