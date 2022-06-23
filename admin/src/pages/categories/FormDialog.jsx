@@ -48,6 +48,7 @@ export default function FormDialog({
               type="file"
               onChange={(e) => onChange(e)}
               label="Image"
+              inputProps={{ accept: 'image/png, image/jpeg' }}
               InputLabelProps={{ shrink: true }}
               variant="outlined"
               margin="dense"

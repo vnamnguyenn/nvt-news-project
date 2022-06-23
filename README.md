@@ -10,11 +10,10 @@
   <p align="center">
     <a href="https://www.youtube.com/watch?v=2U7DpiqdBRo">Video Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Live Demo</a>
+    <a href="http://nvtnews.ml">Admin Live Demo</a>
+    <a href="http://nvtnews.tk">User Live Demo</a>
   </p>
 </div>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -39,25 +38,24 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 <div align="center">
   <img align="center" src="https://i.imgur.com/aIFrtDV.png" />
 </div>
 
-
 ### Built With
 
 Dưới đây là các framework/library và các phần mềm được sự dụng trong project này.
-* [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.settingup.html)
-* [Node.js](https://nodejs.org/en/)
-* [Node.js](https://nodejs.org/en/)
-* [React.js](https://reactjs.org/)
-* [Express.js](https://expressjs.com/)
-* [MaterialUI](https://mui.com/material-ui/)
+
+- [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.settingup.html)
+- [Node.js](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/en/)
+- [React.js](https://reactjs.org/)
+- [Express.js](https://expressjs.com/)
+- [MaterialUI](https://mui.com/material-ui/)
 
 ### Cấu trúc thư mục
 
@@ -82,7 +80,7 @@ Dưới đây là các framework/library và các phần mềm được sự d�
     │   ├── routes            # Định tuyến đường đi API
     │   ├── .env.sample       # file dùng để điền các client, access key, endpoint,...
     │   ├── index.js          # file run source source code
-    |   └── ...           
+    |   └── ...
     ├── client                # Người dùng
     │   ├── public            # Development server file
     │   ├── src               # Chứa file code project
@@ -95,15 +93,15 @@ Dưới đây là các framework/library và các phần mềm được sự d�
     |       ├── App.js
     |       ├── index.js
     |       ├── requestMethods.js # Tạo file Kết nối client đến api
-    |       └── ...          
+    |       └── ...
     ├── docker                # Run database với docker
     ├── dynamodb              # Run database local
-    └── ... 
+    └── ...
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 This is an example of how you may give instructions on setting up your project locally.
@@ -112,89 +110,91 @@ To get a local copy up and running follow these simple example steps.
 ### Những thứ cần cài đặt để chạy blog app / Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* NPM & Nodejs
+
+- NPM & Nodejs
   ```sh
   https://nodejs.org/en/download/
   ```
-* Visual Studio Code
+- Visual Studio Code
   ```sh
   https://code.visualstudio.com/download
   ```
-* JDK (Cài đặt nếu bạn muốn sử dụng DynamoDB Local)
+- JDK (Cài đặt nếu bạn muốn sử dụng DynamoDB Local)
   ```sh
   https://www.oracle.com/java/technologies/downloads/
-   ```
-* Docker (Cài đặt nếu bạn muốn chạy DynamoDB trên Docker)
+  ```
+- Docker (Cài đặt nếu bạn muốn chạy DynamoDB trên Docker)
   ```sh
   https://www.docker.com/products/docker-desktop/
-   ```
-
+  ```
 
 ### Cài đặt / Installation
+
 Video hướng dẫn tải và cài đặt, xem chi tiết [tại đây](https://www.youtube.com/watch?v=2U7DpiqdBRo)
+
 1. Clone the repo
    ```sh
    git clone https://github.com/vnamnguyenn/nvt-news-project.git
    ```
 2. Tại thư mục API chúng ta đổi tên file `.env.sample` -> `.env`, xem chi tiết hướng dẫn [tại đây](https://youtu.be/2U7DpiqdBRo?t=279)
    ```js
-   AWS_ACCESS_KEY_ID= 'ENTER YOUR ACCESS KEY ID'
-   AWS_SECRET_ACCESS_KEY= 'ENTER YOUR SECRET KEY'
-   AWS_DEFAULT_REGION = 'ENTER YOUR REGION'
-   AWS_END_POINT_DDB_CONSOLE = 'ENTER YOUR ENPOINT'
+   AWS_ACCESS_KEY_ID = "ENTER YOUR ACCESS KEY ID";
+   AWS_SECRET_ACCESS_KEY = "ENTER YOUR SECRET KEY";
+   AWS_DEFAULT_REGION = "ENTER YOUR REGION";
+   AWS_END_POINT_DDB_CONSOLE = "ENTER YOUR ENPOINT";
    ```
 3. Cài đặt các package trong thư mục API
    ```sh
    cd api
    npm install
    npm start
-   ```  
+   ```
 4. Cài đặt các package trong thư mục Client
    ```sh
    cd ..
    cd client
    npm install
    npm start
-   ```  
+   ```
 5. Cài đặt các package trong thư mục Admin
    ```sh
    cd ..
    cd admin
    npm install
    npm start
-   ```  
-6. Chạy lệnh này nếu bạn sử dụng DynamoDB                       
+   ```
+6. Chạy lệnh này nếu bạn sử dụng DynamoDB
    ```sh
    java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- USAGE EXAMPLES -->
+
 ## Fix Bug
 
 Nếu bạn chạy thành công nhưng ứng dụng không hiển thị nội dung (nguyên do là bạn chưa tạo table và import data)
-1. Mở trang admin tại                            
+
+1. Mở trang admin tại
    ```sh
    http://localhost:3005/signin
-   ```                         
+   ```
 2. Lúc này trang admin xuất hiện 2 button, bạn hãy bấm theo thứ tự 1.Create Table và 2. Import Data
 <div align="center">
   <img align="center" src="https://i.imgur.com/A9c2t5R.png" />
-</div>                                                           
+</div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Tài liệu tham khảo
-* [NoSQL Workbench for DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.settingup.html)
-* [Singgle Table DynamoDB](https://www.alexdebrie.com/posts/dynamodb-single-table/)
-* [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
-* [CRUD Mern Stack](https://www.youtube.com/watch?v=y66RgYMAgSo)
-* [User HTML template](https://github.com/jlop007/FreeCodeCamp-NewsFlash)
+
+- [NoSQL Workbench for DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.settingup.html)
+- [Singgle Table DynamoDB](https://www.alexdebrie.com/posts/dynamodb-single-table/)
+- [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+- [CRUD Mern Stack](https://www.youtube.com/watch?v=y66RgYMAgSo)
+- [User HTML template](https://github.com/jlop007/FreeCodeCamp-NewsFlash)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-

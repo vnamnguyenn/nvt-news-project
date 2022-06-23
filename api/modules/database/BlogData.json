@@ -1,17 +1,19 @@
 [
   {
-    "Avatar": "man.png",
-    "FullName": "admin",
-    "IsActive": true,
-    "isAdmin": true,
-    "AccountId": "ujygfwmcl4lo82m5",
-    "Gender": "male",
-    "DateOfBirth": "2022-06-10",
-    "CreatedDate": "2022-06-20 01:57:32",
-    "UserEmail": "admin1@gmail.com",
-    "SK": "ACCT_ujygfwmcl4lo82m5",
-    "PK": "ACCT_ujygfwmcl4lo82m5",
-    "PasswordHash": "fcdf034495f0c82e4d68f90f5241e3e6b794fa5a15dbfe3bdaf06d8850248abde4f2fdec588c638a4d35a12e8b7fdf664989d206bfa74f54872823bffb1ec670"
+    "SavePostID": "pjygfcijl4l1wmh6",
+    "Thumbnail": "1655627566381Screen Shot 2022-06-19 at 15.30.55.png",
+    "CreatedDate": "2022-06-21 13:04:16",
+    "PostTitle": "Netflix is finally taking a page from the rest of Hollywood",
+    "SK": "SAV_pjygfcijl4l1wmh6",
+    "PK": "ACCT_ujygf7eil4nrgy3m",
+    "AuthorInfo": {
+      "PK": "ACCT_ujygf9hil43mstls",
+      "AccountId": "ujygf9hil43mstls",
+      "Avatar": "1655580367367business-man.png",
+      "FullName": "Administrator"
+    },
+    "ReadingTime": "8",
+    "PublishedDate": "Jul 19 2022"
   },
   {
     "Avatar": "1655580367367business-man.png",
@@ -26,14 +28,6 @@
     "SK": "ACCT_ujygf9hil43mstls",
     "PK": "ACCT_ujygf9hil43mstls",
     "PasswordHash": "fcdf034495f0c82e4d68f90f5241e3e6b794fa5a15dbfe3bdaf06d8850248abde4f2fdec588c638a4d35a12e8b7fdf664989d206bfa74f54872823bffb1ec670"
-  },
-  {
-    "Path": "backup-2022-06-19-1655656408275.json",
-    "CreatedDate": "2022-06-19 23:33:28",
-    "BackupID": "bkjygftbml4lj2spg",
-    "BackupName": "backup-2022-06-19-1655656408275",
-    "SK": "BAK_bkjygftbml4lj2spg",
-    "PK": "ACCT_ujygf9hil43mstls"
   },
   {
     "Thumbnail": "1654873529648gym-va-fitness-la-gi.jpeg",
@@ -1279,15 +1273,6 @@
     "PK": "ACCT_ujygf9hil43mstls"
   },
   {
-    "Thumbnail": "1654874390832Nhà_điều_hành_Đại_học_Quốc_Gia_TPHCM.jpeg",
-    "UpdatedDate": "2022-06-19 15:41:46",
-    "CreatedDate": "2022-06-10 22:19:50",
-    "TagId": "tjygf1xajl48lhg74",
-    "TagName": "VNUHCM",
-    "SK": "TAG_tjygf1xajl48lhg74",
-    "PK": "ACCT_ujygf9hil43mstls"
-  },
-  {
     "Thumbnail": "16548744583861645082778_hon-thom-phu-quoc-2.jpeg",
     "CreatedDate": "2022-06-10 22:20:58",
     "UpdatedDate": "2022-06-19 23:33:53",
@@ -1610,5 +1595,51 @@
     "TagName": "Blockchain",
     "SK": "TAG_tjygfwanl4ka11en",
     "PK": "ACCT_ujygf9hil43mstls"
+  },
+  {
+    "SavePostID": "pjygfcijl4l1wmh6",
+    "Thumbnail": "1655627566381Screen Shot 2022-06-19 at 15.30.55.png",
+    "CreatedDate": "2022-06-21 12:56:05",
+    "PostTitle": "Netflix is finally taking a page from the rest of Hollywood",
+    "SK": "SAV_pjygfcijl4l1wmh6",
+    "PK": "ACCT_ujygf7eil4nr6c4a",
+    "AuthorInfo": {
+      "PK": "ACCT_ujygf9hil43mstls",
+      "AccountId": "ujygf9hil43mstls",
+      "Avatar": "1655580367367business-man.png",
+      "FullName": "Administrator"
+    },
+    "ReadingTime": "8",
+    "PublishedDate": "Jul 19 2022"
+  },
+  {
+    "ParentCommentId": null,
+    "CreatedDate": "2022-06-21 12:38:14",
+    "CommentId": "cjygf6fql4nqjvcs",
+    "CommentContent": "Hello",
+    "SK": "CMT_cjygf6fql4nqjvcs",
+    "ParentPostID": "pjygf13bpl4lrra0z",
+    "PK": "ACCT_ujygf6fql4nqjkyp",
+    "AccountInfo": {
+      "Avatar": "man.png",
+      "AccountId": "ujygf6fql4nqjkyp",
+      "FullName": "admin"
+    }
+  },
+  {
+    "SavePostID": "pjygf13bpl4lrra0z",
+    "Thumbnail": "1655670986950Screen Shot 2022-06-20 at 03.32.17.png",
+    "CreatedDate": "2022-06-21 12:38:33",
+    "PostTitle": "Deadpool 3: Plot, Cast and Everything Else We Know",
+    "SK": "SAV_pjygf13bpl4lrra0z",
+    "PK": "ACCT_ujygf6fql4nqjkyp",
+    "AuthorInfo": {
+      "PK": "ACCT_ujygf9hil43mstls",
+      "AccountId": "ujygf9hil43mstls",
+      "Avatar": "1655580367367business-man.png",
+      "FullName": "Administrator"
+    },
+    "ReadingTime": "12",
+    "PublishedDate": "Jul 20 2022"
   }
 ]

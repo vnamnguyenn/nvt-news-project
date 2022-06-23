@@ -201,6 +201,7 @@ export default function FormDialog({
                   type="file"
                   onChange={(e) => onChange(e)}
                   label="Thumbnail"
+                  inputProps={{ accept: 'image/png, image/jpeg' }}
                   InputLabelProps={{ shrink: true }}
                   variant="outlined"
                   margin="dense"
@@ -210,6 +211,7 @@ export default function FormDialog({
                   required
                   id="PostImage"
                   type="file"
+                  inputProps={{ accept: 'image/png, image/jpeg' }}
                   onChange={(e) => onChange(e)}
                   label="Image"
                   InputLabelProps={{ shrink: true }}
