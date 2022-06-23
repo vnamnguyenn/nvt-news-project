@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 require('dotenv').config();
 const app = express();
-const port = process.env.EXPRESS_PORT ;
+const port = process.env.EXPRESS_PORT || 5000;
 const bodyParser = require('body-parser');
 const path = require('path');
 app.use(bodyParser.json());
@@ -34,6 +34,6 @@ require('./routes/posts')(app);
 require('./routes/comments')(app);
 require('./routes/database')(app);
 
-app.listen(port || 5000, () => {
+app.listen(port, () => {
 	console.log(`App listening at http://localhost:${port}`);
 });
