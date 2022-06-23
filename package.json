@@ -2,10 +2,13 @@
   "name": "server",
   "version": "1.0.0",
   "description": "node express dynamodb rest api",
+  "engines": {
+    "node": "16.x"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -27,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-getting-started"
+    "url": "https://github.com/vnamnguyenn/nvt-news-project/tree/server"
   },
   "keywords": [
     "node",
