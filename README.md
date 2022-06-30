@@ -10,8 +10,9 @@
   <p align="center">
     <a href="https://www.youtube.com/watch?v=2U7DpiqdBRo">Video Demo</a>
     ·
-    <a href="http://nvtnews.ml">Admin Live Demo</a>
-    <a href="http://nvtnews.tk">User Live Demo</a>
+    <a href="http://admin.nvtnews.cf">Admin Live Demo</a>
+    ·
+    <a href="http://nvtnews.cf">User Live Demo</a>
   </p>
 </div>
 
