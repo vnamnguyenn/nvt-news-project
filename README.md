@@ -53,7 +53,6 @@ Dưới đây là các framework/library và các phần mềm được sự d�
 
 - [NoSQL Workbench](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/workbench.settingup.html)
 - [Node.js](https://nodejs.org/en/)
-- [Node.js](https://nodejs.org/en/)
 - [React.js](https://reactjs.org/)
 - [Express.js](https://expressjs.com/)
 - [MaterialUI](https://mui.com/material-ui/)
