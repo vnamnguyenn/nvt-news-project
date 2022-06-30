@@ -19,8 +19,6 @@ const SignUp = () => {
     ConfirmPassword: "",
     Gender: "male",
   });
-  console.log(location.state);
-
   useEffect(() => {
     document.title = "Sign up";
     if (currentUser) {
@@ -90,7 +88,7 @@ const SignUp = () => {
           PasswordHash: values.PasswordHash,
           Gender: values.Gender,
         },
-        location.state.previousPage
+        location.state?.previousPage
       );
     } catch (err) {
       setError(true);
@@ -141,7 +139,7 @@ const SignUp = () => {
                 Already an account?
                 <Link
                   to="/signin"
-                  state={{ previousPage: location.state.previousPage }}
+                  state={{ previousPage: location.state?.previousPage }}
                 >
                   Sign in!
                 </Link>
