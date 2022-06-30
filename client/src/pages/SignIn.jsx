@@ -58,7 +58,7 @@ const SignIn = () => {
     signin(
       dispatch,
       { UserEmail: values.UserEmail, PasswordHash: values.PasswordHash },
-      location.state.previousPage
+      location.state?.previousPage
     );
   };
 
@@ -90,7 +90,7 @@ const SignIn = () => {
                 Don't have an account yet?
                 <Link
                   to="/signup"
-                  state={{ previousPage: location.state.previousPage }}
+                  state={{ previousPage: location.state?.previousPage }}
                 >
                   Sign up!
                 </Link>
