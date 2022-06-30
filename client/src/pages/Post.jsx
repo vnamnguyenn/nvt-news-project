@@ -32,7 +32,6 @@ const Post = () => {
     };
     getPost();
   }, [postID, loading]);
-
   const cleanHTML = DOMPurify.sanitize(post.Content, {
     USE_PROFILES: { html: true },
   });
@@ -141,8 +140,8 @@ const Post = () => {
               </div>
               <div className="author-about">
                 <Link
-                  to={`/author/${post.AuthorInfo.PK}`}
-                  state={{ authorName: post.AuthorInfo.FullName }}
+                  to={`/author/${post.AuthorInfo?.PK}`}
+                  state={{ authorName: post.AuthorInfo?.FullName }}
                 >
                   <h3 className="author-name">{post.AuthorInfo?.FullName}</h3>
                 </Link>
@@ -169,7 +168,7 @@ const Post = () => {
             <div className="article__tags">
               <h2>Tags</h2>
               <ul className="article__tags__menu">
-                {post.Tags.map((tag) => (
+                {post.Tags?.map((tag) => (
                   <li className="menu__item" key={tag.TagId}>
                     <Link
                       to={`/tag/${tag.TagId}`}
@@ -183,7 +182,7 @@ const Post = () => {
             </div>
             <div className="comments-container">
               <Comments
-                postAuthorID={post.AuthorInfo.AccountId}
+                postAuthorID={post.AuthorInfo?.AccountId}
                 postID={postID}
               />
             </div>
